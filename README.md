@@ -1,1 +1,1 @@
-Site modelo (em construção)
+Modelo de site em React (em construção)
