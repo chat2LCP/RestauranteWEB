@@ -7,7 +7,7 @@ video{
 }
 
 .hero-container{
-    background: url('../images/capa.jpg') center center/cover no-repeat;
+    background: url('../images/home-capa.jpg') center center/cover no-repeat;
     height: 100vh;  /*100vh retorna a altura do navegador (1vh é igual a 1/100 da altura da viewport, então, por exemplo, se a altura do navegador é 900px , 1vh equivale a 9px*/
     width: 100%;
     display: flex;
@@ -46,7 +46,7 @@ video{
         margin-top: 30px;
     }
 
-    .hero-container > p {
+    .hero-container > p {   /*Seleciona todos <p> onde o pai tem a classe hero-container*/
         font-size: 25px;
     }
 }
