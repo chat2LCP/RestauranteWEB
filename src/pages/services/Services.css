@@ -1,0 +1,15 @@
+.services_hero_section {
+    display: flex;
+    height: 90vh;
+    align-items: center;
+    justify-content: center;
+    background-image: url('/src/images/services-capa.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.services_hero_section h1{
+    color: #fff;
+    font-size: 100px;
+}

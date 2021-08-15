@@ -1,6 +1,6 @@
 import React,{useState,useEffect} from 'react'
 import { Link } from 'react-router-dom'
-import { Button } from '../Button';
+import { Button } from '../Button/Button';
 import './Navbar.css';
 
 function Navbar() {
@@ -28,14 +28,11 @@ function Navbar() {
     return (
         <>
             <nav className='navbar'>
-                <div className='navbar-conteiner'>
-                    <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
-                        TRVL <i className='fab fa-typo3'/>  {/* <i> é a tag de icone do fontawesome */}
+                <div className='navbar-container'>
+                    <Link to="/" className='navbar-logo' onClick={closeMobileMenu}>
+                        EAT <i className='fab fa-pagelines'/>  {/* <i> é a tag de icone do fontawesome */}
                     </Link>
-                    <div className='menu-icon' onClick={handleClick}>
-                        {/* fas da-times e fa-bars são icones (<i>) da biblioteca fontawesome (npm install @fortawesome/fontawesome-free) */}
-                        <i className={click? "fas fa-times":"fas fa-bars"} />
-                    </div>
+                                        
                     <ul className={click? 'nav-menu active' : 'nav-menu'}>
                         <li className='nav-item'>
                             <Link to='/' className='nav-links' onClick={closeMobileMenu}>
@@ -58,6 +55,11 @@ function Navbar() {
                             </Link>
                         </li>
                     </ul>
+                    
+                    <div className='menu-icon' onClick={handleClick}>
+                        <i className={click? "fas fa-times":"fas fa-bars"} /> {/* fas da-times e fa-bars são icones (<i>) da biblioteca fontawesome (npm install @fortawesome/fontawesome-free) */}
+                    </div>
+
                     {/* a linha abaixo funciona como se fosse um if() */}
                     {button && <Button buttonStyle='btn--outline'>Sign Up</Button>}
                 </div>

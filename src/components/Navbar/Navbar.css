@@ -18,29 +18,29 @@
     max-width: 1500px;
   }
   
-  .navbar-logo {
+  .navbar-logo{
+    display: flex;
+    align-items: center;
     color: #fff;
     justify-self: start;
     margin-left: 20px;
     cursor: pointer;
     text-decoration: none;
     font-size: 2rem;
-    display: flex;
-    align-items: center;
   }
   
-  .fa-typo3 {
+  .fa-pagelines {
     margin-left: 0.5rem;
     font-size: 1.8rem;
   }
   
   .nav-menu {
     display: grid;
-    grid-template-columns: repeat(4, auto);
+    grid-template-columns: repeat(4, auto); /*o repeat repeta a palavra auto o numero de vezes que eu indicar, grid-template-columns: repeat(4, auto) quer dizer o mesmo que grid-template-columns: auto auto auto auto*/
     grid-gap: 10px;
     list-style: none;
     text-align: center;
-    width: 60vw;
+    width: 60vw;  /*vh = view height e vw = view width (1 vh = 1/100 da altura ou largura da viewport)*/
     justify-content: end;
     margin-right: 2rem;
   }
@@ -67,19 +67,17 @@
     color: #fff;
   }
   
+  /*Remove o botão de sign up do fa-bars quando a tela for maior que 960px*/
   .nav-links-mobile {
     display: none;
   }
   
+  /*Remove o fa-bars quando a tela for maior que 960px*/
   .menu-icon {
     display: none;
   }
   
-  @media screen and (max-width: 960px) {
-    .NavbarItems {
-      position: relative;
-    }
-  
+  @media screen and (max-width: 960px) {  
     .nav-menu {
       display: flex;
       flex-direction: column;
@@ -87,7 +85,7 @@
       height: 90vh;
       position: absolute;
       top: 80px;
-      left: -100%;
+      left: -100%;  /*esconde a navbar no lado esquerdo da página*/
       opacity: 1;
       transition: all 0.5s ease;
     }
@@ -112,14 +110,7 @@
       color: #242424;
       border-radius: 0;
     }
-  
-    .navbar-logo {
-      position: absolute;
-      top: 0;
-      left: 0;
-      transform: translate(25%, 50%);
-    }
-  
+
     .menu-icon {
       display: block;
       position: absolute;
@@ -128,6 +119,7 @@
       transform: translate(-100%, 60%);
       font-size: 1.8rem;
       cursor: pointer;
+      transform: translate(-100%, 60%);
     }
   
     .fa-times {
@@ -140,7 +132,7 @@
       text-align: center;
       margin: 2rem auto;
       border-radius: 4px;
-      width: 80%;
+      width: 70%;
       text-decoration: none;
       font-size: 1.5rem;
       background-color: transparent;

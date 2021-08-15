@@ -1,8 +1,8 @@
 import React from 'react'
-import CardItem from './CardItem'
-import './Cards.css'
+import CardItem from '../../components/Cards/CardItem'
+import './CardsServices.css'
 
-function Cards() {
+function CardsServices() {
     return (
         <div className='cards'>
             <h1>Check out the Menu</h1> 
@@ -10,13 +10,13 @@ function Cards() {
                 <div className="cards_wrapper">
                     <ul className="cards_items">
                         <CardItem 
-                            src='../../images/card-image-1.jpg' 
+                            src='' 
                             text='An explosion of flavor'
                             label='Sweets'
                             path='/services'
                         /> 
                         <CardItem 
-                            src='../../images/card-image-2.jpg' 
+                            src='' 
                             text='A wide variety of wines from the best wineries of the country'
                             label='Wines'
                             path='/services'
@@ -24,21 +24,21 @@ function Cards() {
                     </ul>
                     <ul className="cards_items">    
                         <CardItem 
-                            src='../../images/card-image-3.jpg'
-                            text='A wide variety of wines from the best wineries of the country'
-                            label='Wines'
+                            src=''
+                            text='The original Italian pasta'
+                            label='Pasta'
                             path='/services'
                         /> 
                         <CardItem 
-                            src='../../images/card-image-3.jpg' 
-                            text='A wide variety of wines from the best wineries of the country'
-                            label='Wines'
+                            src='' 
+                            text='High quality brazilian barbecue for the meat lovers'
+                            label='Barbecue'
                             path='/services'
                         />
                         <CardItem 
-                            src='../../images/card-image-3.jpg' 
-                            text='A wide variety of wines from the best wineries of the country'
-                            label='Wines'
+                            src='' 
+                            text='Kids menu with delicious meals specially prepared for the little ones'
+                            label='Kids menu'
                             path='/services'
                         />
                     </ul>
@@ -48,4 +48,4 @@ function Cards() {
     )
 }
 
-export default Cards
+export default CardsServices

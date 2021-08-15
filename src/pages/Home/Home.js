@@ -1,14 +1,14 @@
 import React from 'react'
 import '../../App.css'
-import Cards from '../../components/Cards/Cards'
+import CardsHome from './CardsHome'
 import Footer from '../../components/Footer/Footer'
-import HeroSection from '../../components/HeroSection'
+import HeroSection from '../../components/HeroSection/HeroSection'
 
 function Home() {
     return(
         <>
-            <HeroSection/>
-            <Cards />
+            <HeroSection />
+            <CardsHome />
             <Footer />
         </>
     )

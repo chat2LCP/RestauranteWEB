@@ -1,0 +1,37 @@
+.cards {
+    padding: 4rem;
+    background: #fff;
+}
+  
+h1 {
+  text-align: center;
+}
+
+.cards_container {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  max-width: 1120px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.cards_wrapper {
+  position: relative;
+  margin: 50px 0 45px; /*top, right e left, bottom*/
+}
+
+.cards_items {
+  margin-bottom: 24px;
+}
+
+.fade-img {
+  animation-name: fade-img;
+  animation-duration: 2s;
+}
+
+@media only screen and (min-width: 1024px) {
+  .cards_items {
+    display: flex;
+  }
+}
