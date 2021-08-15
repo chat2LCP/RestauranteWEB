@@ -88,7 +88,7 @@
       top: 80px;  /*distância para ficar abaixo da navbar*/
       left: -100%;  /*esconde a navbar no lado esquerdo da página*/
       opacity: 1;
-      transition: all 0.5s ease;
+      transition: all 0.7s ease;
     }
   
     .nav-menu.active {

@@ -6,8 +6,13 @@ video{
     z-index: -1;
 }
 
+/*TENTAR MODIFICAR ESSA VARIÁVEL EM CADA UMA DAS PÁGINAS*/
+:root{
+    --img-fundo: url('../../images/home-capa.jpg')
+}
+
 .hero-container{
-    background: url('../../images/home-capa.jpg') center center/cover no-repeat;
+    background: var(--img-fundo) center center/cover no-repeat;
     height: 100vh;  /*100vh retorna a altura do navegador (1vh é igual a 1/100 da altura da viewport, então, por exemplo, se a altura do navegador é 900px , 1vh equivale a 9px*/
     width: 100%;
     display: flex;
@@ -19,7 +24,6 @@ video{
 
 .hero-container > h1{
     font-size: 50px;
-    margin-top: 30px;
 }
 
 .hero-container > p{
@@ -42,31 +46,30 @@ video{
 
 @media screen and (max-width: 960px){
     .hero-container > h1{
-        font-size: 32px;
-        margin-top: 30px;
+        font-size: 33px;
     }
 
     .hero-container > p {   /*Seleciona todos <p> onde o pai tem a classe hero-container*/
         font-size: 25px;
-    }
-}
-
-@media screen and (max-width: 650px){
-    .hero-container > h1{
-        font-size: 22px;
-        margin-top: 30px;
-    }
-
-    .hero-container > p {
-        font-size: 18px;
     }
 
     .btn-mobile{
         display: block;
         text-decoration: none;
     }
+}
 
+@media screen and (max-width: 650px){
+    .hero-container > h1{
+        font-size: 22px;
+    }
+
+    .hero-container > p {
+        font-size: 19px;
+    }
+    
     .btn{
         width: 100%;
+        font-size: 14px;
     }
 }
