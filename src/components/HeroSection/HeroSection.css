@@ -7,9 +7,8 @@ video{
 }
 
 /*TENTAR MODIFICAR ESSA VARIÁVEL EM CADA UMA DAS PÁGINAS*/
-/*o problema de nao carregar as imagens talvez seja pq elas nao estao na pasta ssets - verificar isso*/
 :root{
-    --img-fundo: url('../../images/home-capa.jpg') 
+    --img-fundo: url("../../images/home-capa.jpg") 
 }
 
 .hero-container{

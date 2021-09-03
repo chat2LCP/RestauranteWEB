@@ -10,7 +10,7 @@ function CardsProducts() {
                 <div className="cards_wrapper">
                     <ul className="cards_items">
                         <CardItem 
-                            src='' 
+                            src= ''
                             text='Brazilian Brigadeiro'
                             label='Brigadeiro'
                             path='/services'

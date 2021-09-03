@@ -11,7 +11,7 @@ function Services() {
             <HeroSection
                 mainText='SERVICES'
                 textBtn1='GET STARTED'
-
+                textBtn2='button 2'
             />
 
             <CardsServices />
