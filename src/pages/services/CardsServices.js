@@ -10,7 +10,7 @@ function CardsServices() {
                 <div className="cards_wrapper">
                     <ul className="cards_items">
                         <CardItem 
-                            src='../images/services-card-image-1.jpg' 
+                            src='/images/services-card-image-1.jpg' 
                             text='Whether you are planning a traditional ceremony, a modern wedding, or want to hold a rehearsal dinner, we have the best options for you'
                             label='Wedding venue'
                             path='/services'
