@@ -1,8 +1,10 @@
-import './App.css'
 import React from 'react'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+
+import './App.css'
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './components/Navbar/Navbar'
 import Home from './pages/Home/Home'
-import {BrowserRouter, Route,Switch} from 'react-router-dom'
 import Services from './pages/services/Services'
 import Products from './pages/Products/Products'
 import SignUp from './pages/SignUp/SignUp'

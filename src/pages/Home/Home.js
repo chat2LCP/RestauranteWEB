@@ -18,7 +18,7 @@ function Home() {
                 textBtn1='GET STARTED'
                 textBtn2='WATCH TRAILLER'
                 iconBtn2='far fa-play-circle'
-                />
+            />
             <CardsHome />
             <Footer />
         </>

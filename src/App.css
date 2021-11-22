@@ -1,3 +1,8 @@
+:root{
+  --white: #fff;
+  --dark-grey: #242424 
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -6,8 +11,7 @@
   }
   
   .home,
-  .products,
-  .sign-up {
+  .products {
     display: flex;
     height: 90vh;
     align-items: center;
@@ -19,15 +23,6 @@
     background-image: url('/src/images/products-capa.jpg');
     background-position: center;
     background-size: fill;
-    background-repeat: no-repeat;
-    color: #fff;
-    font-size: 100px;
-  }
-  
-  .sign-up {
-    background-image: url('/src/images/sign-up-capa.jpg');
-    background-position: center;
-    background-size: cover;
     background-repeat: no-repeat;
     color: #fff;
     font-size: 100px;

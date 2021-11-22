@@ -1,6 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import Footer from '../../components/Footer/Footer'
+import CardProducts from './CardsProducts'
 
 function Products() {
   
@@ -17,7 +18,7 @@ function Products() {
         case 'sweets':
             return (
                 <div>         
-                    <h1>Doces</h1>
+                    <CardProducts />
                     <Footer />
                 </div>
             )

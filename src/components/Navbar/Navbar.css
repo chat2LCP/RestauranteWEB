@@ -1,5 +1,5 @@
 .navbar {
-    background: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%);
+    background: var(--dark-grey);
     height: 80px;
     display: flex;
     justify-content: center;
@@ -8,14 +8,16 @@
     position: sticky;
     top: 0;
     z-index: 999;
+    text-decoration: none;
+    padding: 0;
   }
   
   .navbar-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80px;
-    max-width: 1500px;
+    height: inherit;
+    width: 100%;
   }
   
   .navbar-logo{
@@ -56,10 +58,11 @@
     text-decoration: none;
     padding: 0.5rem 1rem;
     height: 100%;
+    border-bottom: 4px solid var(--dark-grey);
   }
   
   .nav-links:hover {
-    border-bottom: 4px solid #fff;
+    border-bottom: 4px solid var(--white);
     transition: all 0.2s ease-out;
   }
 
@@ -89,6 +92,8 @@
       left: -100%;  /*esconde a navbar no lado esquerdo da página*/
       opacity: 1;
       transition: all 0.7s ease;
+      margin: 0;
+      padding: 0;
     }
   
     .nav-menu.active {

@@ -10,9 +10,9 @@ function HeroSection(props) {
             <h1>{props.mainText}</h1>
             <p>{props.description}</p>
 
-            <div className='hero-btns '>
-                <Button className='btns' buttonStyle='btn--outline' buttonSize='btn--large'>{props.textBtn1}</Button>
-                <Button className='btns' buttonStyle='btn--primary' buttonSize='btn--large'>{props.textBtn2} <i className={props.iconBtn2} /></Button>
+            <div className='hero-btns'>
+                <Button buttonStyle='btn--outline' buttonSize='btn--large' link='/signUp'>{props.textBtn1}</Button>
+                <Button buttonStyle='btn--white' buttonSize='btn--large'>{props.textBtn2} <i className={props.iconBtn2} /></Button>
             </div>
         </div>
     )

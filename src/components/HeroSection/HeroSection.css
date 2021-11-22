@@ -29,15 +29,12 @@ video{
 .hero-container > p{
     margin-top: 8px;
     font-size: 32px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .hero-btns{
-    margin-top: 32px;
-}
-
-.hero-btns .btn{
-    margin: 6px;
+    margin-top: 32px;    
+    text-align: center;
 }
 
 .fa-play-circle{
@@ -52,11 +49,6 @@ video{
     .hero-container > p {   /*Seleciona todos <p> onde o pai tem a classe hero-container*/
         font-size: 25px;
     }
-
-    .btn-mobile{
-        display: block;
-        text-decoration: none;
-    }
 }
 
 @media screen and (max-width: 650px){
@@ -66,10 +58,5 @@ video{
 
     .hero-container > p {
         font-size: 19px;
-    }
-    
-    .btn{
-        width: 100%;
-        font-size: 14px;
     }
 }
