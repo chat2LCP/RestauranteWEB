@@ -15,9 +15,6 @@ function Home() {
                 /*img = '../../images/home-capa.jpg'*/
                 mainText='THE BEST MEALS YOU WILL EVER HAVE'
                 description='What are you waiting for?'
-                textBtn1='GET STARTED'
-                textBtn2='WATCH TRAILLER'
-                iconBtn2='far fa-play-circle'
             />
             <CardsHome />
             <Footer />

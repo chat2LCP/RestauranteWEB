@@ -37,6 +37,10 @@ video{
     text-align: center;
 }
 
+.hero-btn{
+    margin: 6px;
+}
+
 .fa-play-circle{
     margin-left: 4px;
 }

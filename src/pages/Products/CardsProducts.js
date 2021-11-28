@@ -5,7 +5,7 @@ import CardItem from '../../components/Cards/CardItem'
 function CardsProducts() {
     return (
         <div className='cards'>
-            <h1>Sweets Menu</h1> 
+            <h1>Menu</h1> 
             <div className='cards_container'>
                 <div className="cards_wrapper">
                     <ul className="cards_items">

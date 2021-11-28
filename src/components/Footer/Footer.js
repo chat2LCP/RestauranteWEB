@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Button } from '../Button/Button'
+import Button from '../Button/Button'
 import './Footer.css'
 
 function Footer() {
@@ -25,7 +25,7 @@ function Footer() {
                 <div className='footer-link-wrapper'>
                     <div className='footer-link-items'>
                         <h2>About Us</h2>
-                        <Link to='/sign-up'>How it works</Link>
+                        <Link to='/'>How it works</Link>
                         <Link to='/'>Make a reservation</Link>
                         <Link to='/'>Cupons and Discounts</Link>
                         <Link to='/'>More infos</Link>
@@ -66,46 +66,46 @@ function Footer() {
                     </div>
                     <small className='website-rights'>EAT © 2021</small>
                     <div className='social-icons'>
-                        <Link
+                        <a
                             className='social-icon-link facebook'
-                            to='/'
+                            href='/'
                             target='_blank'
                             aria-label='Facebook'
                         >
                             <i className='fab fa-facebook-f' />
-                        </Link>
-                        <Link
+                        </a>
+                        <a
                             className='social-icon-link instagram'
-                            to='/'
+                            href='/'
                             target='_blank'
                             aria-label='Instagram'
                         >
                             <i className='fab fa-instagram' />
-                        </Link>
-                        <Link
+                        </a>
+                        <a
                             className='social-icon-link youtube'
-                            to='/'
+                            href='www.youtube.com'
                             target='_blank'
                             aria-label='Youtube'
                         >
                             <i className='fab fa-youtube' />
-                        </Link>
-                        <Link
+                        </a>
+                        <a
                             className='social-icon-link twitter'
-                            to='/'
+                            href='/'
                             target='_blank'
                             aria-label='Twitter'
                         >
                             <i className='fab fa-twitter' />
-                        </Link>
-                        <Link
+                        </a>
+                        <a
                             className='social-icon-link twitter'
-                            to='/'
+                            href='/'
                             target='_blank'
                             aria-label='LinkedIn'
                         >
                             <i className='fab fa-linkedin' />
-                        </Link>
+                        </a>
                     </div>
                 </div>
             </section>            
