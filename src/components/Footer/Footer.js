@@ -68,7 +68,8 @@ function Footer() {
                     <div className='social-icons'>
                         <a
                             className='social-icon-link facebook'
-                            href='/'
+                            href='www.facebook.com'
+                            rel='noopener noreferrer'
                             target='_blank'
                             aria-label='Facebook'
                         >
@@ -76,7 +77,8 @@ function Footer() {
                         </a>
                         <a
                             className='social-icon-link instagram'
-                            href='/'
+                            href='www.instagram.com'
+                            rel='noopener noreferrer'
                             target='_blank'
                             aria-label='Instagram'
                         >
@@ -85,6 +87,7 @@ function Footer() {
                         <a
                             className='social-icon-link youtube'
                             href='www.youtube.com'
+                            rel='noopener noreferrer'
                             target='_blank'
                             aria-label='Youtube'
                         >
@@ -93,6 +96,7 @@ function Footer() {
                         <a
                             className='social-icon-link twitter'
                             href='/'
+                            rel='noopener noreferrer'
                             target='_blank'
                             aria-label='Twitter'
                         >
@@ -100,7 +104,8 @@ function Footer() {
                         </a>
                         <a
                             className='social-icon-link twitter'
-                            href='/'
+                            href='www.linkedin.com'
+                            rel='noopener noreferrer'   //essa propriedade precisa ter por questões de segurança quando se usa uma tag <a> pq ela impede q o site externo possa acessar propriedades do meu site
                             target='_blank'
                             aria-label='LinkedIn'
                         >

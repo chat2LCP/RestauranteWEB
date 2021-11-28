@@ -19,9 +19,7 @@ const Button = ({
 
     return(
         <Component className={`btn ${buttonStyle} ${buttonSize} ${className}`} {...restProps}>
-            {/* <button > */}
-                {children}
-            {/* </button> */}
+            {children}
         </Component>
     )
 }

@@ -18,9 +18,9 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />}/>
           <Route path='services' element={<Services/>}/>
-          <Route path='products' element={<Products/>}/>
-          <Route path='products/allProducts' element={<h1>todos os prod </h1>}/>
-          <Route path='products/sweets' element={<h1>doces</h1>}/>
+          <Route path='products/:product' element={<Products/>}/>
+          {/* <Route path='products/:product-type' element={<h1>tipo de produto </h1>}/> */}
+          {/* <Route path='products/sweets' element={<h1>doces</h1>}/> */}
           <Route path='signup' element={<SignUp/>}/>
           <Route path='new-account' element={<NewAccount/>}/>
         </Routes>

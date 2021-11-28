@@ -6,6 +6,7 @@ function CardsHome() {
     return (
         <div className='cards'>
             <h1>Check out our Menu</h1> 
+
             <div className='cards_container'>
                 <div className="cards_wrapper">
                     <ul className="cards_items">
@@ -43,7 +44,7 @@ function CardsHome() {
                         />
                     </ul>
                 </div>
-            </div>           
+            </div>         
         </div>
     )
 }

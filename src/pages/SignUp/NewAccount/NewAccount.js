@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Button from "../../../components/Button/Button";
+
 import './NewAccount.css';
+import Button from "../../../components/Button/Button";
 
 const NewAccount = () => {
 
@@ -29,30 +30,30 @@ const NewAccount = () => {
                     </h2>
 
                     <form className="form" onSubmit={handleSubmit}>
-                        <div className="form-group">
-                            <label htmlFor="username" className="control-label">Username</label>
+                        <div >
+                            <label htmlFor="username">Username</label>
                             <input type="text" className="form-control" name="username" id="username"/>
                         </div>
 
-                        <div className="form-group">
+                        <div >
                             <label htmlFor="email">E-mail</label>
                             <input type="email" className="form-control" name="email" id="email"/>
                         </div>
 
-                        <div className="form-group">
-                            <label htmlFor="password" className="control-label">Password</label>
+                        <div >
+                            <label htmlFor="password" >Password</label>
                             <input type="password" className="form-control" name="password" id="password"/>
                         </div>
 
                         <div className="address">
                             <div className="grid-template-columns-2">
-                                <div className="form-group">
-                                    <label htmlFor="cep" className="control-label">CEP</label>
+                                <div>
+                                    <label htmlFor="cep">CEP</label>
                                     <input type="text" className="form-control" name="cep" onBlur={findCEP} id="cep"/>
                                 </div>
 
-                                <div className="form-group">
-                                    <label htmlFor="state" className="control-label">State</label>
+                                <div>
+                                    <label htmlFor="state">State</label>
                                     
                                     <select className="form-control" name="state" id="state">
                                         {/* <option *nghtmlFor="let state of states$ | async" [value]="state.abbreviation">{{ state.name }}</option>                */}
@@ -60,30 +61,30 @@ const NewAccount = () => {
                                 </div>
                             </div>
                             
-                            <div className="form-group">
-                                <label htmlFor="street" className="control-label">Street</label>
+                            <div>
+                                <label htmlFor="street">Street</label>
                                 <input type="text" className="form-control" name="street" id="street"/>
                             </div>
 
                             <div className="grid-template-columns-2">
-                                <div className="form-group">
-                                    <label htmlFor="number" className="control-label">Number</label>
+                                <div>
+                                    <label htmlFor="number" >Number</label>
                                     <input type="text" className="form-control" name="number" id="number"/>
                                 </div>
 
-                                <div className="form-group">
-                                    <label htmlFor="complement" className="control-label">Complement</label>
+                                <div>
+                                    <label htmlFor="complement" >Complement</label>
                                     <input type="text" className="form-control" name="complement" id="complement"/>
                                 </div>
                             </div>
 
-                            <div className="form-group">
-                                <label htmlFor="district" className="control-label">District</label>
+                            <div>
+                                <label htmlFor="district">District</label>
                                 <input type="text" className="form-control" name="district" id="district"/>
                             </div>
 
-                            <div className="form-group">
-                                <label htmlFor="city" className="control-label">City</label>
+                            <div>
+                                <label htmlFor="city">City</label>
                                 <input type="text" className="form-control" name="city" id="city"/>
                             </div>
                         </div>

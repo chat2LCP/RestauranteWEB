@@ -60,7 +60,7 @@ function Navbar() {
                 </div>
 
                 {/* a linha abaixo funciona como se fosse um if() */}
-                {button && <Button link='signup' buttonStyle='btn--outline'>Sign Up</Button>}
+                {button && <Button component={Link} to='/signup' buttonStyle='btn--outline'>Sign Up</Button>}
             </div>
         </nav>
     )
