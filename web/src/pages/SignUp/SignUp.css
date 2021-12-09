@@ -1,0 +1,117 @@
+.sign-up-contaier{
+    margin: 0;
+    padding: 0;
+    font-size: 10px;
+}
+
+.sign-header {
+    position: realtive;
+    height: 40vh;
+    width: 100%;
+    background-image: url('/src/images/sign-up-capa.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.sign-up {
+    position: absolute;
+    width: 100%; 
+    top: 25%;
+    color: var(--white);
+    font-size: 70px;
+}
+
+.login-container{
+    margin: 15px 0;
+    font-size: 10px;    /*fonte padrão para facilitar na responsividade, já que todas as unidades de tamanho de fonte se baseiam nessa unidade aqui (por conta do REM). Ex.: 1.2rem = 12px*/
+}
+
+.login-card-data{
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    padding: 20px 20px; /*padding se aplica àquilo que está dentro do elemento e, não, ao elemento em si*/
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    height: 270px;
+    margin-top: 20px;
+}
+
+.user, .password{
+    font-size: 1.4em;
+}
+
+.password label{
+    width: 50%;
+}
+
+.password label + label{   /*label + label é para o css selecionar a primeiro label que vier depois de uma outra label, ou seja, dentro da classe .password, procure uma label, na próxima label aplica o text-align*/
+    text-align: right;
+}
+
+.password a{
+    text-decoration: none;
+}
+
+.input-password-eye > input{
+    padding: 6px 25px 6px 12px;
+}
+
+.input-password-eye{
+    position: relative;
+}
+
+.input-password-eye .eye{
+    position: absolute;
+    right: 7px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.4em;
+}
+
+.signup-create-account-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0px 20px 0px;
+    height: 110px;
+    text-align: center;
+}
+
+.create-account-span{
+    font-size: 1.3em;
+    color: #6d6d6d;
+    position: relative;
+    width: 100%;
+    margin-bottom: 9px;
+}
+
+.create-account-span::before, .create-account-span::after{
+    position: absolute;
+    content: '';
+    width: 29%;
+    height: 1px;
+    bottom: 50%;
+    background: #c7c7c7;
+    border-radius: 4px;
+}
+
+.create-account-span::before{
+    position: absolute;
+    left: 0;
+}
+
+.create-account-span::after{
+    right: 0;
+}
+
+.btn-create-account{
+    width: 150px;
+}
+
+/* .has-error{
+    border: 2px solid red
+} */

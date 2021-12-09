@@ -1,0 +1,14 @@
+.page-not-found-container{
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.page-not-found-container i{
+    font-size: 3em;
+    color: #198754;
+    margin-bottom: 20px;
+}
