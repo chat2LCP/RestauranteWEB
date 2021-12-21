@@ -6,28 +6,17 @@
 .cards-container{
   display: flex;
   flex-direction: column;
-  padding: 30px 10px;
-}
-
-.cards h1 {
-  /* text-align: center; */
-}
-
-/* .cards_container {
-  display: flex;
-  flex-flow: column;
   align-items: center;
-  max-width: 1120px;
-  width: 90%;
-  margin: 0 auto;
-} */
+  padding: 30px;
+}
 
-.cards_wrapper {
-  /* position: relative; */
-  /*margin: 50px 0 45px; /*top, right e left, bottom*/
+.cards-container-title{
+  margin: 20px 0 50px 0;
 }
 
 .cards_items {
+  display: flex;
+  justify-content: center;
   margin-bottom: 24px;
   padding: 0;
 }
@@ -35,10 +24,4 @@
 .fade-img {
   animation-name: fade-img;
   animation-duration: 2s;
-}
-
-@media only screen and (min-width: 1024px) {
-  /* .cards_items {
-    display: flex;
-  } */
 }

@@ -11,7 +11,7 @@ function HeroSection(props) {
             {/*<video src='' autoPlay loop muted></video>*/} {/* caso queira colocar um video de fundo ao inves da imagem é só colocar a source */}
             <h1>{props.mainText}</h1>
             <p>{props.description}</p>
-
+            
             <div className='hero-btns'>
                 <Button component={Link} to='signup' className='hero-btn' buttonStyle='btn--outline' buttonSize='btn--large'>GET STARTED</Button>
                 <Button component={Link} to='/' className='hero-btn' buttonStyle='btn--white' buttonSize='btn--large'>WATCH TRAILLER <i className='far fa-play-circle'/></Button>

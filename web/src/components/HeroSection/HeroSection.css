@@ -13,7 +13,7 @@ video{
 
 .hero-container{
     background: var(--img-fundo) center center/cover no-repeat;
-    height: 100vh;  /*100vh retorna a altura do navegador (1vh é igual a 1/100 da altura da viewport, então, por exemplo, se a altura do navegador é 900px , 1vh equivale a 9px*/
+    height: 90vh;  /*100vh retorna a altura do navegador (1vh é igual a 1/100 da altura da viewport, então, por exemplo, se a altura do navegador é 900px , 1vh equivale a 9px*/
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -23,17 +23,19 @@ video{
 }
 
 .hero-container > h1{
-    font-size: 50px;
+    font-size: 3.1em;
+    font-weight: 600;
 }
 
 .hero-container > p{
     margin-top: 8px;
-    font-size: 32px;
-    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2em;
 }
 
 .hero-btns{
-    margin-top: 32px;    
+    margin-top: 32px;  
+    display: flex;  
+    flex-wrap: wrap;
     text-align: center;
 }
 

@@ -10,28 +10,34 @@ import CardsProduct from './pages/Products/CardsProduct';
 import Products from './pages/Products/Products'
 import NewAccount from './pages/SignUp/NewAccount/NewAccount'
 import NotFound from './pages/notFound/NotFound'
+
 const SignUp = React.lazy(() => import('./pages/SignUp/SignUp'))
 
-
 function App() {
+
   return (
     <>
       <BrowserRouter>
         <Navbar />
-        <Suspense fallback={<div>Carregando...</div>}>
-          <Routes>
-            <Route path='/' element={<Home />} />
-            {/* <Route path='services' element={<Services/>}/> */}
-            <Route path='products' element={<Products />}>
-              <Route path='produtcs/:product' element={<CardsProduct />} />
-            </Route>
-            <Route path='signup' element={SignUp} />
-            <Route path='new-account' element={<NewAccount />} />
-            <Route path='*' element={<NotFound />} />
-          </Routes>
-        </Suspense>
+        
+        <Routes>
+          <Route path='/' element={<Home />} />
+          {/* <Route path='services' element={<Services/>}/> */}
+          <Route path='products' element={<Products />}>
+            <Route path='produtcs/:product' element={<CardsProduct />} />
+          </Route>
+          <Route 
+            path='signup' 
+            element={
+              <Suspense fallback={<div>Carregando...</div>}>
+                <SignUp />
+              </Suspense>
+            }
+          />          
+          <Route path='new-account' element={<NewAccount />} />
+          <Route path='*' element={<NotFound />} />
+        </Routes>
       </BrowserRouter>
-
     </>
   );
 }
