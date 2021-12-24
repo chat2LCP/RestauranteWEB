@@ -6,10 +6,10 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './components/Navbar/Navbar'
 import Home from './pages/Home/Home'
 import CardsProduct from './pages/Products/CardsProduct';
-// import Services from './pages/services/Services'
 import Products from './pages/Products/Products'
-import NewAccount from './pages/SignUp/NewAccount/NewAccount'
+import NewAccount from './pages/NewAccount/NewAccount'
 import NotFound from './pages/notFound/NotFound'
+// import Services from './pages/services/Services'
 
 const SignUp = React.lazy(() => import('./pages/SignUp/SignUp'))
 
