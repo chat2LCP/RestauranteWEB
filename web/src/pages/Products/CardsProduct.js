@@ -1,6 +1,6 @@
 import React from 'react'
 
-import './CardsProduct.css'
+import './CardsProduct.scss'
 import CardItem from '../../components/Cards/CardItem'
 
 function CardsProduct(props) {

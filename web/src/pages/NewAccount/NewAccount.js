@@ -4,8 +4,9 @@ import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup';
 import axios from "axios";
+import CepProvider from '../../providers/cep-provider/CepProvider'
 
-import './NewAccount.css';
+import './NewAccount.scss';
 import Button from "../../components/Button/Button";
 // import CepProvider from "../../providers/cep-provider/CepProvider";
 
@@ -13,6 +14,14 @@ const NewAccount = () => {
 
     const [address, setAddress] = useState({})
 
+    const findCEP = (e) => {
+        console.log(e.target.value)
+
+        CepProvider(e.target.value, setAddress)
+
+        console.log(address)
+    }
+    
 
     /*******************************************
      * Constantes do yup para validação dos campos do form.
@@ -91,24 +100,24 @@ const NewAccount = () => {
      * @returns Promise<AxiosResponse>
      *******************************************/
     //OBS: tentar pegar os dados do serviço: CepProvider e, não, direto daqui
-    const findCEP = (e) => {
-        axios.get(`https://viacep.com.br/ws/${e.target.value}/json`)
-        .then(response => {
-            console.log(response.data)
-            setAddress({
-                address: response.data,
-                // street: response.data.logradouro,
-                // complement: response.data.complemento,
-                // district: response.data.bairro,
-                // city: response.data.localidade,
-            })
-        }) 
-        .catch((err) => {
-            console.log("erro ao buscar dados"+err)
-        })
+    // const findCEP = (e) => {
+    //     axios.get(`https://viacep.com.br/ws/${e.target.value}/json`)
+    //     .then(response => {
+    //         console.log(response.data)
+    //         setAddress({
+    //             address: response.data,
+    //             // street: response.data.logradouro,
+    //             // complement: response.data.complemento,
+    //             // district: response.data.bairro,
+    //             // city: response.data.localidade,
+    //         })
+    //     }) 
+    //     .catch((err) => {
+    //         console.log("erro ao buscar dados"+err)
+    //     })
 
-        console.log(this.state.address)
-    }
+    //     console.log(this.state.address)
+    // }
 
     // const handleChange = (e) => {
     //     console.log(e.target.name)
@@ -117,7 +126,7 @@ const NewAccount = () => {
     
     return (
         <div className="create-account-container container-fluid">
-            <section className='header'>
+            <section>
                 <div className='create-account-header'>
                     <h1 className='create-account-text'>CREATE ACCOUNT</h1>
                 </div>
@@ -169,7 +178,7 @@ const NewAccount = () => {
                                         type="text" 
                                         className="form-control" 
                                         name="cep" 
-                                        // onBlur={findCEP} 
+                                        onBlur={findCEP} 
                                         id="cep" 
                                         {...register("cep")}
                                     />

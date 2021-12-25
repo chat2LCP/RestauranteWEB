@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './Button.css';
+import './Button.scss';
 
 // const STYLES = ['btn--outline', 'btn--white', 'btn--create-account', 'btn--login']
 // const SIZES = ['btn--medium','btn--large']

@@ -1,3 +1,6 @@
+@import 'src/styles/variables';
+@import 'src/styles/reset';
+
 body{
     text-decoration: none;
 }
@@ -8,10 +11,9 @@ body{
 }
 
 .create-account-header {  
-    position: relative;
-    height: 40vh;
+    height: 170px;
     width: 100%;
-    background-image: url('/src/images/sign-up-capa.jpg');
+    background-image: url('../../assets/NewAccount/sign-up-capa.jpg');
     box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);
     background-position: center;
     background-size: cover;
@@ -19,10 +21,9 @@ body{
 }
 
 .create-account-text {
-    position: absolute;
+    line-height: 170px;
     width: 100%; 
-    top: 25%;
-    color: var(--white);
+    color: $white;
     font-size: 70px;
 }
 

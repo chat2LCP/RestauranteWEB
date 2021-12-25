@@ -1,9 +1,11 @@
+@import 'src/styles/variables';
+@import 'src/styles/mixins';
+@import 'src/styles/reset';
+
 .navbar {
-    background: var(--dark-grey);
+    background: $dark-grey;
     height: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include flexCenter();
     font-size: 1.2rem;
     position: sticky;
     top: 0;
@@ -13,9 +15,7 @@
   }
   
   .navbar-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include flexCenter();
     height: inherit;
     width: 100%;
   }
@@ -23,12 +23,12 @@
   .navbar-logo{
     display: flex;
     align-items: center;
-    color: #fff;
+    color: $white;
+    font-size: 2rem;
     justify-self: start;
     margin-left: 20px;
     cursor: pointer;
     text-decoration: none;
-    font-size: 2rem;
   }
   
   .fa-pagelines {
@@ -52,22 +52,22 @@
   }
 
   .nav-links {
-    color: #fff;
+    color: $white;
     display: flex;
     align-items: center;
     text-decoration: none;
     padding: 0.5rem 1rem;
     height: 100%;
-    border-bottom: 4px solid var(--dark-grey);
+    border-bottom: 4px solid $dark-grey;
   }
   
   .nav-links:hover {
-    border-bottom: 4px solid var(--white);
+    border-bottom: 4px solid $white;
     transition: all 0.2s ease-out;
   }
 
   .fa-bars {
-    color: #fff;
+    color: $white;
   }
   
   /*Remove o botão de sign up do fa-bars quando a tela for maior que 960px*/
@@ -112,7 +112,7 @@
     }
   
     .nav-links:hover {
-      background-color: #fff;
+      background-color: $white;
       color: #242424;
       border-radius: 0;
     }
@@ -129,7 +129,7 @@
     }
   
     .fa-times {
-      color: #fff;
+      color: $white;
       font-size: 2rem;
     }
   
@@ -142,15 +142,15 @@
       text-decoration: none;
       font-size: 1.5rem;
       background-color: transparent;
-      color: #fff;
+      color: $white;
       padding: 14px 20px;
-      border: 1px solid #fff;
+      border: 1px solid $white;
       transition: all 0.3s ease-out;
     }
   
     .nav-links-mobile:hover {
-      background: #fff;
-      color: #242424;
+      background: $white;
+      color: $dark-grey;
       transition: 250ms;
     }
   }

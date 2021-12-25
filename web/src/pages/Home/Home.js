@@ -1,7 +1,6 @@
 import React from 'react'
 
-import '../../App.css'
-import './Home.css'
+import './Home.scss'
 import CardsHome from './CardsHome'
 import Footer from '../../components/Footer/Footer'
 import HeroSection from '../../components/HeroSection/HeroSection'

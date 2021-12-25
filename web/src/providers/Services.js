@@ -1,9 +1,8 @@
 import React from 'react'
-import '../../App.css'
 import Footer from '../components/Footer/Footer'
 import CardsServices from './CardsServices'
 import HeroSection from '../components/HeroSection/HeroSection'
-import './Services.css'
+import './Services.scss'
 
 function Services() {
     return (

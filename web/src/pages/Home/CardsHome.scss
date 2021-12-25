@@ -1,6 +1,8 @@
+@import 'src/styles/variables';
+@import 'src/styles/reset';
+
 .cards {
-    padding: 0;
-    background: var(--white);
+    background: $white;
 }
 
 .cards-container{
@@ -21,7 +23,3 @@
   padding: 0;
 }
 
-.fade-img {
-  animation-name: fade-img;
-  animation-duration: 2s;
-}

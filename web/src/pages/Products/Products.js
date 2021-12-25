@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Outlet, useParams } from 'react-router'
 // import axios from 'axios'
 
-import './Products.css'
+import './Products.scss'
 // import ProductsProvider from '../../providers/ProductsProvider'
 import CardsProduct from './CardsProduct'
 

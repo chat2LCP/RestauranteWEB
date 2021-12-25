@@ -1,9 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import '../../App.css'
 import Button from '../Button/Button'
-import './HeroSection.css'
+import './HeroSection.scss'
 
 function HeroSection(props) {
     return (

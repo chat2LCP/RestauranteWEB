@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup';
 
 import Button from '../../components/Button/Button'
-import './SignUp.css'
+import './SignUp.scss'
 
 const SignUp = () => {
 

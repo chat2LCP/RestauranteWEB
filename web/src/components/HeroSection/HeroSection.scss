@@ -1,3 +1,7 @@
+@import 'src/styles/variables';
+@import 'src/styles/mixins';
+@import 'src/styles/reset';
+
 video{
     object-fit: cover;
     width: 100%;
@@ -6,20 +10,13 @@ video{
     z-index: -1;
 }
 
-/*TENTAR MODIFICAR ESSA VARIÁVEL EM CADA UMA DAS PÁGINAS*/
-:root{
-    --img-fundo: url("../../images/home-capa.jpg") 
-}
-
 .hero-container{
-    background: var(--img-fundo) center center/cover no-repeat;
+    background: url("../../assets/HeroSection/home-capa.jpg") center center/cover no-repeat;
     height: 90vh;  /*100vh retorna a altura do navegador (1vh é igual a 1/100 da altura da viewport, então, por exemplo, se a altura do navegador é 900px , 1vh equivale a 9px*/
     width: 100%;
-    display: flex;
+    @include flexCenter();
     flex-direction: column;
-    align-items: center;
     box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);
-    justify-content: center;
 }
 
 .hero-container > h1{

@@ -1,6 +1,9 @@
+@import 'src/styles/variables';
+@import 'src/styles/reset';
+
 .cards {
     padding: 4rem;
-    background: #fff;
+    background: $white;
 }
   
 h1 {

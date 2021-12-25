@@ -1,3 +1,6 @@
+@import 'src/styles/variables';
+@import 'src/styles/reset';
+
 .btn-container{
     display: block;
     position: fixed;
@@ -32,10 +35,10 @@
 }
 
 .btn-to-top::after{
-    font-family: 'Trebuchet MS', 'Lucida Sans', Arial, sans-serif;
+    font-family: 'Trebuchet MS', Arial, sans-serif;
     content: "^";
     font-size: 45px;
-    color: var(--white);
+    color: $white;
 }
 
 .show-btn{
