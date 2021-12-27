@@ -29,7 +29,14 @@ function App() {
           <Route 
             path='signup' 
             element={
-              <Suspense fallback={<div>Carregando...</div>}>
+              <Suspense fallback={
+                <div className="spinner-container">
+                  <div className="spinner-grow text-primary" style={{width: 3+'rem', height: 3+'rem'}} role="status">
+                    <span className="sr-only">Loading...</span>
+                  </div>
+                </div>
+                }
+              >
                 <SignUp />
               </Suspense>
             }

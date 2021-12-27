@@ -4,7 +4,8 @@ import { Outlet, useParams } from 'react-router'
 
 import './Products.scss'
 // import ProductsProvider from '../../providers/ProductsProvider'
-import CardsProduct from './CardsProduct'
+// import CardsProduct from './CardsProduct'
+import SearchNavigateBar from '../../components/SearchNavigateBar/SearchNavigateBar'
 
 function Products() {
 
@@ -27,7 +28,8 @@ function Products() {
 
     return(
         <div className="products-container">
-            <h1>Barra de pesquisa</h1>
+
+            <SearchNavigateBar/>
 
             {prodType? (
                 <div>
@@ -35,7 +37,7 @@ function Products() {
                     <Outlet></Outlet>
                 </div>        
             ) : (
-                <div>chamar a pagina com todos os prods</div>
+                <div>pagina com todos os prods</div>
             )}
 
             

@@ -8,7 +8,6 @@ import './Button.scss';
 const Button = ({
     children, 
     component: Component,  /*essa propriedade serve para eu poder usar esse componente como substituto dos elementos <button> ou <a> ou <Link>, por exemplo. Basta eu definir na tag <Button> qual é o tipo de componente que eu quero que ele substitua*/
-    // type, 
     className,  /* com esse className eu posso passar uma classe de css para esse botão de qualquer lugar que eu quiser, por exemplo, no componente HeroSection eu passo a classe 'hero-btn' que está definida lá naquele componente e que aplica uma amrgem de 6 px somente naqueles dois botões*/
     buttonStyle, 
     buttonSize,

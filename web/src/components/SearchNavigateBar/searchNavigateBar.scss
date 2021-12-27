@@ -1,0 +1,233 @@
+@import 'src/styles/variables';
+@import 'src/styles/reset';
+@import 'src/styles/mixins';
+
+body{
+    font-size: 10px;
+}
+
+.search-bar-container{
+    height: 100px;
+    position: relative;
+    background-color: $dark-blue;
+
+    .search-bar{
+        height: 55%;
+        display: flex;
+        align-items: center;
+        // justify-content: space-between;
+        flex-wrap: nowrap;
+
+        .search{
+
+            .search-border{
+                display: flex;
+                flex-wrap: nowrap;
+                width: 100%;
+                border: 3px solid transparent;   //essa borda fica invisível, pelo mesmo motivo da classe .dropdown-category
+                border-radius: 8px;
+                margin: 0;
+            
+                &:focus-within{
+                    border-color: #41c8da;
+                    background-color: #41c8da;
+                }
+            
+                .search-input{
+                    font-size: 15px;
+                    line-height: 15px;
+                    padding: 7px 10px 10px 0;
+                    margin: 0;
+                    border: 0;
+                    border-radius: 5px 0 0 5px;
+                    height: 36px;
+                    background: 0 0;
+                    color: #111;
+                    background-color: $white;
+                    outline: 0;
+                    -webkit-appearance: none;
+                    box-shadow: none;
+                    text-indent: 8px;
+                    width: 100%;
+                }
+                
+                .search-btn{
+                    position: relative;
+                    height: 36px;
+                    width: 40px;
+                    border-radius: 0 5px 5px 0;
+                    background-color: $light-blue;
+                    border: 0;
+            
+                    &:hover{
+                        background-color: #59b6c2;
+                    }
+
+                    .search-icon{
+                        font-size: 1.5em;
+                        color: $dark-grey;
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%,-50%);
+                    }
+                }
+            }
+        }
+
+        .shopping-cart-container{
+            position: relative;
+            height: 100%;
+            
+            .shopping-cart{
+        
+                .shopping-basket{
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    right: 12px;    //12px por conta do padding do shopping-cart-container
+                    font-size: 4em;
+                    color: $white;
+                }
+                
+                .cart-quantity{
+                    position: absolute;
+                    right: 24px;
+                    bottom: 4px;
+                    color: $light-blue;
+                    font-size: 1rem;
+                    font-weight: 800;
+                }
+            }
+        }
+    }
+
+    .categories-menu-bar{
+        height: 45%;
+        background-color: $medium-blue;
+    
+        .categories{
+            display: flex;
+            justify-content: flex-start;
+            align-items: center
+        }
+
+        .categories-menu-right{
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            color: $white;
+            font-size: 1.5em;
+            line-height: 1.2em;
+
+            .categories-menu-text{
+                width: fit-content;
+                height: fit-content;
+                border: 1px solid transparent;   //essa borda também é para ficar invisível, assim como a da classe .dropdown-category
+                float: right;
+                padding: 2px 5px;
+
+                &:hover{
+                    border-color: $white;
+                }
+            }
+        }
+    }
+
+    //Essa classe precisa ficar aqui pois ela é usada tanto no bloco "search-bar" quanto no bloco "categories-menu-bar" 
+    .dropdown-category{
+        width: fit-content;
+        height: 100%;
+        padding: 11px 0px;
+        position: relative; //esse position serve para posicionar os elementos dropdown-submenu
+    
+        &:hover .category-btn{
+            border-color: $white;
+        }
+    
+        &.dropdown-search-bar{
+            padding: 7px 0px;
+        }
+    
+        .category-btn{
+            color: $white;
+            font-size: 1.4em;
+            border: 1px solid transparent;  //essa borda é para ficar invisível mesmo pois eu estou aplicando uma borda branca no hover desse elemento
+            border-radius: 2px;
+            padding: 0px 5px;
+    
+            //icone caret-down
+            .bi-caret-down-fill{
+                font-size: 0.7em;
+            }
+    
+            .dropdown-submenu{
+                position: absolute; //absoluto em relação ao elemento dropdown-category
+                left: 0; //left: 0 em relação ao primeiro elemento pai que tiver um position diferente de static. Nesse caso, é o elemento "dropdown-category", portanto, esse elemento vai ficar no mesmo left que o elemento dropdown-category
+                top: 100%; //100% do tamanho do elemento pai (ou seja, esse elemento fica posicionado logo abaixo do elemento pai, depois de percorrer 100% da altura do pai, ele posiciona esse elemento)
+                width: 150px;
+                text-align: start;
+                font-size: 1em;
+                list-style: none;  
+                background-color: #273952;
+                border-radius: 3px;
+                transform: scale(0);    //esconde o menu e mostra quando for feito o hover
+                transform-origin: top center;
+                z-index: 2;
+                padding: 0;
+            
+                &.signin{
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-evenly;
+                    align-items: center;
+                    width: 300px;
+                    height: 150px;
+                    background-color: $white;
+                }
+    
+                .dropdown-submenu-item{    //aplica margem exceto no último <li> (dropdown-submenu-item" 
+                    margin-bottom: 8px;
+                                
+                    .dropdown-submenu-link{
+                        padding: 0 10px;
+                        color: $white;
+                        display: block;
+                    
+                        &:hover{
+                            background-color: #344c6d;
+                        }
+                    }
+    
+                    .dont-have-account-span{
+                        font-size: 1em;
+                        color: #4d4d4d;
+                        position: relative;
+                        width: 100%;
+                        padding-top: 10px;
+                        border-style: solid;
+                        border-radius: 4px;
+                        border-image: linear-gradient(to right, rgba(238, 238, 238, 0.281), rgba(155, 155, 155, 0.226), rgba(238, 238, 238, 0.281))100% 1;
+                        border-bottom: none; 
+                    }
+                }
+            }
+        }
+    
+        &:hover .dropdown-submenu{
+            transform: scale(1) //mostra o dropdown-submenu
+        }
+    }
+}
+
+
+
+
+
+
+@media screen and (max-width: 768px){
+    .categories-menu-right{
+        display: none;
+    }
+}

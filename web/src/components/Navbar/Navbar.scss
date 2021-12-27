@@ -45,6 +45,7 @@
     width: 60vw;  /*vh = view height e vw = view width (1 vh = 1/100 da altura ou largura da viewport)*/
     justify-content: end;
     margin-right: 2rem;
+    margin-bottom: 0;
   }
   
   .nav-item {
@@ -58,7 +59,7 @@
     text-decoration: none;
     padding: 0.5rem 1rem;
     height: 100%;
-    border-bottom: 4px solid $dark-grey;
+    border-bottom: 4px solid transparent;
   }
   
   .nav-links:hover {
@@ -115,6 +116,7 @@
       background-color: $white;
       color: #242424;
       border-radius: 0;
+      border: none;
     }
 
     .menu-icon {

@@ -1,10 +1,49 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Button from '../Button/Button'
+import { useForm } from "react-hook-form"
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup';
 
+import Button from '../Button/Button'
 import './Footer.scss'
 
 function Footer() {
+
+    const validationSchema = yup.object().shape({
+        email: yup
+            .string()
+            .email("e-mail not valid")
+            .matches(/\S+@\S+\.\S+/, "e-mail not valid")
+            .required(),  //user é o atributo 'name' da input
+    })
+
+    /*constantes do react-hook-form para manipular o formulário*/
+    const { 
+        register,       //register registra cada uma das inputs dentro do hok
+        handleSubmit,
+    } = useForm({
+        defaultValues: {
+            email: "",
+        },
+        resolver: yupResolver(validationSchema),  //aplica a validação do yup no formulário
+    })    
+    
+    const subscribeUser = async userEmail => {
+        await subscribeToNewsletter(userEmail)
+    }
+
+    const subscribeToNewsletter = (userEmail) => {
+        try{
+            console.log(userEmail)
+            //criar método para armazenar o email do usuário no banco
+        }catch(error){
+            alert("Error! please try again")
+            console.error('Error: ', error)
+        }
+        
+    }
+
+
     return (
         <div className='footer-container'>
             <section className='footer-subscription'>
@@ -15,8 +54,15 @@ function Footer() {
                     You can unsubscribe any time
                 </p>
                 <div>
-                    <form>
-                        <input className='footer-input' type='email' name='email' placeholder='Your e-mail'></input>
+                    <form onSubmit={handleSubmit(subscribeUser)}>
+                        <input 
+                            className='footer-input' 
+                            type='email' 
+                            name='email' 
+                            placeholder='Your e-mail'
+                            {...register("email")} 
+                        />
+
                         <Button buttonStyle='btn--outline'>Subscribe</Button>
                     </form>
                 </div>
@@ -68,11 +114,13 @@ function Footer() {
                             EAT <i className='fab fa-pagelines' />
                         </Link>
                     </div>
-                    <small className='website-rights'>EAT © 2021</small>
+
+                    <p className='website-rights'>EAT © 2021</p>
+
                     <div className='social-icons'>
                         <a
                             className='social-icon-link facebook'
-                            href='www.facebook.com'
+                            href='https://www.facebook.com'
                             rel='noopener noreferrer'
                             target='_blank'
                             aria-label='Facebook'
@@ -81,7 +129,7 @@ function Footer() {
                         </a>
                         <a
                             className='social-icon-link instagram'
-                            href='www.instagram.com'
+                            href='https://www.instagram.com'
                             rel='noopener noreferrer'
                             target='_blank'
                             aria-label='Instagram'
@@ -90,7 +138,7 @@ function Footer() {
                         </a>
                         <a
                             className='social-icon-link youtube'
-                            href='www.youtube.com'
+                            href='https://www.youtube.com'
                             rel='noopener noreferrer'
                             target='_blank'
                             aria-label='Youtube'
@@ -99,7 +147,7 @@ function Footer() {
                         </a>
                         <a
                             className='social-icon-link twitter'
-                            href='/'
+                            href='http://www.twitter.com'
                             rel='noopener noreferrer'
                             target='_blank'
                             aria-label='Twitter'
@@ -108,7 +156,7 @@ function Footer() {
                         </a>
                         <a
                             className='social-icon-link twitter'
-                            href='www.linkedin.com'
+                            href='http://www.linkedin.com'
                             rel='noopener noreferrer'   //essa propriedade precisa ter por questões de segurança quando se usa uma tag <a> pq ela impede q o site externo possa acessar propriedades do meu site
                             target='_blank'
                             aria-label='LinkedIn'

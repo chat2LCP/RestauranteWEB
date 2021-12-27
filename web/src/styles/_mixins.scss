@@ -3,3 +3,10 @@
     align-items: center;
     justify-content: center;
 }
+
+@mixin translateCenter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
