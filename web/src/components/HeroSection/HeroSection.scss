@@ -20,13 +20,15 @@ video{
 }
 
 .hero-container > h1{
-    font-size: 3.1em;
+    color: $dark-grey;
+    font-size: 3rem;
     font-weight: 600;
 }
 
 .hero-container > p{
+    color: $dark-grey;
     margin-top: 8px;
-    font-size: 2em;
+    font-size: 1.8rem;
 }
 
 .hero-btns{
@@ -47,19 +49,20 @@ video{
 @media screen and (max-width: 960px){
     .hero-container > h1{
         font-size: 33px;
+        font-weight: 700;
     }
 
     .hero-container > p {   /*Seleciona todos <p> onde o pai tem a classe hero-container*/
-        font-size: 25px;
+        font-size: 27px;
     }
 }
 
 @media screen and (max-width: 650px){
     .hero-container > h1{
-        font-size: 22px;
+        font-size: 25px;
     }
 
     .hero-container > p {
-        font-size: 19px;
+        font-size: 22px;
     }
 }

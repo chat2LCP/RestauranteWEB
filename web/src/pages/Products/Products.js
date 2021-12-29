@@ -6,6 +6,7 @@ import './Products.scss'
 // import ProductsProvider from '../../providers/ProductsProvider'
 // import CardsProduct from './CardsProduct'
 import SearchNavigateBar from '../../components/SearchNavigateBar/SearchNavigateBar'
+import Carousel from '../../components/Carousel/Carousel'
 
 function Products() {
 
@@ -37,7 +38,9 @@ function Products() {
                     <Outlet></Outlet>
                 </div>        
             ) : (
-                <div>pagina com todos os prods</div>
+                <div className='all-products-container'>
+                    <Carousel />
+                </div>
             )}
 
             

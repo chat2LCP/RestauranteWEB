@@ -1,0 +1,7 @@
+@import 'src/styles/reset';
+@import 'src/styles/mixins';
+
+
+.all-products-container{
+    @include flexCenter();
+}
