@@ -4,142 +4,144 @@
 
 .carousel-container{
     position: relative;
+    display: flex;
     max-width: 85vw;
+
+    .carousel{
+        display: flex;
+        overflow-x: auto;   //habilita o scroll na pagina
+        scroll-behavior: smooth;
+
+        &::-webkit-scrollbar{
+            display: none;  //esconde a scrollbar
+        }
+
+        .item{
+            background-color: $white;
+            margin: 5px;
+            padding: 10px;
+            height: 263px;
+            width: 135px;
+            border: 1px solid $light-blue;
+            border-radius: 16px;
+            flex: none; //para o item não ser comprimido (o display flex faz com que os flexitems se comprimam para caberem todos na página, com o flex: none eu digo que não é para comprimir nem para aumetnar o tamanho dos flex items (flex é um atalho para flex-grow, flex-shrink e flex-basis)
+            transition: 0.05s transform;
+
+            &:hover{
+                transform: scale(1.2);
+                box-shadow: 0 2px 4px rgb(0 0 0 / 20%);
+            }
+
+            &:hover .info .name{
+                font-size: 0.76rem;
+                margin-bottom: 5px;
+                -webkit-line-clamp: 4;
+            }
+
+            .image{
+                width: 100%;
+                height: 40%;
+            }
+
+            .image img{
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+
+            .info{
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                .name{
+                    font-size: 0.9rem;
+                    font-weight: 600;
+                    margin: 5px 0 0;
+                    height: 75px;
+                    color: $medium-blue;
+                    -webkit-line-clamp: 3;
+                    background-color: linear-gradient(to top, red, 80%);
+                }
+
+                .old-price{
+                    font-size: 0.8rem;
+                    text-decoration: line-through;
+                    color: $coral;
+                }
+
+                .price{
+                    margin-top: 5px;
+                    font-size: 0.9rem;
+                    line-height: 0.9rem;
+                    font-weight: 700;
+                    background-color: #88e8f5;
+                    border-radius: 8px;
+                    color: $dark-grey;
+                }
+
+                span{
+                    display: block;
+                    text-align: center;
+                    padding: 5px 0px;
+
+                    //tudo isso abaixo é para aparecer as reticências do webkit-line-clamp
+                    -webkit-box-orient: vertical;
+                    display: -webkit-box;
+                    overflow: hidden;
+                    width: 100%; //Define o tamanho máximo do container
+                }
+            }
+        }
+    }
+
+    .btn-scroll-card{
+        background-color: white;
+        border-radius: 50%;
+        border: 1px solid #dfe1e5;
+        width: 55px;
+        height: 55px;
+        position: absolute; //esse absolute é em relação ao elemento .carousel-container que é o elemento pai mais próximo que possui um position diferente de static
+        box-shadow: 1px 3px 6px #8e8e8eda; 
+        z-index: 1;
+        transition: color 0.5s ease-in-out;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .btn-scroll-card::after{
+        font-family: 'Trebuchet MS', 'Lucida Sans', Arial, sans-serif;
+        position: absolute;
+        @include translateCenter();
+        font-size: 25px;
+        font-weight: 600;
+        color: rgb(110, 110, 110);
+    }
+    
+    .btn-scroll-card.left::after{
+        content: "<";
+    }
+    
+    .btn-scroll-card.right::after{
+        content: ">";
+    }
+    
+    .btn-scroll-card.left{
+        left: -25px;
+    }
+    
+    .btn-scroll-card.right{
+        right: -25px;
+    }
+    
+    .btn-scroll-card:hover::after{
+        color: $dark-grey;
+    }
 }
 
-.carousel-container .carousel{
-    display: flex;
-    overflow-x: auto;   //habilita o scroll na pagina
-    scroll-behavior: smooth;
-}
-
-.carousel-container .carousel::-webkit-scrollbar{
-    display: none;  //esconde a scrollbar
-}
-
-.carousel-container .carousel .item{
-    background-color: $white;
-    margin: 5px;
-    padding: 10px;
-    width: 150px;
-    border: 1px solid $light-blue;
-    border-radius: 16px;
-    flex: none; //para o item não ser comprimido (o display flex faz com que os flexitems se comprimam para caberem todos na página, com o flex: none eu digo que não é para comprimir nem para aumetnar o tamanho dos flex items (flex é um atalho para flex-grow, flex-shrink e flex-basis)
-}
-
-.carousel-container .carousel .item .image img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.carousel-container .carousel .item .info{
-    height: 120px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.carousel-container .carousel .item .info span{
-    display: block;
-    text-align: center;
-    color: $dark-grey;
-    padding: 5px 0px;
-    border-radius: 8px;
-}
-
-//tudo isso é para aparecer as reticências do webkit-line-clamp
-.carousel-container .carousel .item .info span{
-    -webkit-box-orient: vertical;
-    display: -webkit-box;
-    overflow: hidden;
-    width: 100%; /* Define o tamanho máximo do container*/
-}
-
-.carousel-container .carousel .item .info .name{
-    font-size: 0.9rem;
-    font-weight: 700;
-    margin: 10px 0 5px 0px;
-    color: $medium-blue;
-    -webkit-line-clamp: 2;
-}
-
-.carousel-container .carousel .item .info .old-price{
-    font-size: 0.8rem;
-    text-decoration: line-through;
-    flex-grow: 1;
-    color: $coral;
-}
-
-.carousel-container .carousel .item .info .price{
-    margin-top: 5px;
-    font-size: 0.9rem;
-    line-height: 0.9rem;
-    font-weight: 700;
-    background-color: #88e8f5;
-    color: $dark-grey;
-}
-
-// .carousel-container .buttons{
-//     // position: relative;
-//     width: 100%;
-//     text-align: center;
-// }
-
-// .carousel-container .buttons button{
-//     position: absolute;
-//     background-color: transparent;
-//     border: none;
-//     cursor: pointer;
-//     z-index: 2;
-// }
-
-// .carousel-container .buttons button:first-child{
-//     left: -40px;
-// }
-
-// .carousel-container .buttons button:nth-child(2){
-//     right: -40px;
-// }
-
-// .carousel-container .buttons button:first-child img{
-//     transform: rotate(180deg);
-// }
 
 
-.btn-scroll-card{
-    background-color: white;
-    border-radius: 50%;
-    border: 1px solid #dfe1e5;
-    width: 55px;
-    height: 55px;
-    position: absolute;
-    box-shadow: 1px 3px 6px #8e8e8eda; 
-    z-index: 1;
-    transition: color 0.5s ease-in-out;
-    transition: transform 0.02s;
-    // transform: rotateX(90deg);  //esconde o botão
-    transition: opacity 0.5s ease-out;
-    // opacity: 0;
-}
 
-.btn-scroll-card::after{
-    font-family: 'Trebuchet MS', 'Lucida Sans', Arial, sans-serif;
-    position: absolute;
-    @include translateCenter();
-    font-size: 25px;
-    font-weight: 600;
-    color: rgb(110, 110, 110);
-}
 
-.btn-scroll-card.left::after{
-    content: "<";
-}
 
-.btn-scroll-card.right::after{
-    content: ">";
-}
 
-.btn-scroll-card:hover::after{
-    color: $dark-grey;
-}

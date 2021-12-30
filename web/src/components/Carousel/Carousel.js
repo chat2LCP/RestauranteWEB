@@ -51,16 +51,8 @@ function Carousel() {
                 })}
             </div>
 
-            <div className='buttons'>
-                <div class="btn-scroll-card left" onClick={handleLeftClick} role="button"></div>
-                {/* <button onClick={handleLeftClick}>
-                    <img src='./Images/chevron_icon.png' alt='Scroll left'/>
-                </button> */}
-                {/* <button onClick={handleRightClick}>
-                    <img src='./Images/chevron_icon.png' alt='Scroll right'/>
-                </button> */}
-                <div class="btn-scroll-card right" onClick={handleRightClick} role="button"></div>
-            </div>
+            <div className="btn-scroll-card left" onClick={handleLeftClick} role="button"></div>
+            <div className="btn-scroll-card right" onClick={handleRightClick} role="button"></div>
         </div>
     )
 }
