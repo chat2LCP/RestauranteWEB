@@ -8,11 +8,23 @@ function Carousel() {
     const carousel = useRef(null)
 
     useEffect(() => {
-        //fetch é uma API JavaScript que funciona como o axios, para fazer requisições HTTP
-        fetch('http://localhost:3000/static/prods.json')
-        .then(response => response.json()) //o axios converte a response em json automaticamente, o fetch() não
-        .then(setData)
+        doGet('http://localhost:3000/static/prods.json').then(setData).catch(console.error)
     }, [])
+
+    const doGet = (url) => {
+        return new Promise((resolve, reject) => {
+            //fetch é uma API JavaScript que funciona como o axios, para fazer requisições HTTP
+            fetch(url)
+            .then(response => {
+                if(!response.ok){   //essa verificação é porque o fecth() retorna uma response (Promise) mesmo que tenha havido algum erro no get (erro 404, por exemplo)
+                    throw new Error('Cannot fetch url - Status: '+response.status)
+                }
+                return response.json() //o axios converte a response em json automaticamente, o fetch() não
+            }) 
+            .then(resolve)  //lança o resolve caso tudo ocorra bem com o fetch. Ele indica que a Promise do fecth foi resolvida e está tudo OK, esse then acessa a Promise retornada pelo then anterior. O then sempre precisa retornar uma Promisse. O resolve e o reject são funções que retornam promises com o resultado retornado na promise anteriormente resolvida ou rejeitada
+            .catch(reject)  //lança o reject caso algo tenha dado errado
+        })
+    }
 
     const handleLeftClick = (e) => {
         e.preventDefault();

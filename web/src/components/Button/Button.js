@@ -2,9 +2,6 @@ import React from 'react';
 
 import './Button.scss';
 
-// const STYLES = ['btn--outline', 'btn--white', 'btn--create-account', 'btn--login']
-// const SIZES = ['btn--medium','btn--large']
-
 const Button = ({
     children, 
     component: Component,  /*essa propriedade serve para eu poder usar esse componente como substituto dos elementos <button> ou <a> ou <Link>, por exemplo. Basta eu definir na tag <Button> qual é o tipo de componente que eu quero que ele substitua*/
@@ -13,8 +10,6 @@ const Button = ({
     buttonSize,
     ...restProps    /* restProps são as props padrão dos <button> ou <a> ou <Link>, uma vez que esse componente <Button /> pode ser qualquer um deles, se eu passar um href="/xxxx", ou um type="algumacoisa" ou to="algumCaminho" ou onClick(), por exemplo, eles vão ser pegos aqui pelo ...restProps e eu nao preciso manipular essas propriedades aqui */
 }) => {
-    // const checkButtonStyle = STYLES.includes(buttonStyle)? buttonStyle : STYLES[1]
-    // const checkButtonSize = SIZES.includes(buttonSize)? buttonSize : SIZES[0]
 
     return(
         <Component className={`btn ${buttonStyle} ${buttonSize} ${className}`} {...restProps}>

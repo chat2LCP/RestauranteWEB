@@ -11,7 +11,7 @@ import NewAccount from './pages/NewAccount/NewAccount'
 import NotFound from './pages/notFound/NotFound'
 // import Services from './pages/services/Services'
 
-const SignUp = React.lazy(() => import('./pages/SignUp/SignUp'))
+const SignUp = React.lazy(() => import('./pages/SignIn/SignIn'))
 
 function App() {
 
@@ -27,7 +27,7 @@ function App() {
             <Route path='produtcs/:product' element={<CardsProduct />} />
           </Route>
           <Route 
-            path='signup' 
+            path='signin' 
             element={
               <Suspense fallback={
                 <div className="spinner-container">

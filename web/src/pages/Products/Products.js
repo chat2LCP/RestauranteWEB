@@ -40,8 +40,6 @@ function Products() {
             ) : (
                 <div className='all-products-container'>
                     <Carousel />
-
-                    
                 </div>
             )}
 

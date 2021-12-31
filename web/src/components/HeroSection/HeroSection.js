@@ -12,7 +12,7 @@ function HeroSection(props) {
             <p>{props.description}</p>
             
             <div className='hero-btns'>
-                <Button component={Link} to='signup' className='hero-btn' buttonStyle='btn--outline' buttonSize='btn--large'>GET STARTED</Button>
+                <Button component={Link} to='signin' className='hero-btn' buttonStyle='btn--outline' buttonSize='btn--large'>GET STARTED</Button>
                 <Button component={Link} to='/' className='hero-btn' buttonStyle='btn--white' buttonSize='btn--large'>WATCH TRAILLER <i className='far fa-play-circle'/></Button>
             </div>
         </div>

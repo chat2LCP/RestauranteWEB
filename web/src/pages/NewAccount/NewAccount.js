@@ -1,19 +1,38 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup';
 import axios from "axios";
-import CepProvider from '../../providers/cep-provider/CepProvider'
 
+import CepProvider from '../../providers/cep-provider'
 import './NewAccount.scss';
 import Button from "../../components/Button/Button";
+import { fetchStates } from "../../providers/fetch-states-provider";
 // import CepProvider from "../../providers/cep-provider/CepProvider";
 
 const NewAccount = () => {
 
     const [address, setAddress] = useState({})
+    const [states, setStates] = useState([])
 
+    useEffect(() => {
+        let isSubscribed = true //evita que o setStates seja executado caso o componente esteja desmontado
+
+        fetchStates()
+        .then(states => (isSubscribed ? setStates(states) : null))
+        .catch(console.error)
+
+        return () => (isSubscribed = false)
+    }, [])  //as [] é para que o useEffect apenas seja executado quando o componente é montado. Ele não é executado nos 're-renders'
+
+
+    /*******************************************
+     * Função  
+     * 
+     * @param e evento de onBlur em um elemento HTML
+     * @returns 
+     *******************************************/
     const findCEP = (e) => {
         console.log(e.target.value)
 
@@ -22,7 +41,6 @@ const NewAccount = () => {
         console.log(address)
     }
     
-
     /*******************************************
      * Constantes do yup para validação dos campos do form.
      * É possível fazer as mesmas validações só com o 
@@ -186,12 +204,19 @@ const NewAccount = () => {
 
                                 <div>
                                     <label htmlFor="state">State</label>
-
                                     <select 
-                                        className="form-control" 
+                                        className="form-control form-select"
                                         name="state"
-                                        id="state">
-                                        {/* <option *nghtmlFor="let state of states$ | async" [value]="state.abbreviation">{{ state.name }}</option> */}
+                                        id="state"
+                                        {...register("state")}
+                                    >
+                                        {states.map(state => {
+                                            const {id, nome} = state
+                                            
+                                            return(
+                                                <option key={id}>{nome}</option>
+                                            )
+                                        })}     
                                     </select>
                                 </div>
                             </div>
@@ -269,7 +294,7 @@ const NewAccount = () => {
                         Please check our website <Link to='/'>Cookies Policy</Link>.
                     </p>
 
-                    <span className="already-have-account-span">Already have an account? <Link to="/signup">Login</Link></span>
+                    <span className="already-have-account-span">Already have an account? <Link to="/signin">Login</Link></span>
                 </div>
             </div>
         </div>

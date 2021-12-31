@@ -8,14 +8,14 @@ body{
 .sign-header {
     height: 170px;
     width: 100%;
-    background-image: url('../../assets/SignUp/sign-up-capa.jpg');
+    background-image: url('../../assets/SignIn/sign-in-capa.jpg');
     box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
 }
 
-.sign-up {
+.sign-in {
     line-height: 170px;
     width: 100%; 
     color: $white;
@@ -72,7 +72,7 @@ body{
     font-size: 1.4em;
 }
 
-.signup-create-account-container{
+.signin-create-account-container{
     display: flex;
     flex-direction: column;
     justify-content: space-between;

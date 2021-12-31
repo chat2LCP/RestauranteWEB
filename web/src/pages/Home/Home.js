@@ -8,12 +8,9 @@ import ScrollTopButton from '../../components/ScrollTopButton/ScrollTopButton'
 
 function Home() {
 
-    //document.documentElement.style.setProperty('--img-fundo', 'url("../../images/home-capa.jpg")')
-
     return(
         <>
             <HeroSection 
-                /*img = '../../images/home-capa.jpg'*/
                 mainText='THE BEST MEALS YOU WILL EVER HAVE'
                 description='What are you waiting for?'
             />

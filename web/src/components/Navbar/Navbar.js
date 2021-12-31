@@ -50,8 +50,8 @@ function Navbar() {
                         </Link>
                     </li>
                     <li className='nav-item'>
-                        <Link to='signup' className='nav-links-mobile' onClick={closeMobileMenu}>
-                            Sign Up
+                        <Link to='signin' className='nav-links-mobile' onClick={closeMobileMenu}>
+                            Sign In
                         </Link>
                     </li>
                 </ul>
@@ -61,7 +61,7 @@ function Navbar() {
                 </div>
 
                 {/* a linha abaixo funciona como se fosse um if() */}
-                {button && <Button component={Link} to='/signup' buttonStyle='btn--outline'>Sign Up</Button>}
+                {button && <Button component={Link} to='/signin' buttonStyle='btn--outline'>Sign In</Button>}
             </div>
         </nav>
     )

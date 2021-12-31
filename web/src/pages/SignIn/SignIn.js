@@ -5,12 +5,12 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup';
 
 import Button from '../../components/Button/Button'
-import './SignUp.scss'
+import './SignIn.scss'
 
-const SignUp = () => {
+const SignIn = () => {
 
     // const [formValues, setFormValues] = useState({})
-
+    
     /*constante do yup (validação dos campos do form) - o yup não é obrigatorio para faze as validações, eu poderia fazer as mesmas validações só com o react-hook-form, a vantagem do yup é que voce consegue tirar a validação da tag html e fazer ela aqui separada, fica mais legível assim.*/
     const validationSchema = yup.object().shape({
         user: yup
@@ -47,10 +47,10 @@ const SignUp = () => {
     }
 
     return (
-        <div className='sign-up-container'>
+        <div className='sign-in-container'>
             <section className='header'>
                 <div className='sign-header'>
-                    <h1 className='sign-up'>SIGN UP</h1>
+                    <h1 className='sign-in'>SIGN IN</h1>
                 </div>
             </section>
 
@@ -93,7 +93,7 @@ const SignUp = () => {
                 </div>
                 
                 <div className="row text-center justify-content-center">
-                    <div className="signup-create-account-container col-10 col-sm-8 col-md-5">
+                    <div className="signin-create-account-container col-10 col-sm-8 col-md-5">
                         <span className="create-account-span">Don't have an account?</span>
 
                         {/* dica: o to='/new-account' leva para localhost:3000/new-account, já o to='new-account' leva para localhost:3000/rota-atual/new-account */}
@@ -105,4 +105,4 @@ const SignUp = () => {
     )
 }
 
-export default SignUp
+export default SignIn

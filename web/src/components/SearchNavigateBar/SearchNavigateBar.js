@@ -26,7 +26,7 @@ const SearchNavigateBar = () => {
                                                 
                         <div className="dropdown-submenu signin">
                             <div className="dropdown-submenu-item">
-                                <Button component={Link} to='/signup' buttonStyle="btn--login">SIGN-IN</Button>
+                                <Button component={Link} to='/signin' buttonStyle="btn--login">SIGN-IN</Button>
                             </div>
                             <div className="dropdown-submenu-item">
                                 <span className="dont-have-account-span">Don't have an account? <Link to="/new-account">Create account</Link></span>
