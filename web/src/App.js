@@ -5,10 +5,10 @@ import './App.scss'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './components/Navbar/Navbar'
 import Home from './pages/Home/Home'
-import CardsProduct from './pages/Products/CardsProduct';
 import Products from './pages/Products/Products'
 import NewAccount from './pages/NewAccount/NewAccount'
 import NotFound from './pages/notFound/NotFound'
+import Spinner from './components/Spinner/spinner';
 // import Services from './pages/services/Services'
 
 const SignUp = React.lazy(() => import('./pages/SignIn/SignIn'))
@@ -22,21 +22,13 @@ function App() {
         
         <Routes>
           <Route path='/' element={<Home />} />
-          {/* <Route path='services' element={<Services/>}/> */}
           <Route path='products' element={<Products />}>
-            <Route path='produtcs/:product' element={<CardsProduct />} />
+            {/* <Route path='produtcs/:product' element={} /> */}
           </Route>
           <Route 
             path='signin' 
             element={
-              <Suspense fallback={
-                <div className="spinner-container">
-                  <div className="spinner-grow text-primary" style={{width: 3+'rem', height: 3+'rem'}} role="status">
-                    <span className="sr-only">Loading...</span>
-                  </div>
-                </div>
-                }
-              >
+              <Suspense fallback={<Spinner />}>
                 <SignUp />
               </Suspense>
             }

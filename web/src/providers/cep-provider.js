@@ -1,21 +1,22 @@
-/* Serviço que consome a api do viaCEP */
 import axios from "axios"
 
-const CepProvider = (cep, setAddress) => {
-
-    console.log(cep)
-    
-    // const findCep = (cep, set) => {
-        axios.get(`https://viacep.com.br/ws/${cep}/json`)
-        .then((response) => {
-            setAddress(response.data)
-            //console.log(response.data)
-            // return response.data
-        }) 
-        .catch((err) => {
-            console.log("erro ao buscar dados"+err)
-        })
-    // }
+export async function getCep(cep){
+    try{
+        const url = `https://viacep.com.br/ws/${cep}/json`
+        const resp =  await axios.get(url)
+        return resp.data
+    } catch (err){
+        console.log('Erro: ', err)
+    }
 }
 
-export default CepProvider
+// export const getCep = (cep) => {
+//     return new Promise((resolve, reject) => {
+//         const url = `https://viacep.com.br/ws/${cep}/json`
+        
+//         axios.get(url, {cache: 'force-cache'})
+//         .then(response => response.data) 
+//         .then(resolve)
+//         .catch(reject)
+//     })
+// }

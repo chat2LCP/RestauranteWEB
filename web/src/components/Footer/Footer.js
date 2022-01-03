@@ -12,8 +12,8 @@ function Footer() {
     const validationSchema = yup.object().shape({
         email: yup
             .string()
-            .email("e-mail not valid")
-            .matches(/\S+@\S+\.\S+/, "e-mail not valid")
+            .email()
+            .matches(/\S+@\S+\.\S+/)
             .required(),  //user é o atributo 'name' da input
     })
 
@@ -50,22 +50,21 @@ function Footer() {
                 <p className='footer-subscription-heading'>
                     Join the Gastronomy Experience newsletter to receive our best reccomendations
                 </p>
+                
                 <p className='footer-subscription-text'>
                     You can unsubscribe any time
                 </p>
-                <div>
-                    <form onSubmit={handleSubmit(subscribeUser)}>
-                        <input 
-                            className='footer-input' 
-                            type='email' 
-                            name='email' 
-                            placeholder='Your e-mail'
-                            {...register("email")} 
-                        />
 
-                        <Button buttonStyle='btn--outline'>Subscribe</Button>
-                    </form>
-                </div>
+                <form className='form-container' onSubmit={handleSubmit(subscribeUser)}>
+                    <input 
+                        className='footer-input' 
+                        type='email' 
+                        name='email' 
+                        placeholder='Your e-mail'
+                        {...register("email")} 
+                    />
+                    <Button buttonStyle='btn--outline'>Subscribe</Button>
+                </form>
             </section> 
 
             <section className='footer-links'>

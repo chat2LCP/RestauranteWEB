@@ -26,6 +26,11 @@ function Carousel() {
         })
     }
 
+    //caso não tenha conseguido carregar os dados dos cards, não renderiza o carrossel na tela
+    if(!data || !data.length){
+        return null
+    }
+
     const handleLeftClick = (e) => {
         e.preventDefault();
         carousel.current.scrollLeft -= carousel.current.offsetWidth
@@ -34,11 +39,6 @@ function Carousel() {
     const handleRightClick = (e) => {
         e.preventDefault();
         carousel.current.scrollLeft += carousel.current.offsetWidth
-    }
-
-    //caso não tenha conseguido carregar os dados dos cards, não renderiza o carrossel na tela
-    if(!data || !data.length){
-        return null
     }
 
     return(

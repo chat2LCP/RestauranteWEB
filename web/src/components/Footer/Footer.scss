@@ -28,14 +28,23 @@
     font-size: 20px;
 }
 
+.form-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .footer-input{
     padding: 8px 20px;
     border-radius: 2px;
     margin-right: 10px;
-    margin-bottom: 16px;
     outline: none;
     border: 1px solid $white;
     font-size: 18px
+}
+
+.footer-input::placeholder{
+    color: #b1b1b1;
 }
 
 .footer-links{
@@ -71,16 +80,8 @@
 }
 
 .footer-link-items a:hover{
-    color: #e9e9e9;
+    color: $whiteHover;
     transition: 0.3s ease-out;
-}
-
-.footer-email-form h2{
-    margin-bottom: 32px;
-}
-
-.footer-input::placeholder{
-    color: #b1b1b1;
 }
 
 /* Social icons */
@@ -119,18 +120,54 @@
     font-size: 2rem;
     align-self: center;
     margin-bottom: 16px;
+
+    &:hover{
+        color: $whiteHover;
+    }
 }
 
 .website-rights{
     color: $white;
 }
 
+.facebook:hover{
+    color: #4267B2;
+}
+
+.instagram:hover{
+    background-image: radial-gradient(circle farthest-corner at 35% 90%, #fec564, transparent 50%), radial-gradient(circle farthest-corner at 0 140%, #fec564, transparent 50%), radial-gradient(ellipse farthest-corner at 0 -25%, #5258cf, transparent 50%), radial-gradient(ellipse farthest-corner at 20% -50%, #5258cf, transparent 50%), radial-gradient(ellipse farthest-corner at 100% 0, #893dc2, transparent 50%), radial-gradient(ellipse farthest-corner at 60% -20%, #893dc2, transparent 50%), radial-gradient(ellipse farthest-corner at 100% 100%, #d9317a, transparent), linear-gradient(#6559ca, #bc318f 30%, #e33f5f 50%, #f77638 70%, #fec66d 100%);
+    
+    /* Segundo passo: apagar do fundo tudo que não estiver imediatamente atrás de texto */
+    background-clip: text;
+    
+    /* Terceiro passo: apagar o texto, deixando apenas o fundo atrás dele */
+    -webkit-text-fill-color: transparent;
+    
+    /* Cor que contraste com o degradê, caso o navegador não suporte `background-clip: text` */
+    color: #c13584;
+}
+
+.youtube:hover{
+    color: red;
+}
+
+.twitter:hover{
+    color: #1d9bf0
+}
+
+.linkedin:hover{
+    color: #0a66c2
+}
+
 @media screen and (max-width: 960px){
-    .footer-link{
-        padding-top: 2rem;
+
+    .form-container{
+        flex-direction: column;
     }
 
     .footer-input{
+        margin-right: 0;
+        margin-bottom: 14px;
         width: 100%;
     }
 
