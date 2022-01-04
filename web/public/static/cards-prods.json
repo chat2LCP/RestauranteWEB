@@ -1,42 +1,42 @@
 [
     {
         "id": "1",
-        "src": "images/CardsHome/card-image-1.jpg",
+        "src": "assets/images/Home/CardsHome/card-image-1.jpg",
         "text": "An explosion of flavor",
         "label":"Sweets",
         "path": "/"
     },
     {   
         "id": "2",
-        "src": "images/CardsHome/card-image-2.jpg",
+        "src": "images/Home/CardsHome/card-image-2.jpg",
         "text": "A wide variety of wines from the best wineries of the country",
         "label":"Wines",
         "path": "/"
     },
     {
         "id": "3",
-        "src": "images/CardsHome/card-image-2.jpg",
+        "src": "images/Home/CardsHome/card-image-2.jpg",
         "text": "A wide variety of wines from the best wineries of the country",
         "label":"Wines",
         "path": "/"
     },
     {
         "id": "4",
-        "src": "images/CardsHome/card-image-3.jpg",
+        "src": "images/Home/CardsHome/card-image-3.jpg",
         "text": "The original Italian pasta",
         "label":"Pasta",
         "path": "/"
     },
     {
         "id": "5",
-        "src": "images/CardsHome/card-image-2.jpg",
+        "src": "images/Home/CardsHome/card-image-2.jpg",
         "text": "High quality brazilian barbecue for the meat lovers",
         "label":"Barbecue",
         "path": "/"
     },
     {
         "id": "6",
-        "src": "images/CardsHome/card-image-2.jpg",
+        "src": "images/Home/CardsHome/card-image-1.jpg",
         "text": "High quality vegetables for the plant based food lovers",
         "label":"Vegetarian",
         "path": "/"

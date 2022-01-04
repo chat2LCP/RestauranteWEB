@@ -1,13 +1,12 @@
 /*******************************************
- * Função responsável por fazer o fetch dos produtos
+ * Função responsável por fazer o fetch de produtos
+ * para outros elementos
  * 
  * @param url endpoint que retorna o array de produtos
  * @returns Promise
  *******************************************/
  export const fetchProducts = (url) => {
     return new Promise((resolve, reject) => {
-        // const url = 'http://localhost:3000/static/cards-prods.json'
-
         //fetch é uma API JavaScript que funciona como o axios, para fazer requisições HTTP
         fetch(url, {cache: 'force-cache'})  //force-cache é para forçar o browser a buscar o array de estados no seu cache antes de fazer uma nova requisição à API
         .then(response => {

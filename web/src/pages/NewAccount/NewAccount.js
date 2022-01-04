@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useForm, useFormState } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup';
 
@@ -13,6 +13,7 @@ const NewAccount = () => {
 
     const [address, setAddress] = useState({})
     const [states, setStates] = useState([])
+
 
     /*******************************************
     * useEffect responsável por buscar os dados do select
@@ -30,7 +31,7 @@ const NewAccount = () => {
         return () => (isSubscribed = false)
     }, [])  //as [] é para que o useEffect apenas seja executado quando o componente é montado. Ele não é executado nos 're-renders'
 
-    
+
     /*******************************************
     * Constantes do yup para validação dos campos do form.
     * É possível fazer as mesmas validações só com o 
@@ -66,20 +67,22 @@ const NewAccount = () => {
     const { 
         register,       //register registra cada uma das inputs dentro do hok
         handleSubmit,
-        formState: {errors},
-        control
-    } = useForm({
-        defaultValues: {
-            userName: '',
-            email: '',
-            password: '',
-            cep: '',
-            state: '',
-            number: '',
-            complement: '',
-            district: '',
-            city: '',
+        setValue,
+        formState: {
+            errors,
         },
+    } = useForm({
+        // defaultValues: {
+        //     userName: '',
+        //     email: '',
+        //     password: '',
+        //     cep: '',
+        //     state: '',
+        //     number: '',
+        //     complement: '',
+        //     district: '',
+        //     city: '',
+        // },
         resolver: yupResolver(validationSchema),  //aplica a validação do yup no formulário
     })    
     
@@ -108,10 +111,6 @@ const NewAccount = () => {
     }
 
 
-    // useEffect(() => {
-    //         console.log('renderizou')
-    //     }    
-    // )
     /*******************************************
     * Função responsável por consumir a API do viaCEP e retornar 
     * os dados de endereço com base em um CEP fornecido
@@ -119,18 +118,6 @@ const NewAccount = () => {
     * @param CEP String
     * @returns Promise<AxiosResponse>
     *******************************************/
-
-     const {touchedFields} = useFormState({control})
-     console.log(touchedFields) 
-
-
-    //  const handleInputChange = (e) => {
-    //      console.log('mudou street')
-    //      document.getElementById('street').setAttribute('value',`${e.target.value}`)
-    //     // e.click()
-    //  }
-
-
     const handleBlur = (e) => {
         const cep = e.target.value
 
@@ -139,22 +126,31 @@ const NewAccount = () => {
             .then(setAddress)
             .catch(console.error)
 
-            console.log('endereco')
-            console.log(address) 
+            // console.log('endereco')
+            // console.log(address)       
         }else{
             setAddress({erro: true})
 
             // console.log(address) 
-            console.log('foi triste')
-            console.log(address) 
-        }
-          
+            // console.log('foi triste')
+            // console.log(address) 
+        }          
     }
 
-    // const handleChange = (e) => {
-    //     console.log(e.target.name)
-    //     this.setState({e.target.name: e.target.value})
-    // }
+
+    /*******************************************
+    * useEffect responsável por atualizar o valor dos
+    * campos de nome da rua, estado, complemento, bairro
+    * e cidade quando ocorre o blur do campo de CEP
+    *******************************************/
+     useEffect(() => {
+        setValue('street', `${address.logradouro}`)
+        setValue('state', `${address.uf}`)
+        setValue('complement', `${address.complemento}`)
+        setValue('district', `${address.bairro}`)
+        setValue('city', `${address.localidade}`)
+    }, [address])
+
     
     return (
         <div className="create-account-container container-fluid">
@@ -223,9 +219,7 @@ const NewAccount = () => {
                                         className="form-control form-select"
                                         name="state"
                                         id="state"
-                                        value={address.uf}  //define o valor do select de acordo com o cep digitado
                                         {...register("state")}
-                                        // onChange={handleInputChange}
                                     >
                                         <option value={null}>Select a state...</option>
                                         {states.map(state => {
@@ -245,10 +239,8 @@ const NewAccount = () => {
                                     type="text" 
                                     className="form-control" 
                                     name="street"
-                                    value={address.logradouro || ''}    //o || '' é porque o valor default dessa input é '' quando ela é inicializada, lhar lá nos métodos do yup onde eu defini como vazio, se não colocar o || vai dar erro porque o componente, quando inicializado com || tem seu value={undefined}, quando eu fou o blur no campo de cep e essa input é preenchida, o value passa a ser definido, e isso não pode acontecer
                                     id="street" 
                                     {...register("street")}
-                                    // onChange={handleInputChange}
                                 />
                             </div>
 
@@ -270,8 +262,6 @@ const NewAccount = () => {
                                         type="text" 
                                         className="form-control" 
                                         name="complement" 
-                                        // onChange={this.handleChange} 
-                                        value={address.complemento || ''}  //o || '' é porque o valor default dessa input é '' quando ela é inicializada, lhar lá nos métodos do yup onde eu defini como vazio, se não colocar o || vai dar erro porque o componente, quando inicializado com || tem seu value={undefined}, quando eu fou o blur no campo de cep e essa input é preenchida, o value passa a ser definido, e isso não pode acontecer
                                         id="complement" 
                                         {...register("complement")}
                                     />
@@ -284,8 +274,6 @@ const NewAccount = () => {
                                     type="text" 
                                     className="form-control" 
                                     name="district" 
-                                    // onChange={this.handleChange} 
-                                    value={address.bairro || ''}  //o || '' é porque o valor default dessa input é '' quando ela é inicializada, lhar lá nos métodos do yup onde eu defini como vazio, se não colocar o || vai dar erro porque o componente, quando inicializado com || tem seu value={undefined}, quando eu fou o blur no campo de cep e essa input é preenchida, o value passa a ser definido, e isso não pode acontecer
                                     id="district"
                                     {...register("district")}
                                 />
@@ -298,7 +286,6 @@ const NewAccount = () => {
                                     className="form-control" 
                                     name="city" 
                                     id="city" 
-                                    value={address.localidade || ''} //o || '' é porque o valor default dessa input é '' quando ela é inicializada, lhar lá nos métodos do yup onde eu defini como vazio, se não colocar o || vai dar erro porque o componente, quando inicializado com || tem seu value={undefined}, quando eu fou o blur no campo de cep e essa input é preenchida, o value passa a ser definido, e isso não pode acontecer
                                     {...register("city")}
                                 />
                             </div>

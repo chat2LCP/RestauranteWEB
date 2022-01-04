@@ -4,7 +4,9 @@ import { Link } from 'react-router-dom'
 import './Cards.scss'
 import { fetchProducts } from '../../providers/fetch-products-provider'
 
-function Cards({ productsUrl }) { //cardsList é uma lista de objetos contendo as informações que estarão contidas nos cards
+const Cards = ({ 
+    productsUrl
+}) => { //cardsList é uma lista de objetos contendo as informações que estarão contidas nos cards
 
     const [cardsList, setCardsList] = useState([]) //buscar a lisa de cards de um banco de dados ou de um json
 

@@ -5,6 +5,7 @@ import Cards from '../../components/Cards/Cards'
 import Footer from '../../components/Footer/Footer'
 import HeroSection from '../../components/HeroSection/HeroSection'
 import ScrollTopButton from '../../components/ScrollTopButton/ScrollTopButton'
+import Paralax from '../../components/Paralax/Paralax'
 
 function Home() {
     
@@ -17,8 +18,17 @@ function Home() {
                 mainText='THE BEST MEALS YOU WILL EVER HAVE'
                 description='What are you waiting for?'
             />
+            
+            <div className='products-cards-title'>
+                <h1>Check out our Products</h1>
+            </div>
+
             <Cards productsUrl={homeCards} />
+
             <ScrollTopButton />
+
+            <Paralax />
+
             <Footer />
         </>
     )
