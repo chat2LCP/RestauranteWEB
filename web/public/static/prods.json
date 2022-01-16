@@ -1,257 +1,642 @@
 [
     {
       "id": "94313731",
-      "name": "Tênis Nike Revolution 5 Max" ,
-      "price": 249.99,
+      "description": "Tênis Nike Revolution 5 Max" ,
+      "price": 83.92,
       "oldPrice": 349.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/94313731.jpg"
+      "discountPercent": 20,
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/94313731.jpg",
+      "category": "Shoes",
+      "rating": 3.4,
+      "numberOfEvaluations": 50,
+      "seller": "Centaurion",
+      "shipper": "Top Shoes and More",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]
     },
-    {
+    {      
       "id": "94313762",
-      "name": "Tênis Nike Revolution 5 fabricated in Brazil",
+      "description": "Tênis Nike Revolution 5 fabricated in Brazil",
       "price": 249.99,
       "oldPrice": 349.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/94313762.jpg"
+      "discountPercent": 20,
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/94313762.jpg",
+      "category": "Shoes",
+      "rating": 2.5,
+      "numberOfEvaluations": 150,
+      "seller": "Centaurion",
+      "shipper": "Top Shoes and More",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]
     },
     { 
       "id": "943137XQ",
-      "name": "Tênis Nike Revolution 5 fabricated in United States",
+      "description": "Tênis Nike Revolution 5 fabricated in United States",
       "price": 249.99,
       "oldPrice": 349.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/943137XQ.jpg"
+      "discountPercent": 20,
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/943137XQ.jpg",
+      "category": "Shoes",
+      "rating": 2.5,
+      "numberOfEvaluations": 150,
+      "seller": "Centaurion",
+      "shipper": "Top Shoes and More",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]      
     },
     {
       "id": "95077714",
-      "name": "Tênis Asics Patriot 12 Noosa 15 laces to tie",
+      "description": "Tênis Asics Patriot 12 Noosa 15 laces to tie",
       "price": 199.99,
       "oldPrice": 279.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/95077714.jpg"
+      "discountPercent": 20,
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/95077714.jpg",
+      "category": "Shoes",
+      "rating": 0.2,
+      "numberOfEvaluations": 150,
+      "seller": "Teh minimum seller",
+      "shipper": "Mr Raccoon",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]
     },
     {
       "id": "9507779N",
-      "name": "Tênis Asics Patriot 12 Noosa",
+      "description": "Tênis Asics Patriot 12 Noosa",
       "price": 199.99,
       "oldPrice": 279.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/9507779N.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/9507779N.jpg",
+      "discountPercent": 20,
+      "category": "Shoes",
+      "rating": 4.2,
+      "numberOfEvaluations": 774,
+      "seller": "Teh minimum seller",
+      "shipper": "Mr Raccoon",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]
     },
     {
       "id": "92601102",
-      "name": "Tênis Oakley Modoc Low 3.0 surfing beaches collection",
+      "description": "Tênis Oakley Modoc Low 3.0 surfing beaches collection",
       "price": 449.99,
       "oldPrice": 559.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/92601102.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/92601102.jpg",
+      "discountPercent": 20,
+      "category": "Shoes",
+      "rating": 1.2,
+      "numberOfEvaluations": 77,
+      "seller": "Teh minimum seller",
+      "shipper": "Mr Raccoon",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]
     },
     {
       "id": "9465450R",
-      "name": "Tênis Nike Renew Run some text so it gets more than four lines of text, it is not big enough, o I will add even more text, let's see if it is enough now",
+      "description": "Tênis Nike Renew Run some text so it gets more than four lines of text, it is not big enough, o I will add even more text, let's see if it is enough now",
       "price": 279.99,
       "oldPrice": 399.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/9465450R.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/9465450R.jpg",
+      "discountPercent": 20,
+      "category": "Shoes",
+      "rating": 4.7,
+      "numberOfEvaluations": 30,
+      "seller": "Teh minimum seller",
+      "shipper": "Mr Raccoon",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]
     },
     {
       "id": "95004531",
-      "name": "Tênis Nike Quest 3",
+      "description": "Tênis Nike Quest 3",
       "price": 299.99,
       "oldPrice": 449.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/95004531.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/95004531.jpg",
+      "discountPercent": 20,
+      "category": "Shoes",
+      "rating": 5.0,
+      "numberOfEvaluations": 37,
+      "seller": "Teh minimum seller",
+      "shipper": "Mr Raccoon",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]
     },
     {
       "id": "94672705",
-      "name": "Tênis adidas Lite Racer 20",
+      "description": "Tênis adidas Lite Racer 20",
       "price": 179.99,
       "oldPrice": 229.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/94672705.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/94672705.jpg",
+      "discountPercent": 20,
+      "category": "Shoes",
+      "rating": 4.7,
+      "numberOfEvaluations": 87,
+      "seller": "Teh minimum seller",
+      "shipper": "Mr Raccoon",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]      
     },
     {
       "id": "92456602",
-      "name": "Tênis Infantil Puma Wired some text so it gets more than four lines of text, some more text, and a little bit more",
+      "description": "Tênis Infantil Puma Wired some text so it gets more than four lines of text, some more text, and a little bit more",
       "price": 179.99,
       "oldPrice": 209.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/92456602.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/92456602.jpg",
+      "discountPercent": 20,
+      "category": "Shoes",
+      "rating": 4.0,
+      "numberOfEvaluations": 887,
+      "seller": "Teh minimum seller",
+      "shipper": "Mr Raccoon",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]      
     },
     {
       "id": "94461431",
-      "name": "Tênis Infantil Nike Flex Runner",
+      "description": "Tênis Infantil Nike Flex Runner",
       "price": 279.99,
-      "oldPrice": null,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/94461431.jpg"
+      "oldPrice": 335.55,
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/94461431.jpg",
+      "discountPercent": 20,
+      "category": "Shoes",
+      "rating": 2.2,
+      "numberOfEvaluations": 2387,
+      "seller": "Teh minimum seller",
+      "shipper": "Mr Raccoon",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]      
     },
     {
       "id": "95850662",
-      "name": "Tênis adidas Runfalcon 2.0",
+      "description": "Tênis adidas Runfalcon 2.0",
       "price": 199.99,
       "oldPrice": 279.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/95850662.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/95850662.jpg",
+      "discountPercent": 20,
+      "category": "Shoes",
+      "rating": 1.2,
+      "numberOfEvaluations": 2387,
+      "seller": "Teh minimum seller",
+      "shipper": "Mr Raccoon",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]      
     },
     {
       "id": "943137X8",
-      "name": "Tênis Nike Revolution 5",
+      "description": "Tênis Nike Revolution 5",
       "price": 249.99,
       "oldPrice": 349.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/943137X8.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/943137X8.jpg",
+      "discountPercent": 20,
+      "category": "Shoes",
+      "rating": 3.3,
+      "numberOfEvaluations": 287,
+      "seller": "Teh minimum seller",
+      "shipper": "Mr Raccoon",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]      
     },
     {
       "id": "93227802",
-      "name": "Tênis Infantil Puma Wired",
+      "description": "Tênis Infantil Puma Wired",
       "price": 159.99,
       "oldPrice": 189.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/93227802.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/93227802.jpg",
+      "discountPercent": 20,
+      "category": "Shoes",
+      "rating": 3.0,
+      "numberOfEvaluations": 284,
+      "seller": "Teh minimum seller",
+      "shipper": "Mr Raccoon",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]      
     },
     {
       "id": "93828502",
-      "name": "Tênis Infantil Nike Pico 5 Baby",
+      "description": "Tênis Infantil Nike Pico 5 Baby",
       "price": 139.99,
       "oldPrice": 179.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/93828502.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/93828502.jpg",
+      "discountPercent": 20,
+      "category": "Shoes",
+      "rating": 1.2,
+      "numberOfEvaluations": 24,
+      "seller": "Teh minimum seller",
+      "shipper": "Mr Raccoon",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]      
     },
     
     {
       "id": "95150929",
-      "name": "Tênis Asics Patriot 12",
+      "description": "Tênis Asics Patriot 12",
       "price": 199.99,
       "oldPrice": 259.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/95150929.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/95150929.jpg",
+      "discountPercent": 20,
+      "category": "Shoes",
+      "rating": 5.0,
+      "numberOfEvaluations": 0,
+      "seller": "Teh minimum seller",
+      "shipper": "Mr Raccoon",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]      
     },
     {
       "id": "95870805",
-      "name": "Tênis Asics Gel-Pacemaker",
+      "description": "Tênis Asics Gel-Pacemaker",
       "price": 299.99,
       "oldPrice": 399.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/95870805.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/95870805.jpg",
+      "discountPercent": 20,
+      "category": "Shoes",
+      "rating": 0.8,
+      "numberOfEvaluations": 10,
+      "seller": "Teh minimum seller",
+      "shipper": "Mr Raccoon",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]      
     },
     {
       "id": "95707805",
-      "name": "Tênis Mizuno Wave Prophecy X",
+      "description": "Tênis Mizuno Wave Prophecy X",
       "price": 1299.99,
       "oldPrice": 1499.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/95707805.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/95707805.jpg",
+      "discountPercent": 20,
+      "category": "Shoes",
+      "rating": 1.3,
+      "numberOfEvaluations": 10,
+      "seller": "Teh minimum seller",
+      "shipper": "Mr Raccoon",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]      
     },
     {
       "id": "94672719",
-      "name": "Tênis adidas Lite Racer 20",
+      "description": "Tênis adidas Lite Racer 20",
       "price": 179.99,
       "oldPrice": 229.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/94672719.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/94672719.jpg",
+      "discountPercent": 20,
+      "category": "Shoes",
+      "rating": 3.7,
+      "numberOfEvaluations": 10,
+      "seller": "Teh minimum seller",
+      "shipper": "Mr Raccoon",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]      
     },
     {
       "id": "95876431",
-      "name": "Tênis Asics Gel-Nagoya 3",
+      "description": "Tênis Asics Gel-Nagoya 3",
       "price": 299.99,
       "oldPrice": 379.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/95876431.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/95876431.jpg",
+      "discountPercent": 20,
+      "category": "Shoes",
+      "rating": 1.9,
+      "numberOfEvaluations": 10,
+      "seller": "Teh minimum seller",
+      "shipper": "Mr Raccoon",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]      
     },
    
     {
       "id": "95707845",
-      "name": "Tênis Mizuno Wave Prophecy X",
+      "description": "Tênis Mizuno Wave Prophecy X",
       "price": 1299.99,
       "oldPrice": 1499.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/95707845.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/95707845.jpg",
+      "discountPercent": 20,
+      "category": "Shoes",
+      "rating": 2.4,
+      "numberOfEvaluations": 10,
+      "seller": "Teh minimum seller",
+      "shipper": "Mr Raccoon",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]      
     },
     {
       "id": "946545OX",
-      "name": "Tênis Nike Renew Run",
+      "description": "Tênis Nike Renew Run",
       "price": 279.99,
       "oldPrice": 399.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/946545OX.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/946545OX.jpg",
+      "discountPercent": 20,
+      "category": "Shoes",
+      "rating": 3.5,
+      "numberOfEvaluations": 10,
+      "seller": "Teh minimum seller",
+      "shipper": "Mr Raccoon",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]      
     },
     {
       "id": "9465450M",
-      "name": "Tênis Nike Renew Run",
+      "description": "Tênis Nike Renew Run",
       "price": 279.99,
       "oldPrice": 399.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/9465450M.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/9465450M.jpg",
+      "discountPercent": 20,
+      "category": "Shoes",
+      "rating": 4.3,
+      "numberOfEvaluations": 10,
+      "seller": "Teh minimum seller",
+      "shipper": "The quality Shoes",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]      
     },
     {
       "id": "95939145",
-      "name": "Tênis Fila Grand Prix",
+      "description": "Tênis Fila Grand Prix",
       "price": 199.99,
       "oldPrice": 249.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/95939145.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/95939145.jpg",
+      "discountPercent": 20,
+      "category": "Shoes",
+      "rating": 4.1,
+      "numberOfEvaluations": 10,
+      "seller": "Teh minimum seller",
+      "shipper": "The quality Shoes",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]      
     },
     {
       "id": "95326905",
-      "name": "Tênis Fila Recovery",
+      "description": "Tênis Fila Recovery",
       "price": 259.99,
       "oldPrice": 299.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/95326905.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/95326905.jpg",
+      "discountPercent": 20,
+      "category": "Shoes",
+      "rating": 2.7,
+      "numberOfEvaluations": 10,
+      "seller": "Teh minimum seller",
+      "shipper": "The quality Shoes",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]      
     },
     {
       "id": "951509X8",
-      "name": "Tênis Asics Patriot 12",
+      "description": "Tênis Asics Patriot 12",
       "price": 199.99,
       "oldPrice": 259.99,
       "image": "https://imgcentauro-a.akamaihd.net/230x230/951509X8.jpg"
     },
     {
       "id": "9515093X",
-      "name": "Tênis Asics Patriot 12",
+      "description": "Tênis Asics Patriot 12",
       "price": 199.99,
       "oldPrice": 259.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/9515093X.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/9515093X.jpg",
+      "discountPercent": 10,
+      "category": "Shoes",
+      "rating": 4.7,
+      "numberOfEvaluations": 10,
+      "seller": "Teh minimum seller",
+      "shipper": "The quality Shoes",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]      
     },
     {
       "id": "9590484W",
-      "name": "Tênis Puma Anzarun SR BDP",
+      "description": "Tênis Puma Anzarun SR BDP",
       "price": 229.99,
       "oldPrice": 329.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/9590484W.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/9590484W.jpg", 
+      "discountPercent": 50,
+      "category": "Shoes",
+      "rating": 2.2,
+      "numberOfEvaluations": 10,
+      "seller": "Teh minimum seller",
+      "shipper": "The quality Shoes",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]      
     },
     {
       "id": "943137D0",
-      "name": "Tênis Nike Revolution 5",
+      "description": "Tênis Nike Revolution 5",
       "price": 249.99,
       "oldPrice": 349.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/943137D0.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/943137D0.jpg", 
+      "discountPercent": 30,
+      "category": "Shoes",
+      "rating": 2.8,
+      "numberOfEvaluations": 10,
+      "seller": "Teh minimum seller",
+      "shipper": "The quality Shoes",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]      
     },
     {
       "id": "9465459P",
-      "name": "Tênis Nike Renew Run",
+      "description": "Tênis Nike Renew Run",
       "price": 279.99,
       "oldPrice": 399.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/9465459P.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/9465459P.jpg", 
+      "discountPercent": 20,
+      "category": "Shoes",
+      "rating": 0.8,
+      "numberOfEvaluations": 10,
+      "seller": "Teh minimum seller",
+      "shipper": "Shoes and much More",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]      
     },
     {
       "id": "94218131",
-      "name": "Tênis Infantil Nike Court Borough Low 2",
+      "description": "Tênis Infantil Nike Court Borough Low 2",
       "price": 199.99,
       "oldPrice": 299.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/94218131.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/94218131.jpg", 
+      "discountPercent": 0,
+      "category": "Shoes",
+      "rating": 3.8,
+      "numberOfEvaluations": 10,
+      "seller": "Teh minimum seller",
+      "shipper": "Shoes and much More",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]      
     },
     {
       "id": "95707858",
-      "name": "Tênis Mizuno Wave Prophecy X",
+      "description": "Tênis Mizuno Wave Prophecy X",
       "price": 1299.99,
       "oldPrice": 1499.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/95707858.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/95707858.jpg", 
+      "discountPercent": 20,
+      "category": "Shoes",
+      "rating": 1.1,
+      "numberOfEvaluations": 10,
+      "seller": "Teh minimum seller",
+      "shipper": "Shoes and much More",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]      
     },
     {
       "id": "94876962",
-      "name": "Tênis adidas Lite Racer 2.0",
+      "description": "Tênis adidas Lite Racer 2.0",
       "price": 179.99,
       "oldPrice": 249.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/94876962.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/94876962.jpg", 
+      "discountPercent": 20,
+      "category": "Shoes",
+      "rating": 4.1,
+      "numberOfEvaluations": 120,
+      "seller": "Teh minimum seller",
+      "shipper": "Shoes and much More",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]      
     },
     {
       "id": "94313703",
-      "name": "Tênis Nike Revolution 5",
+      "description": "Tênis Nike Revolution 5",
       "price": 249.99,
       "oldPrice": 349.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/94313703.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/94313703.jpg", 
+      "discountPercent": 20,
+      "category": "Shoes",
+      "rating": 3.9,
+      "numberOfEvaluations": 80,
+      "seller": "Teh minimum seller",
+      "shipper": "Happy feet",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]      
     },
     
     {
       "id": "93761902",
-      "name": "Tênis Oakley Modoc 2.0",
+      "description": "Tênis Oakley Modoc 2.0",
       "price": 449.99,
       "oldPrice": 649.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/93761902.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/93761902.jpg", 
+      "discountPercent": 20,
+      "category": "Shoes",
+      "rating": 4.5,
+      "numberOfEvaluations": 1024,
+      "seller": "Teh minimum seller",
+      "shipper": "Happy feet",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]      
     },
     {
       "id": "95150919",
-      "name": "Tênis Asics Patriot 12",
+      "description": "Tênis Asics Patriot 12",
       "price": 199.99,
       "oldPrice": 259.99,
-      "image": "https://imgcentauro-a.akamaihd.net/230x230/95150919.jpg"
+      "image": "https://imgcentauro-a.akamaihd.net/230x230/95150919.jpg", 
+      "discountPercent": 0,
+      "category": "Shoes",
+      "rating": 1.6,
+      "numberOfEvaluations": 104,
+      "seller": "Teh minimum seller",
+      "shipper": "Mr Raccon",
+      "colors": [
+          "#ff00ff",
+          "#eab003",
+          "#0abab5"
+      ]      
     }
   ]

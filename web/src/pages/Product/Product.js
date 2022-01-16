@@ -1,80 +1,89 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
+import { useForm } from "react-hook-form"
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup';
 
 import './Product.scss'
+import { getCep } from "../../providers/cep-provider"
+import { fetchProducts } from "../../providers/fetch-products-provider"
 
 const Product = () => {
 
-    // const { prod } = useParams()
+    const { productId } = useParams() //retorna o id do produto, que é o parâmetro da rota para o produto selecionado
+    const [productDetails, setProductDetails] = useState({})
+    const [cep, setCep] = useState(null)
+    const miniatures = [{ id: 1, path: '/images/miniature1.jpg' }, { id: 2, path: './images/miniature2.jpg' }, { id: 3, path: './images/miniature3.jpg' }, { id: 4, path: './images/miniature4.jpg' }]
 
-    const productDetails = {
-        category: "Furniture",
-        id: "2",
-        description: "Drop Leaf Dining Table in Solid Pine - Seats 2 - Emerson",
-        rating: 3.4,
-        numberOfEvaluations: 50,
-        seller: "Tables and More",
-        shipper: "Top Furniture",
-        originalPrice: 104.99,
-        discountPercent: 20,
-        priceWithDiscount: 83.92,
-        colors: [
-            "#ff00ff",
-            "#eab003",
-            "#0abab5"
-        ]
+
+    /************************************************
+    * constante do yup (validação dos campos do form) - 
+    * o yup não é obrigatorio para fazer as validações, eu 
+    * poderia fazer as mesmas validações só com o react-hook-form,
+    * a vantagem do yup é que voce consegue tirar a validação da 
+    * tag html e fazer ela aqui separada, fica mais legível assim
+    *************************************************/
+    const validationSchema = yup.object().shape({
+        cep: yup
+        .string()
+        .matches(/^[0-9]+$/, "CEP not valid")
+        .matches(/\d{8}/, "CEP not valid")
+        .length(8, "CEP not valid")
+        .required(),
+    })
+
+
+    /************************************************
+    * constantes do react-hook-form para manipular o formulário
+    *************************************************/
+    const { 
+        register,       //register registra cada uma das inputs dentro do hok
+        handleSubmit,
+        formState: {errors}
+    } = useForm({
+        resolver: yupResolver(validationSchema),  //aplica a validação do yup no formulário
+    })
+
+    /************************************************
+     * Handler que faz a busca do cep digitado pelo usuário
+     * é chamado ao fazer submite do cep digitado no formulário
+     * 
+     * @param cep O CEP que se deseja buscar os dados
+     * @returns void
+     * ***********************************************/
+     const findCep = (data) => {
+        // setTimeout(() => {
+            getCep(data.cep)
+            .then(setCep)
+            .catch(console.error) //caso seja submetido um cep incorreto
+        // }, 3000)     
     }
-    const miniatures = [
-        {
-            id: 1,
-            path: './images/miniature1.jpg'
-        },
-        {
-            id: 2,
-            path: './images/miniature2.jpg'
-        },
-        {
-            id: 3,
-            path: './images/miniature3.jpg'
-        },
-        {
-            id: 4,
-            path: './images/miniature4.jpg'
-        },
-    ]
-    const inscricao = ''
-    const freteAddress$ = ''
-
-    //   constructor(
-    //     private activatedRoute: ActivatedRoute,
-    //     private getCepService: GetCepService
-    //   ) { }
 
 
+    /*************************************************
+     * useEffect que recupera as informações do produto selecionado
+     * por meio do parâmetro da rota (id do produto)
+     *************************************************/
     useEffect(() => {
-        getProductDetails()
-        fillRatingStars()
-        changeMainImg(miniatures[0])  //inicializa a imagem principal como sendo a primeira imagem do array miniatures[]
+        let isSubscribed = true //evita que o setProductDetails seja executado caso o componente esteja desmontado
 
-        return () => {
-            // cleanup
-        }
+        fetchProducts('http://localhost:3000/static/prods.json')
+            .then(resp => resp.filter(p => p.id == productId))
+            .then(product => isSubscribed ? setProductDetails(product[0]) : null)
+            .catch(console.error)
+
+        return () => (isSubscribed = false) //cancela a inscrição quando o elemento for desmontado
     }, [])
 
 
     /*************************************************
-     * Método que recupera as informações (o objeto) pré-carregadas pelo resolver e as atribui à variável productDetails para que sejam carregadas no template
-     * uma vez que os dados do produto (produto referente ao id da rota atual) foram carregados pelo productDetailsResolver eu preciso recuperar esses dados depois que o componente for renderizado
-     * @returns void
+     * useEffect que preenche as estrelas de avaliação do produto e
+     * inicializa a imagem principal do produto no quadro de imagens
      *************************************************/
-    const getProductDetails = () => {
-        // inscricao = activatedRoute.data /* data retorna um observable com os dados resolvidos pelo resolver da rota atual*/
-        //     .subscribe(
-        //         (info) => {
-        //             productDetails = info.productDetail  /* esse productDetail do info.productDetail tem q ser o mesmo nome que foi passado como chave lá no parametro resolve do products-routing.module */
-        //         }
-        //     );
-    }
+    useEffect(() => {
+        fillRatingStars()
+        changeMainImg(miniatures[0])    //esse método precisa atualizar quando o productDetails atualiza?
+    }, [productDetails])
 
 
     /************************************************
@@ -90,6 +99,7 @@ const Product = () => {
         starsWidth.style.width = `${percentOfColor}%`
     }
 
+
     /************************************************
     * Método que atualiza o nome da cor do produto com base da propriedade 'colors' do produto atual selecionado 
     * 
@@ -104,6 +114,7 @@ const Product = () => {
         colorName.innerText = selectedColor
     }
 
+
     /************************************************
      * Método que faz o scroll da janela para a section 'payment-options' ao clicar no link 'More payment methods'
      * 
@@ -113,6 +124,7 @@ const Product = () => {
         const element = document.getElementById('payment-options')
         element?.scrollIntoView({ behavior: "smooth" });
     }
+
 
     /************************************************
      * Método que faz a troca da imagem principal do produto sempre que for clicado em uma miniatura
@@ -145,6 +157,7 @@ const Product = () => {
         }
     }
 
+
     /************************************************
      * 
      * @param
@@ -162,14 +175,6 @@ const Product = () => {
         // .subscribe(data => data ? this.populateDataForm(data) : {});
     }
 
-    /************************************************
-     * Método que faz a busca dos dados na API do ViaCep e devolve um Observable: Address com os respectivos dados
-     * @param cep O CEP que se deseja buscar os dados
-     * @returns void
-     * ***********************************************/
-    const getCep = (cep) => {
-        freteAddress$ = this.getCepService.findCep(cep)
-    }
 
     return (
         <div className="product-details-container">
@@ -239,16 +244,16 @@ const Product = () => {
                                 {productDetails.discountPercent != 0 ?
                                     (
                                         <>
-                                            <div className="no-discount-price"> from $ { productDetails.originalPrice }</div>
-                                            
+                                            <div className="no-discount-price"> from $ {productDetails.oldPrice}</div>
+
                                             <div className="discount-price">
-                                                to {}
+                                                to { }
                                                 <span className="final-price">
-                                                    $ { productDetails.priceWithDiscount }
+                                                    $ {productDetails.price}
                                                 </span>
-                                                {} in cash {}
+                                                { } in cash { }
                                                 <span className="total-discount">
-                                                    ({ productDetails.discountPercent }% discount)
+                                                    ({productDetails.discountPercent}% discount)
                                                 </span>
                                             </div>
                                         </>
@@ -257,7 +262,7 @@ const Product = () => {
                                     (
                                         <div className="final-price">
                                             <span>
-                                                $ { productDetails.priceWithDiscount }
+                                                $ {productDetails.price}
                                             </span>
                                             a vista
                                         </div>
@@ -298,70 +303,95 @@ const Product = () => {
                                 Consultar prazo e valor do frete
                             </span>
 
-                            <div className="input-btn-frete-container">
-                                {/* <input #teste id="cep-input" type="text" aria-label="text" (keyup)="formataCEP($event)" placeholder="000000-000">
-                            <button (click)="getCep(teste.value)" aria-label="Get CEP">OK</button> */}
-                                <a target="_blank" href="https://buscacepinter.correios.com.br/app/endereco/index.php">Não sei o CEP</a>
+                            <div className="formcep-anchor-frete-container">
+                                <form className="form formcep" onSubmit={handleSubmit(findCep)}>               
+                                    <input 
+                                        id="cep" 
+                                        name="cep"
+                                        type="text" 
+                                        className="form-control" 
+                                        aria-label="text" 
+                                        onKeyUp={formataCEP} 
+                                        placeholder="000000000"                                     
+                                        {...register("cep")} 
+                                    />
+                                    <button type="submit" aria-label="Get CEP">OK</button>
+                                
+                                    <a target="_blank" href="https://buscacepinter.correios.com.br/app/endereco/index.php">Don't know my CEP</a>
+                                </form>                          
+
+                                <p className='error-message'>{errors.cep?.message}</p>
                             </div>
 
-                            {/* no ngIf eu tenho que verificar se o CEP está correto e retornou algum endereço, usar o serviço de CEP no componente para verificar isso */}
-                            {/* <div className="frete-details" *ngIf="freteAddress$ | async as freteAddress; else spinner" > */}
                             <div className="frete-details">
-                                <p className="address">
-                                    {/* {{ freteAddress.logradouro }} - {{ freteAddress.bairro }} - {{ freteAddress.localidade }} */}
-                                </p>
-
-                                <table className="address-table">
-                                    <tbody>
-                                        <tr className="table-row">
-                                            <td className="shipping-info">
-                                                <span>
-                                                    Receba em até 2 dias úteis
-                                                </span>
-                                                <p>
-                                                    Após a confirmação do pagamento
+                                { 
+                                    (cep != null && !errors.cep) && //cep != null é pq o valor de cep é null assim que a componente é montado, errors.cep é o retorno das validações feitas pelo yup
+                                    (   
+                                        !cep.erro?  //cep.erro é retornado pelo viaCep quando é submetido um cep que não existe, não é uma boa variavel p usar aqui
+                                        (
+                                            <>
+                                                <p className="address">
+                                                    {cep.logradouro} - {cep.bairro} - {cep.localidade}
                                                 </p>
-                                            </td>
-                                            <td className="frete-value">
-                                                $ 15.00
-                                                {/* {{ valorDoFrete | currency }} */}
-                                            </td>
-                                        </tr>
 
-                                        <tr className="table-row">
-                                            <td>
-                                                <span>
-                                                    Retire na loja em 2 horas
-                                                </span>
-                                                <p>
-                                                    Após aprovação da compra, verifique
-                                                    o horário de funcionamento da loja.
+                                                <table className="address-table">
+                                                    <tbody>
+                                                        <tr className="table-row">
+                                                            <td className="shipping-info">
+                                                                <span>
+                                                                    Receba em até 2 dias úteis
+                                                                </span>
+                                                                <p>
+                                                                    Após a confirmação do pagamento
+                                                                </p>
+                                                            </td>
+                                                            <td className="frete-value">
+                                                                $ 15.00
+                                                                {/* {{ valorDoFrete | currency }} */}
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr className="table-row">
+                                                            <td>
+                                                                <span>
+                                                                    Retire na loja em 2 horas
+                                                                </span>
+                                                                <p>
+                                                                    Após aprovação da compra, verifique
+                                                                    o horário de funcionamento da loja.
+                                                                </p>
+                                                            </td>
+                                                            <td className="frete-free">
+                                                                Frete Grátis
+                                                                {/* {{ valorDoFrete | currency }}*/}
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                                <p className="frete-disclaimer">
+                                                    Os prazos de entrega começam a contar a partir da
+                                                    confirmação de pagamento e podem variar para mais de
+                                                    uma unidade de um mesmo produto.
                                                 </p>
-                                            </td>
-                                            <td className="frete-free">
-                                                Frete Grátis
-                                                {/* {{ valorDoFrete | currency }}*/}
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-                                <p className="frete-disclaimer">
-                                    Os prazos de entrega começam a contar a partir da
-                                    confirmação de pagamento e podem variar para mais de
-                                    uma unidade de um mesmo produto.
-                                </p>
+                                            </>
+                                        )
+                                        :
+                                        (   
+                                            // se eu digitar um cep errado e submeter e digitar um correto em seguida ele não funciona
+                                            <p className='error-message'>errado</p>
+                                        )
+                                    )
+                                    // :
+                                    // (
+                                    //     // NÂO ESTA FUNCIONANDO PORQUE AQUI NESSE LUGAR ELE NUNCA VAI SER RENDERIZADO
+                                    //     <div className="spinner-container">
+                                    //         <div className="spinner-border spin text-warning" role="status">
+                                    //         </div>
+                                    //     </div>
+                                    // )
+                                }
                             </div >
-
-                            {/* <ng-template #spinner>
-                                <div className="spinner spinner-border text-primary" role="status">
-                                    <span className="sr-only"></span>
-                                </div>
-                            </ng-template> */}
-
-                            {/* < ng - template #address_not_found >
-                                <h3>Endereço não encontrado</h3>
-                            </ng - template > */}
                         </div>
                     </div>
                 </div>
@@ -414,10 +444,10 @@ const Product = () => {
                                 2x de {{ productDetails.originalPrice / 2 | currency }} sem juros<br/>
                                 3x de {{ productDetails.originalPrice / 3 | currency }} sem juros<br/>
                                 4x de {{ productDetails.originalPrice / 4 | currency }} sem juros<br/> */}
-                                1x de {productDetails.originalPrice} sem juros<br />
-                                2x de {productDetails.originalPrice / 2} sem juros<br />
-                                3x de {productDetails.originalPrice / 3} sem juros<br />
-                                4x de {productDetails.originalPrice / 4} sem juros<br />
+                                1x de {productDetails.oldPrice} sem juros<br />
+                                2x de {productDetails.oldPrice / 2} sem juros<br />
+                                3x de {productDetails.oldPrice / 3} sem juros<br />
+                                4x de {productDetails.oldPrice / 4} sem juros<br />
                             </div>
                         </div>
 
@@ -430,8 +460,8 @@ const Product = () => {
                             <div className="price-method">
                                 {/* 1x de {{ productDetails.originalPrice | currency }} sem juros<br> */}
                                 {/* 5x de {{ (productDetails.originalPrice / 5) + 3 | currency}} */}
-                                1x de {productDetails.originalPrice} sem juros<br />
-                                5x de {(productDetails.originalPrice / 5) + 3}
+                                1x de {productDetails.oldPrice} sem juros<br />
+                                5x de {(productDetails.oldPrice / 5) + 3}
                             </div>
                         </div>
                     </div>
@@ -442,7 +472,8 @@ const Product = () => {
                     <h2>Boleto</h2>
                     <div className="boleto price-method">
                         {/* {{ productDetails.originalPrice | currency }} in cash */}
-                        {productDetails.originalPrice} in cash
+
+                        {productDetails.oldPrice} in cash
                     </div>
                 </div>
 
@@ -451,7 +482,8 @@ const Product = () => {
                     <h2>PIX</h2>
                     <div className="pix price-method">
                         {/* { productDetails.originalPrice | currency } in cash */}
-                        {productDetails.originalPrice} in cash
+
+                        {productDetails.oldPrice} in cash
                     </div>
                 </div>
             </section>

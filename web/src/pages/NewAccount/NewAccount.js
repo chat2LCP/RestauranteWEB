@@ -55,7 +55,8 @@ const NewAccount = () => {
         cep: yup
             .string()
             .matches(/^[0-9]+$/, "CEP not valid")
-            .matches(/\d{8}/, "Only dgits are accepted")
+            .matches(/\d{8}/, "CEP not valid")
+            .length(8, "CEP not valid")
             .required(),
     })
 
