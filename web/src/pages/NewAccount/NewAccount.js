@@ -156,7 +156,7 @@ const NewAccount = () => {
         <div className="create-account-container container-fluid">
             <section>
                 <div className='create-account-header'>
-                    <h1 className='create-account-text'>CREATE ACCOUNT</h1>
+                    <h1 className='create-account'>CREATE ACCOUNT</h1>
                 </div>
             </section>
 

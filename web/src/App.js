@@ -9,7 +9,7 @@ import Products from './pages/Products/Products'
 import NewAccount from './pages/NewAccount/NewAccount'
 import NotFound from './pages/notFound/NotFound'
 import Spinner from './components/Spinner/spinner';
-// import Services from './pages/services/Services'
+import Product from './pages/Product/Product';
 
 const SignUp = React.lazy(() => import('./pages/SignIn/SignIn'))
 
@@ -22,9 +22,8 @@ function App() {
         
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='products' element={<Products />}>
-            {/* <Route path='produtcs/:product' element={} /> */}
-          </Route>
+          <Route path='products' element={<Products />} />
+          <Route path='products/:product' element={<Product />} />
           <Route 
             path='signin' 
             element={

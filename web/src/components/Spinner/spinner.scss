@@ -9,7 +9,7 @@
     top: 80px;  //80 porque é o tamanho da navbar
     left: 0;
     @include flexCenter();
-    background-color: rgba(0, 0, 0, 0.10);
+    background-color: rgba(0, 0, 0, 0.05);
     z-index: 50;
 }
 

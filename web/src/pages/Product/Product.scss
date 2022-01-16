@@ -1,0 +1,471 @@
+@import 'src/styles/variables';
+@import 'src/styles/reset';
+
+.product-details-container{
+    font-size: 10px;    //fonte padrão para facilitar na responsividade, já que todas as unidades de tamanho de fonte se baseiam nessa unidade aqui (por conta do REM). Ex.: 1.2rem = 12px
+    min-width: 978px;   //se a tela for menor que 978px aparece uma barra de rolagem e os elementos param de tentar se adaptar ao tamanho da tela, se a tela for > 978px o elementos se adaptam a ela
+    padding: 0 12px;
+    display: flex;
+    flex-direction: column;
+
+    section{
+        margin-bottom: 30px;
+    
+        h1{
+            padding-bottom: 7px;
+            border-bottom: 1px solid #c7c7c7;
+            width: 100%;
+            color: $blue;
+            font-size: 2.3em;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        & > div{    //apica margem nas divs que forem filhas diretas de uma section
+            margin-top: 20px;
+        }
+    }
+
+    .breadcrumb-sec{
+        margin: 0;
+
+        .breadcrumb{
+            height: 50px;
+            line-height: 50px;
+            margin-bottom: 0;
+            font-size: 1.6em;
+
+            //breadcrumb-item é uma classe do bootstrap, eu estou modificando o separador dos itens nessa classe
+            .breadcrumb-item{
+                list-style: none;
+                color: $blue;
+
+                &:not(:first-child):before{
+                    content: ">";
+                }
+
+                a{
+                    text-decoration: none;
+                }
+            }
+        } 
+    }
+
+    .curr-prod-container-sec{
+        
+        .curr-prod-caption{
+            height: 64px;
+            //border: 1px solid violet;
+            font-size: 2.8em;
+            color: #404040;
+            font-weight: 400;
+            line-height: 30px;
+            display: flex;
+            align-items: center;
+            margin: 0;
+        }
+
+        .curr-prod-details{
+            height: fit-content;
+            display: grid;
+            grid-template-columns: 1.8fr 1fr;
+            justify-content: center;
+
+            .curr-prod-media{
+                height: 486px;
+                display: flex;
+
+                .curr-prod-miniatures{
+                    height: 100%;
+                    width: 110px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+
+                    li{
+                        list-style: none;
+                        height: 100%;
+                    }
+
+                    img{
+                        border: 1px solid transparent;
+                        object-fit: contain;
+                        width: 100%;
+                        height: 100%;
+
+                        &:hover{
+                            border: 1px solid $blue;
+                            border-radius: 5px;
+                        }
+                    }  
+                }
+
+                .curr-prod-main-img{
+                    height: 100%;
+                    width: 100%;
+                    object-fit: cover;
+                    display: flex;
+
+                    img{
+                        max-height: 90%;    //max-height e width para a imagem se ajustar na altura e na largura conforme aumenta ou diminui a tela
+                        max-width: 90%;
+                        margin: auto;
+                    }
+                }
+            }
+
+            .curr-prod-sell-infos{
+                font-size: 1.6em;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+
+                .client-rating-bar{
+                    display: flex;
+                    align-items: flex-start;
+                    font-weight: 100;
+                    height: 50px;
+                
+                    .stars{
+                        height: 100%;
+                        position: relative;
+                        font-size: 22px;
+                        width: 91px;    //esse width está relacionado com a função fillRatingStars(), portanto, se alterar essa propriedade, as cores das estrelas não vão funcionar corretamente
+                        
+                        .background-stars{
+                            position: absolute;
+                            color: #E5E5E5;
+                        }
+                        
+                        .colored-stars{
+                            position: absolute;
+                            overflow: hidden;
+                            color: #FFCC03;
+                        }
+                
+                        .stars-percent{
+                            display: inline;
+                        }
+                    }
+                
+                    .rating-values{
+                        margin-top: 5px;
+                
+                        span{
+                            margin-left: 10px;
+                        }
+                    }
+                }
+
+                .seller-identification{
+                    margin: 10px 0;
+                    
+                    a{
+                        color: #212529;
+                    }
+
+                    a img{
+                        height: 20px;
+                        width: 20px;
+                        margin-bottom: 3px;
+                    }
+                }
+                
+                .price{
+                    margin: 10px 0;
+                
+                    .no-discount-price{
+                        color: #999999;
+                    }
+                
+                    .final-price{
+                        font-weight: 700;
+                        font-size: 1.3em;
+                        color: $dark-grey;
+                    }
+                
+                    .total-discount{
+                        color: $green;
+                    }
+                }
+
+                .product-colors{
+                    margin-top: 5px;
+                    height: fit-content;
+
+                    .colors-container{
+                        height: 50px;
+                        display: flex;
+                        align-items: center;
+                
+                        div{
+                            height: 100%;
+                        }
+                
+                        input{
+                            display: none;
+                
+                            &:checked + label{
+                                border: 3px dotted $green;
+                
+                                i{
+                                    display: block;
+                                }
+                            }
+                        }
+                        
+                        .color-option{
+                            border: 3px dotted transparent;
+                            position: relative;
+                            width: 40px;
+                            height: 80%;
+                            margin-right: 10px;
+                    
+                            &:hover{
+                                cursor: pointer;
+                            }
+                    
+                            i{
+                                font-size: 0.8em;
+                                position: absolute;
+                                bottom: -9px;
+                                right: -6px;
+                                color: $green;
+                                display: none;
+                            }
+                        }
+                    }
+                }
+                
+                .payment{
+                    color: $dark-grey;
+                    font-size: 16px;
+                    height: fit-content;
+                    margin: 10px 0;
+                
+                    a{
+                        text-decoration: underline;
+                    }
+                }
+
+                .add-to-cart-container{
+                    margin: 5px 0;
+
+                    .btn-add-to-cart{
+                        font-size: 16px;
+                        text-align: center;
+                        background-color: $green;
+                        border-radius: 4px;
+                        color: $white;
+                        width: 100%;
+                        padding: 8px 0;
+                        margin: 10px 0;
+                        text-decoration: none;
+                    }
+
+                    .btn-add-to-cart i{
+                        margin-right: 10px;
+                    }
+                    
+                    .btn-add-to-cart:hover{
+                        background-color: #4ba727;
+                    }
+                } 
+
+                .calc-frete-container{
+                    .input-btn-frete-container{
+                        margin: 15px 0;
+                        display: flex;
+                        align-items: center;
+                    }
+
+                    .input-btn-frete-container input{
+                        font-size: 15px;
+                        line-height: 15px;
+                        padding: 10px 10px 10px 0;
+                        border: 1px solid #E5E5E5;
+                        border-right: none;
+                        border-radius: 4px 0 0 4px;
+                        height: 40px;
+                        width: 120px;
+                        background: 0 0;
+                        color: #111;
+                        background-color: $white;
+                        outline: 0;
+                        -webkit-appearance: none;
+                        box-shadow: none;
+                        text-indent: 8px;
+                    }
+                    
+                    .input-btn-frete-container button{
+                        height: 40px;
+                        width: 45px;
+                        border-radius: 0 4px 4px 0;
+                        background-color: #F4F4F4;
+                        border: 1px solid #E5E5E5;
+                        border-left: none;
+                        font-size: 16px; //tamanho do icone da lupa de busca
+                        margin-right: 10px;
+                    }
+
+                    .input-btn-frete-container a{
+                        color: #8C8C8C;
+                    }   
+                    
+                    .spinner{
+                        position: relative;
+                        left: 40%
+                    }
+                }
+
+                .frete-details{
+                    .address{
+                        padding-bottom: 10px; 
+                        font-size: 14px;
+                        color: #8C8C8C;
+                    }
+
+                    p{
+                        font-size: 14px;
+                        padding: 6px 0 10px 0;
+                        color: #8C8C8C;
+                        line-height: normal;
+                    }
+
+                    .address-table{
+                        
+                        .table-row{
+                            border-bottom: 1px solid #c7c7c7;
+                            
+                            .shipping-info{
+                                width: 65%;
+                            }
+
+                            .frete-value{
+                                text-align: center;
+                                color: #0083ca;
+                                width: 35%;
+                            }
+
+                            .frete-free{
+                                text-align: center;
+                                color: $green;
+                                font-weight: 600;
+                                width: 35%;
+                            }
+                        }
+                    } 
+
+                    .frete-disclaimer{
+                        text-align: justify;
+                    }
+                }
+            }
+        }
+    }
+
+    .related-products-sec{
+        height: 300px;
+    }
+
+    .curr-prod-complete-details-sec{
+        height: 300px;
+    }
+
+    .clients-rating-sec{
+        height: 300px;
+    }
+
+    .payment-options-sec{
+        height: fit-content;
+
+        .payment-method-container{
+            height: fit-content;
+
+            i{
+                font-size: 2em;
+                margin-right: 10px;
+            }
+
+            h2{
+                font-size: 1.7em;
+                font-weight: 800;
+                display: inline;
+            }
+
+            .credit-card{
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                
+                .cards-container{
+                    display: flex;
+                    justify-content: flex-start;  
+                    margin-bottom: 8px; 
+                    margin-left: 30px;
+                    width: 100%;
+                }  
+
+                .credit-card-icon{
+                    width: 50px;
+                    height: 40px;
+                    list-style: none;
+                    background: no-repeat center;
+                    background-size: contain; 
+                    margin-right: 10px;
+                }
+
+                .general-cards{
+                    width: 100%;
+                    border-right: 1px solid #c7c7c7; 
+
+                    .general{
+                        width: fit-content;
+
+                        .icon-visa{
+                            background-image: url(./images/visa-icon.png);
+                        }
+                        .icon-mastercard{
+                            background-image: url(./images/mastercard-icon.png);
+                        }
+                        .icon-diners{
+                            background-image: url(./images/dinners-icon.png);
+                        }
+                        .icon-americanexpress{
+                            background-image: url(./images/americanexpress-icon.png);
+                        }
+                        .icon-elo{
+                            background-image: url(./images/elo-icon.png);
+                        }
+                    }
+                }
+
+                .brand-cards{
+                    width: 100%;
+
+                    .brand{
+                        width: fit-content;
+
+                        .icon-brand1{
+                            background-image: url();
+                            border: 1px solid black;
+                        }
+
+                        .icon-brand2{
+                            background-image: url();
+                            border: 1px solid black;
+                        }
+                    }
+                }
+            }
+        }
+
+        .price-method{
+            font-size: 16px;
+            margin-left: 30px;
+            color: $blue;
+        }
+    }
+}
+
+
+

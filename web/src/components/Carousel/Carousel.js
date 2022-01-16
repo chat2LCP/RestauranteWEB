@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
+import { Link } from 'react-router-dom'
 
 import './Carousel.scss'
 import { fetchProducts } from '../../providers/fetch-products-provider'
@@ -53,15 +54,17 @@ function Carousel() {
 
                     return (
                         <div className="item" key={id}>
-                            <div className="image">
-                                <img src={image} alt={name}></img>
-                            </div>
+                            <Link to={`/products/${id}`} >
+                                <div className="image">
+                                    <img src={image} alt={name}></img>
+                                </div>
 
-                            <div className="info">
-                                <span className="name">{name}</span>
-                                <span className="old-price">U$ {oldPrice}</span>
-                                <span className="price">U$ {price}</span>
-                            </div>
+                                <div className="info">
+                                    <span className="name">{name}</span>
+                                    <span className="old-price">U$ {oldPrice}</span>
+                                    <span className="price">U$ {price}</span>
+                                </div>
+                            </Link>
                         </div>
                     )
                 })}
