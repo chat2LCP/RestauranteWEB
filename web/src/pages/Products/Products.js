@@ -40,6 +40,10 @@ function Products() {
             ) : (
                 <div className='all-products-container'>
                     <Carousel />
+                    
+                    <div>
+                        <h1>Teste nova branch</h1>
+                    </div>
                 </div>
             )}
 

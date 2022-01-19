@@ -4,5 +4,6 @@
 
 .all-products-container{
     @include flexCenter();
+    flex-direction: column;
     height: 100vh;
 }
