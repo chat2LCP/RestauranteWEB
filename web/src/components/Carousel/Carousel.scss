@@ -6,11 +6,14 @@
     position: relative;
     display: flex;
     max-width: 85vw;
+    
 
     .carousel{
         display: flex;
         overflow-x: auto;   //habilita o scroll na pagina
         scroll-behavior: smooth;
+        height: 330px;
+        align-items: center;
 
         &::-webkit-scrollbar{
             display: none;  //esconde a scrollbar
@@ -29,7 +32,8 @@
 
             &:hover{
                 transform: scale(1.2);
-                box-shadow: 0 2px 4px rgb(0 0 0 / 20%);
+                // box-shadow: 0 2px 4px rgb(0 0 0 / 20%);
+                box-shadow: 0 2px 4px rgba(69, 163, 192, 0.2);
             }
 
             &:hover .info .name{

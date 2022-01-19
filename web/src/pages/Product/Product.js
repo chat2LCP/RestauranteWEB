@@ -13,7 +13,7 @@ const Product = () => {
     const { productId } = useParams() //retorna o id do produto, que é o parâmetro da rota para o produto selecionado
     const [productDetails, setProductDetails] = useState({})
     const [cep, setCep] = useState(null)
-    const miniatures = [{ id: 1, path: '/images/miniature1.jpg' }, { id: 2, path: './images/miniature2.jpg' }, { id: 3, path: './images/miniature3.jpg' }, { id: 4, path: './images/miniature4.jpg' }]
+    const miniatures = [{ id: 1, path: '/assets/images/Product/miniature1.jpg' }, { id: 2, path: '/assets/images/Product/miniature2.jpg' }, { id: 3, path: '/assets/images/Product/miniature3.jpg' }, { id: 4, path: '/assets/images/Product/miniature4.jpg' }]
 
 
     /************************************************
@@ -425,13 +425,13 @@ const Product = () => {
                 <h1>Payment Methods</h1>
 
                 <div className="payment-method-container">
-                    <i className="bi bi-credit-card"></i>
+                    <i class="fas fa-credit-card"></i>
 
                     <h2>Credit cards</h2>
 
                     <div className="credit-card">
-                        <div className="general-cards">
-                            <ul className="general cards-container">
+                        <div className="general-cards-container">
+                            <ul className="general-cards">
                                 <li className="credit-card-icon icon-visa"></li>
                                 <li className="credit-card-icon icon-mastercard"></li>
                                 <li className="credit-card-icon icon-diners"></li>
@@ -451,8 +451,8 @@ const Product = () => {
                             </div>
                         </div>
 
-                        <div className="brand-cards">
-                            <ul className="brand cards-container">
+                        <div className="brand-cards-container">
+                            <ul className="brand-cards">
                                 <li className="credit-card-icon icon-brand1"></li>
                                 <li className="credit-card-icon icon-brand2"></li>
                             </ul>
@@ -468,7 +468,7 @@ const Product = () => {
                 </div>
 
                 <div className="payment-method-container">
-                    <i className="bi bi-upc"></i>
+                    <i class="fas fa-barcode"></i>
                     <h2>Boleto</h2>
                     <div className="boleto price-method">
                         {/* {{ productDetails.originalPrice | currency }} in cash */}
@@ -478,7 +478,7 @@ const Product = () => {
                 </div>
 
                 <div className="payment-method-container">
-                    <i className="bi bi-phone"></i>
+                    <i class="fa-brands fa-pix"></i>
                     <h2>PIX</h2>
                     <div className="pix price-method">
                         {/* { productDetails.originalPrice | currency } in cash */}

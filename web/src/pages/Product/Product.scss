@@ -446,7 +446,7 @@
 
             h2{
                 font-size: 1.7em;
-                font-weight: 800;
+                font-weight: 700;
                 display: inline;
             }
 
@@ -471,11 +471,11 @@
                     margin-right: 10px;
                 }
 
-                .general-cards{
+                .general-cards-container{
                     width: 100%;
                     border-right: 1px solid #c7c7c7; 
 
-                    .general{
+                    .general-cards{
                         width: fit-content;
 
                         .icon-visa{
@@ -496,7 +496,7 @@
                     }
                 }
 
-                .brand-cards{
+                .brand-cards-container{
                     width: 100%;
 
                     .brand{
