@@ -1,14 +1,14 @@
 [
     {
         "id": "1",
-        "src": "assets/images/Home/CardsHome/card-image-1.jpg",
+        "src": "https://imgcentauro-a.akamaihd.net/230x230/94313731.jpg",
         "text": "An explosion of flavor",
         "label":"Sweets",
         "path": "/"
     },
     {   
         "id": "2",
-        "src": "images/Home/CardsHome/card-image-2.jpg",
+        "src": "https://imgcentauro-a.akamaihd.net/230x230/94313731.jpg",
         "text": "A wide variety of wines from the best wineries of the country",
         "label":"Wines",
         "path": "/"

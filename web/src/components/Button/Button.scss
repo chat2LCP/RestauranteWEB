@@ -23,17 +23,17 @@
     color: $dark-grey;
 }
 
-.btn--create-account{
-    background-color: #5fa371;
-    border: 1px solid #2d4e36;
-    color: $white;
-    transition: all 0.3s ease-out;
-}
+// .btn--green{
+//     background-color: #5fa371;
+//     border: 1px solid #2d4e36;
+//     color: $white;
+//     transition: all 0.3s ease-out;
+// }
 
-.btn--create-account:hover{
-    background-color: #549265;
-    color: $white;
-}
+// .btn--green{
+//     background-color: #549265;
+//     color: $white;
+// }
 
 .btn--login{
     width: 100%;
@@ -60,13 +60,13 @@
     color: $white;
 }
 
-.btn--create-account{
+.btn--green{
     background-color: #5fa371;
     border: 1px solid #2d4e36;
     color: $white;
 }
 
-.btn--create-account:hover{
+.btn--green:hover{
     background-color: #549265;
     color: $white;
     transition: all 0.3s ease-out;
@@ -74,11 +74,13 @@
 }
 
 .btn--medium{
-    padding: 10px 20px;
-    font-size: 16px;
+    padding: 15px 10px;
+    width: 200px;
+    font-size: 13px;
 }
 
 .btn--large{
     padding: 20px 26px;
+    width: 300px;
     font-size: 20px;
 }

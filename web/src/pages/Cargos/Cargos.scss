@@ -1,0 +1,70 @@
+@import 'src/styles/reset';
+@import 'src/styles/variables';
+@import 'src/styles/mixins';
+
+.cargos-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 170px;
+    width: 100%;
+    background-image: url('../../assets/SignIn/sign-in-capa.jpg');
+    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.logo-restaurante{
+    font-size: 6em;
+    color: #198754;
+}
+
+.cargos-titulo {
+    line-height: 170px;
+    margin-left: 25px; 
+    color: $white;
+    font-size: 70px;
+    text-align: center;
+}
+
+.cargos-container{
+    position: relative;
+    padding: 40px 30px;
+    height: 100vh;   
+}
+
+.divider::before{
+    content: "";
+    display: inline-block;
+    width: 100%;
+    height: 2px;
+    margin-right: 5px;
+    background: $light-grey;
+}
+
+.cargos-label-input{
+    .label-nome-cargo{
+        margin-top: 40px;
+        font-size: 2em;
+        font-weight: 600;
+        display: block;
+    }
+
+    .input-cargos{
+        width: 45%;
+        margin-top: 10px;
+        font-size: 2em;
+    }
+}
+
+.cargos-botoes{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-evenly;
+    position: absolute;
+    bottom: 40px;
+}
+

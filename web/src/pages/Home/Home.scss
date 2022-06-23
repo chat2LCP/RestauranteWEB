@@ -1,7 +1,70 @@
 @import 'src/styles/reset';
+@import 'src/styles/variables';
+@import 'src/styles/mixins';
 
-.products-cards-title{
-    padding: 40px 15px 20px;
+.home-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 170px;
+    width: 100%;
+    background-image: url('../../assets/SignIn/sign-in-capa.jpg');
+    box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.logo-restaurante{
+    font-size: 6em;
+    color: #198754;
+}
+
+.home-titulo {
+    line-height: 170px;
+    margin-left: 25px; 
+    color: $white;
+    font-size: 70px;
     text-align: center;
 }
 
+.home-container{
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+}
+
+.home-gerencial, .home-operacional{
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    height: 50vh;
+    border-bottom: 2px solid $light-grey;
+    padding: 15px;
+}
+
+.home-subtitulos{
+    color: $medium-grey;
+    @include flexCenter()
+}
+
+.home-botoes{
+    display: flex;
+    flex-direction: column;
+}
+
+.botoes-gerenciais-superiores, .botoes-gerenciais-inferiores{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 50%;
+    width: 100%;
+    gap: 10px
+}
+
+.botoes-operacionais{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    gap: 10px
+}

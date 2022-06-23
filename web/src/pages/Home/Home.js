@@ -1,36 +1,53 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import './Home.scss'
-import Cards from '../../components/Cards/Cards'
-import Footer from '../../components/Footer/Footer'
-import HeroSection from '../../components/HeroSection/HeroSection'
-import ScrollTopButton from '../../components/ScrollTopButton/ScrollTopButton'
-import Paralax from '../../components/Paralax/Paralax'
+import Button from '../../components/Button/Button'
 
 function Home() {
-    
-    //endpoint que contém os produtos que serão exibidos nos cards
-    const homeCards = 'http://localhost:3000/static/cards-prods.json'
-
     return(
-        <>
-            <HeroSection 
-                mainText='THE BEST MEALS YOU WILL EVER HAVE'
-                description='What are you waiting for?'
-            />
-            
-            <div className='products-cards-title'>
-                <h1>Check out our Products</h1>
-            </div>
+        <div>
+            <section className='header'>
+                <div className='home-header'>
+                    <div className='logo-restaurante'>
+                        <i class="fab fa-pagelines"></i>
+                    </div>
+                    <h1 className='home-titulo'>DRestaurante</h1>
+                </div>
+            </section>
 
-            <Cards productsUrl={homeCards} />
-
-            <ScrollTopButton />
-
-            <Paralax />
-
-            <Footer />
-        </>
+            <section className="home-container"> 
+                <div className='home-gerencial'>
+                    <div className='home-subtitulos'>
+                        <h3>GERENCIAL</h3>
+                    </div>
+                    <div className='home-botoes'>
+                        <div className='botoes-gerenciais-superiores'>
+                            <Button component={Link} to='/new-account' buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRO DE PRODUTOS</Button>
+                            <Button component={Link} to='/new-account' buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRO DE CARGOS</Button>
+                            <Button component={Link} to='/new-account' buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRO DE FUNCIONÁRIOS</Button>
+                        </div>
+                        <div className='botoes-gerenciais-inferiores'>
+                            <Button component={Link} to='/new-account' buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRO DE SETORES</Button>
+                            <Button component={Link} to='/new-account' buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRO DE CATEGORIAS</Button>
+                            <Button component={Link} to='/new-account' buttonSize='btn--medium' buttonStyle='btn--green'>RELATÓRIOS</Button>
+                        </div>
+                    </div>        
+                </div>  
+                <div className='home-operacional'>
+                    <div className='home-subtitulos'>
+                        <h3>OPERACIONAL</h3>
+                    </div>
+                    <div className='home-botoes'>
+                        <div className='botoes-operacionais'>
+                            <Button component={Link} to='/new-account' buttonSize='btn--medium' buttonStyle='btn--green'>REALIZAR PEDIDO</Button>
+                            <Button component={Link} to='/new-account' buttonSize='btn--medium' buttonStyle='btn--green'>INCLUIR ITEM</Button>
+                        </div>
+                    </div>        
+                </div> 
+                    
+            </section>
+        </div>
     )
 }
 

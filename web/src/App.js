@@ -3,36 +3,28 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import './App.scss'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import Navbar from './components/Navbar/Navbar'
 import Home from './pages/Home/Home'
 import Products from './pages/Products/Products'
 import NewAccount from './pages/NewAccount/NewAccount'
 import NotFound from './pages/notFound/NotFound'
 import Spinner from './components/Spinner/spinner';
 import Product from './pages/Product/Product';
-
-const SignUp = React.lazy(() => import('./pages/SignIn/SignIn'))
+import SignIn from './pages/SignIn/SignIn';
+import Cargos from './pages/Cargos/Cargos';
 
 function App() {
 
   return (
     <>
-      <BrowserRouter>
-        <Navbar />
-        
+      <BrowserRouter>      
         <Routes>
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={<Cargos />} />
+
+
           <Route path='products' element={<Products />} />
           <Route path='products/:productId' element={<Product />} />
-          <Route 
-            path='signin' 
-            element={
-              <Suspense fallback={<Spinner />}>
-                <SignUp />
-              </Suspense>
-            }
-          />          
-          <Route path='new-account' element={<NewAccount />} />
+          <Route path='signin' element={<SignIn /> } />  
+          <Route path='products' element={<Products />} />        
           <Route path='*' element={<NotFound />} />
         </Routes>
       </BrowserRouter>

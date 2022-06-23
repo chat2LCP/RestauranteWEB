@@ -1,32 +1,27 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup';
 
 import Button from '../../components/Button/Button'
 import './SignIn.scss'
+import axios from 'axios';
 
-const SignIn = () => {
-
-    // const [formValues, setFormValues] = useState({})
-    
-    /*constante do yup (validação dos campos do form) - o yup não é obrigatorio para faze as validações, eu poderia fazer as mesmas validações só com o react-hook-form, a vantagem do yup é que voce consegue tirar a validação da tag html e fazer ela aqui separada, fica mais legível assim.*/
+const SignIn = () => {    
     const validationSchema = yup.object().shape({
         user: yup
             .string()
-            .email("e-mail not valid")
-            .matches(/\S+@\S+\.\S+/, "e-mail not valid")
+            .email("e-mail inválido")
+            .matches(/\S+@\S+\.\S+/, "e-mail inválido")
             .required(),  //user é o atributo 'name' da input
         password: yup
             .string()
-            .min(6, "min length is 6")
+            .min(6, "mínimo de 6 caracteres")
             .required(),
     })
 
-    /*constantes do react-hook-form para manipular o formulário*/
     const { 
-        register,       //register registra cada uma das inputs dentro do hok
+        register,
         handleSubmit,
         formState: {errors}
     } = useForm({
@@ -37,28 +32,35 @@ const SignIn = () => {
         resolver: yupResolver(validationSchema),  //aplica a validação do yup no formulário
     })    
     
-    const logUser = async data => {
-        await login(data.user, data.password)
-        console.log(data)
-    }
-
-    const login = (user, password) => {
-        //criar método para logar no email
+    const handleLogin = async (data) => {
+        await axios.get('http://localhost:XXXX/ssss/', {
+            usuario: data.user, 
+            senha: data.password
+        })
+        .then((response) => {
+            console.log(response.data);
+        })
+        .catch((error) => {
+            console.log(error.message)
+        })
     }
 
     return (
         <div className='sign-in-container'>
             <section className='header'>
                 <div className='sign-header'>
-                    <h1 className='sign-in'>SIGN IN</h1>
+                    <div className='logo-restaurante'>
+                        <i class="fab fa-pagelines"></i>
+                    </div>
+                    <h1 className='sign-in'>DRestaurante</h1>
                 </div>
             </section>
 
             <section className="login-container container-fluid">               
                 <div className="row justify-content-center">
-                    <form className="form login-card-data col-10 col-sm-8 col-md-5" onSubmit={handleSubmit(logUser)}>               
+                    <form className="form login-card-data col-10 col-sm-8 col-md-5" onSubmit={handleSubmit(handleLogin)}>               
                         <div className="user">
-                            <label htmlFor="user">Username</label>
+                            <label htmlFor="user">Email</label>
                             <input 
                                 id="user"
                                 type="email" 
@@ -70,11 +72,7 @@ const SignIn = () => {
                         </div>
                 
                         <div className="password">
-                            <label htmlFor="password">Password</label>
-                            
-                            <label className="forgot-password">
-                                <Link to='/'>Forgot password</Link>
-                            </label>
+                            <label htmlFor="password">Senha</label>
                             
                             <div className="input-password-eye">
                                 <input 
@@ -90,15 +88,6 @@ const SignIn = () => {
                         
                         <Button type="submit" buttonStyle='btn--login'>LOGIN</Button>
                     </form>
-                </div>
-                
-                <div className="row text-center justify-content-center">
-                    <div className="signin-create-account-container col-10 col-sm-8 col-md-5">
-                        <span className="create-account-span">Don't have an account?</span>
-
-                        {/* dica: o to='/new-account' leva para localhost:3000/new-account, já o to='new-account' leva para localhost:3000/rota-atual/new-account */}
-                        <Button className='btn-create-account' component={Link} to='/new-account' buttonSize='btn--medium' buttonStyle='btn--create-account'>Create Account</Button>
-                    </div>
                 </div>
             </section>
         </div>
