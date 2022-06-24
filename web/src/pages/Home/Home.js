@@ -6,7 +6,7 @@ import Button from '../../components/Button/Button'
 
 function Home() {
     return(
-        <div>
+        <div className='home-container'>
             <section className='header'>
                 <div className='home-header'>
                     <div className='logo-restaurante'>
@@ -16,16 +16,16 @@ function Home() {
                 </div>
             </section>
 
-            <section className="home-container"> 
+            <section className="home-body"> 
                 <div className='home-gerencial'>
                     <div className='home-subtitulos'>
                         <h3>GERENCIAL</h3>
                     </div>
                     <div className='home-botoes'>
                         <div className='botoes-gerenciais-superiores'>
-                            <Button component={Link} to='/new-account' buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRO DE PRODUTOS</Button>
-                            <Button component={Link} to='/new-account' buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRO DE CARGOS</Button>
-                            <Button component={Link} to='/new-account' buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRO DE FUNCIONÁRIOS</Button>
+                            <Button component={Link} to='/cadastrar-produto' buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRO DE PRODUTOS</Button>
+                            <Button component={Link} to='cadastrar-cargo' buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRO DE CARGOS</Button>
+                            <Button component={Link} to='/cadastrar-funcionario' buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRO DE FUNCIONÁRIOS</Button>
                         </div>
                         <div className='botoes-gerenciais-inferiores'>
                             <Button component={Link} to='/new-account' buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRO DE SETORES</Button>
@@ -40,12 +40,11 @@ function Home() {
                     </div>
                     <div className='home-botoes'>
                         <div className='botoes-operacionais'>
-                            <Button component={Link} to='/new-account' buttonSize='btn--medium' buttonStyle='btn--green'>REALIZAR PEDIDO</Button>
-                            <Button component={Link} to='/new-account' buttonSize='btn--medium' buttonStyle='btn--green'>INCLUIR ITEM</Button>
+                            <Button component={Link} to='/realizar-pedido' buttonSize='btn--medium' buttonStyle='btn--green'>REALIZAR PEDIDO</Button>
+                            <Button component={Link} to='/incluir-item' buttonSize='btn--medium' buttonStyle='btn--green'>INCLUIR ITEM</Button>
                         </div>
                     </div>        
-                </div> 
-                    
+                </div>       
             </section>
         </div>
     )

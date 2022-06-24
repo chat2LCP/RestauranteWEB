@@ -5,8 +5,13 @@ import './Cargos.scss'
 import Button from '../../components/Button/Button'
 
 function Cargos() {
+
+    const cadastrarCargo = () => {
+        //logica p cadastrar
+    }
+
     return(
-        <div>
+        <div className='cargos-container'>
             <section className='header'>
                 <div className='cargos-header'>
                     <div className='logo-restaurante'>
@@ -16,7 +21,7 @@ function Cargos() {
                 </div>
             </section>
 
-            <section className="cargos-container">
+            <section className="cargos-body">
                 <div className='cargos-description'>
                     <h3>CADASTRO DE CARGOS</h3>
                     <span className='divider'></span>
@@ -28,8 +33,8 @@ function Cargos() {
                 </div>
 
                 <div className='cargos-botoes'>
-                    <Button component={Link} to='/new-account' buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRAR</Button>
-                    <Button component={Link} to='/new-account' buttonSize='btn--medium' buttonStyle='btn--green'>CANCELAR</Button>
+                    {/* <Button component={Button} onClick={cadastrarCargo} buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRAR</Button> */}
+                    <Button component={Link} to='/' buttonSize='btn--medium' buttonStyle='btn--red'>CANCELAR</Button>
                 </div>
             </section>
         </div>

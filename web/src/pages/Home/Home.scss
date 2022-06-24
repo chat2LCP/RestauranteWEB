@@ -2,6 +2,12 @@
 @import 'src/styles/variables';
 @import 'src/styles/mixins';
 
+.home-container{
+    height: 100vh;
+    position: relative;
+    min-width: 900px;
+}
+
 .home-header {
     display: flex;
     align-items: center;
@@ -28,22 +34,22 @@
     text-align: center;
 }
 
-.home-container{
+.home-body{
     display: grid;
     grid-template-rows: 1fr 1fr;
+    height: 100%;
 }
 
 .home-gerencial, .home-operacional{
     display: grid;
     grid-template-columns: 1fr 3fr;
-    height: 50vh;
     border-bottom: 2px solid $light-grey;
     padding: 15px;
 }
 
 .home-subtitulos{
     color: $medium-grey;
-    @include flexCenter()
+    @include flexCenter();
 }
 
 .home-botoes{

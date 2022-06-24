@@ -2,12 +2,12 @@
 @import 'src/styles/variables';
 @import 'src/styles/mixins';
 
-.cargos-container{
+.produto-container{
     height: 100%;
     min-width: 900px;
 }
 
-.cargos-header {
+.produto-header {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -25,7 +25,7 @@
     color: #198754;
 }
 
-.cargos-titulo {
+.produto-titulo {
     line-height: 170px;
     margin-left: 25px; 
     color: $white;
@@ -33,7 +33,7 @@
     text-align: center;
 }
 
-.cargos-body{
+.produto-body{
     padding: 40px 30px;
     height: 100%;   
 }
@@ -47,7 +47,17 @@
     background: $light-grey;
 }
 
-.cargos-label-input{
+.label-inputs{
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.label-input-esquerda, .label-input-direita{
+    width: 100%;
+}
+
+.produto-label-input{
     .label-nome-cargo{
         margin-top: 40px;
         font-size: 2em;
@@ -55,14 +65,33 @@
         display: block;
     }
 
-    .input-cargos{
-        width: 45%;
+    .input-produto{
+        width: 80%;
         margin-top: 10px;
         font-size: 2em;
     }
 }
 
-.cargos-botoes{
+.produto-radiobutton{
+    font-size: 2em;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    height: 50px;
+}
+
+.produto-radiobutton > input{
+    margin-right: 6px;
+    width: 16px;
+    height: 16px;
+}
+
+
+.produto-radiobutton > span{
+    margin-right: 20px;
+}
+
+.produto-botoes{
     width: 100%;
     display: flex;
     flex-wrap: wrap;

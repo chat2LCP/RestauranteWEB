@@ -73,6 +73,19 @@
     transition: 250ms;
 }
 
+.btn--red{
+    background-color: #ac4f49;
+    border: 1px solid #7e170a;
+    color: $white;
+}
+
+.btn--red:hover{
+    background-color: #a3412f;
+    color: $white;
+    transition: all 0.3s ease-out;
+    transition: 250ms;
+}
+
 .btn--medium{
     padding: 15px 10px;
     width: 200px;

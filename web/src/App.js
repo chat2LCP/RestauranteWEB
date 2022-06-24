@@ -1,16 +1,16 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import './App.scss'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Home from './pages/Home/Home'
-import Products from './pages/Products/Products'
-import NewAccount from './pages/NewAccount/NewAccount'
 import NotFound from './pages/notFound/NotFound'
-import Spinner from './components/Spinner/spinner';
-import Product from './pages/Product/Product';
 import SignIn from './pages/SignIn/SignIn';
 import Cargos from './pages/Cargos/Cargos';
+import Pedidos from './pages/Pedidos/Pedidos';
+import Produtos from './pages/Produtos/Produtos';
+import Funcionarios from './pages/Funcionarios/Funcionarios';
+import Itens from './pages/Itens/Itens';
 
 function App() {
 
@@ -18,13 +18,12 @@ function App() {
     <>
       <BrowserRouter>      
         <Routes>
-          <Route path='/' element={<Cargos />} />
-
-
-          <Route path='products' element={<Products />} />
-          <Route path='products/:productId' element={<Product />} />
-          <Route path='signin' element={<SignIn /> } />  
-          <Route path='products' element={<Products />} />        
+          <Route path='/' element={<Home />} />
+          <Route path='/cadastrar-cargo' element={<Cargos />} />
+          <Route path='/cadastrar-produto' element={<Produtos />} />
+          <Route path='/cadastrar-funcionario' element={<Funcionarios />} />
+          <Route path='/realizar-pedido' element={<Pedidos />} />  
+          <Route path='/incluir-item' element={<Itens />} />       
           <Route path='*' element={<NotFound />} />
         </Routes>
       </BrowserRouter>
