@@ -23,18 +23,6 @@
     color: $dark-grey;
 }
 
-// .btn--green{
-//     background-color: #5fa371;
-//     border: 1px solid #2d4e36;
-//     color: $white;
-//     transition: all 0.3s ease-out;
-// }
-
-// .btn--green{
-//     background-color: #549265;
-//     color: $white;
-// }
-
 .btn--login{
     width: 100%;
     background-color: #234d59;
@@ -86,14 +74,38 @@
     transition: 250ms;
 }
 
+.btn--blue{
+    background-color: #344b6d;
+    border: 1px solid #17053f;
+    color: $white;
+}
+
+.btn--blue:hover{
+    background-color: #2f4461;
+    color: $white;
+    transition: all 0.3s ease-out;
+    transition: 250ms;
+}
+
+.btn--transparent{
+    background-color: transparent;
+    border: none;
+}
+
 .btn--medium{
     padding: 15px 10px;
     width: 200px;
-    font-size: 13px;
+    font-size: 0.82rem;
 }
 
 .btn--large{
     padding: 20px 26px;
     width: 300px;
-    font-size: 20px;
+    font-size: 1.25rem;
+}
+
+.btn--invisible{
+    padding: 0;
+    height: 0;
+    width: 0;
 }

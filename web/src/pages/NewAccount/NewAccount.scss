@@ -6,7 +6,7 @@ body{
 }
 
 .create-account-container{
-    font-size: 10px;    /*fonte padrão para facilitar na responsividade, já que todas as unidades de tamanho de fonte se baseiam nessa unidade aqui (por conta do REM). Ex.: 1.2rem = 12px */
+    font-size: 0.62px;    /*fonte padrão para facilitar na responsividade, já que todas as unidades de tamanho de fonte se baseiam nessa unidade aqui (por conta do REM). Ex.: 1.2rem = 12px */
     padding: 0;
 }
 
@@ -24,7 +24,7 @@ body{
     line-height: 170px;
     width: 100%; 
     color: $white;
-    font-size: 70px;
+    font-size: 4rem;
     text-align: center;
 }
 
@@ -44,7 +44,7 @@ body{
     display: grid;
     align-content: space-between;
     height: 680px;
-    font-size: 1.3em;
+    font-size: 1.3rem;
     font-weight: 660;
 }
 
@@ -61,12 +61,12 @@ body{
 }
 
 .terms-of-use-link{
-    font-size: 1.1em;
+    font-size: 1.1rem;
     margin-bottom: 15px;
 }
 
 .already-have-account-span{
-    font-size: 1.3em;
+    font-size: 1.3rem;
     color: #4d4d4d;
     position: relative;
     width: 100%;

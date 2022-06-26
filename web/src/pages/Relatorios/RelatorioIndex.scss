@@ -2,13 +2,14 @@
 @import 'src/styles/variables';
 @import 'src/styles/mixins';
 
-.cargos-container{
+.relatorioIndex-container{
+    // height: 100vh;
     min-width: 900px;
     box-sizing: border-box;
     position: relative;
 }
 
-.cargos-header {
+.relatorioIndex-header {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -26,7 +27,7 @@
     color: #198754;
 }
 
-.cargos-titulo {
+.relatorioIndex-titulo {
     line-height: 170px;
     margin-left: 25px; 
     color: $white;
@@ -34,7 +35,7 @@
     text-align: center;
 }
 
-.cargos-body{
+.relatorioIndex-body{
     padding: 40px 30px; 
     height: 75vh; 
     position: relative;
@@ -51,32 +52,43 @@
     background: $light-grey;
 }
 
-.cargos-label-input{
-    .label-nome-cargo{
+.relatorio-datepickers-container{
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 2rem;
+
+    .label-nome-relatorio{
         margin-top: 40px;
-        font-size: 1.5rem;
         font-weight: 600;
         display: block;
     }
 
-    .input-cargos{
-        width: 45%;
-        margin-top: 10px;
-        font-size: 1.5rem;
+    .dtpicker{
+        width: 200px;  
+    }
+
+    .react-datepicker__input-container{
+        display: flex;
+        justify-content: center;
+    } 
+}
+
+.relatorioIndex-botoes-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .relatorioIndex-botoes{
+        display: flex;
+        justify-content: center;
+        gap: 70px; 
+    }
+
+    .botoes-inferior{
+        margin-top: 20px;
     }
 }
 
-.cargos-botoes{
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 70px;
-}
 
-.cargo-error-message{
-    color: rgb(243, 1, 1);
-    font-weight: normal;
-    font-size: 1rem;
-}
 

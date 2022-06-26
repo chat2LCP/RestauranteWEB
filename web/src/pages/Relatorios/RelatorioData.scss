@@ -2,13 +2,14 @@
 @import 'src/styles/variables';
 @import 'src/styles/mixins';
 
-.cargos-container{
+.relatorioData-container{
+    // height: 100vh;
     min-width: 900px;
     box-sizing: border-box;
     position: relative;
 }
 
-.cargos-header {
+.relatorioData-header {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -26,7 +27,7 @@
     color: #198754;
 }
 
-.cargos-titulo {
+.relatorioData-titulo {
     line-height: 170px;
     margin-left: 25px; 
     color: $white;
@@ -34,7 +35,7 @@
     text-align: center;
 }
 
-.cargos-body{
+.relatorioData-body{
     padding: 40px 30px; 
     height: 75vh; 
     position: relative;
@@ -51,32 +52,22 @@
     background: $light-grey;
 }
 
-.cargos-label-input{
-    .label-nome-cargo{
-        margin-top: 40px;
-        font-size: 1.5rem;
-        font-weight: 600;
-        display: block;
+.relatorioData-tabela-grafico{
+    .tabela-dados-relatorio{
+        width: 100%;
+        font-size: 1rem;
+        margin-top: 30px;
     }
 
-    .input-cargos{
-        width: 45%;
-        margin-top: 10px;
-        font-size: 1.5rem;
-    }
 }
 
-.cargos-botoes{
+.relatorioData-botoes{
     width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 70px;
-}
-
-.cargo-error-message{
-    color: rgb(243, 1, 1);
-    font-weight: normal;
-    font-size: 1rem;
+    // position:absolute;
+    // bottom: 40px;
 }
 

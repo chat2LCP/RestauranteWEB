@@ -5,10 +5,10 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup';
 import axios from 'axios';
 
-import './Cargos.scss'
+import './Categorias.scss'
 import Button from '../../components/Button/Button'
 
-function Cargos() {
+function Categorias() {
     const validationSchema = yup.object().shape({
         descricao: yup
             .string()
@@ -26,48 +26,48 @@ function Cargos() {
         resolver: yupResolver(validationSchema),  //aplica a validação do yup no formulário
     }) 
 
-    const cadastrarCargo = async ({descricao}) => {
-        await axios.put('/cargos', {
+    const cadastrarCategoria = async ({descricao}) => {
+        await axios.put('/categorias', {
             descricao
         })
         .then(
-            alert("Cargo salvo com sucesso")
+            alert("Categoria salva com sucesso")
         )
-        .catch(() => {
-           alert("Erro ao salvar cargo, tente novamente")
+        .catch((erro) => {
+           alert("Erro ao salvar categoria, tente novamente") 
         })
     }
 
     return(
-        <div className='cargos-container'>
+        <div className='categoria-container'>
             <section className='header'>
-                <div className='cargos-header'>
+                <div className='categoria-header'>
                     <div className='logo-restaurante'>
                         <i class="fab fa-pagelines"></i>
                     </div>
-                    <h1 className='cargos-titulo'>DRestaurante</h1>
+                    <h1 className='categoria-titulo'>DRestaurante</h1>
                 </div>
             </section>
 
-            <section className="cargos-body">
-                <div className='cargos-description'>
-                    <h3>CADASTRO DE CARGOS</h3>
+            <section className="categoria-body">
+                <div className='categoria-description'>
+                    <h3>CADASTRO DE CATEGORIA</h3>
                     <span className='divider'></span>
                 </div>
-                
-                <form className="form" onSubmit={handleSubmit(cadastrarCargo)}>
-                    <div className='cargos-label-input'>
-                        <label className='label-nome-cargo'>Nome do cargo</label>
+
+                <form className="form" onSubmit={handleSubmit(cadastrarCategoria)}>
+                    <div className='categoria-label-input'>
+                        <label className='label-nome-cargo'>Nome da categoria</label>
                         <input 
                             id="descricao"
                             name="descricao"
-                            className="form-control input-cargos" 
+                            className="form-control input-categoria" 
                             {...register("descricao")} 
                         />
-                        <p className='cargo-error-message'>{errors.descricao?.message}</p>
+                        <p className='categoria-error-message'>{errors.descricao?.message}</p>
                     </div>
 
-                    <div className='cargos-botoes'>
+                    <div className='categoria-botoes'>
                         <Button component={Button} type='submit' buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRAR</Button>
                         <Button component={Link} to='/' buttonSize='btn--medium' buttonStyle='btn--red'>CANCELAR</Button>
                     </div>
@@ -77,4 +77,4 @@ function Cargos() {
     )
 }
 
-export default Cargos
+export default Categorias

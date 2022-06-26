@@ -6,15 +6,16 @@ import * as yup from 'yup';
 import Button from '../../components/Button/Button'
 import './SignIn.scss'
 import axios from 'axios';
+import Home from '../Home/Home';
 
 const SignIn = () => {    
     const validationSchema = yup.object().shape({
-        user: yup
+        usuario: yup
             .string()
             .email("e-mail inválido")
             .matches(/\S+@\S+\.\S+/, "e-mail inválido")
             .required(),  //user é o atributo 'name' da input
-        password: yup
+        senha: yup
             .string()
             .min(6, "mínimo de 6 caracteres")
             .required(),
@@ -26,22 +27,23 @@ const SignIn = () => {
         formState: {errors}
     } = useForm({
         defaultValues: {
-            user: "",
-            password: ""
+            usuario: "",
+            senha: ""
         },
         resolver: yupResolver(validationSchema),  //aplica a validação do yup no formulário
     })    
     
-    const handleLogin = async (data) => {
-        await axios.get('http://localhost:XXXX/ssss/', {
-            usuario: data.user, 
-            senha: data.password
+    const handleLogin = async ({usuario, senha}) => {
+        await axios.get('http://localhost:8080/funcionarios', {
+            usuario, 
+            senha
         })
         .then((response) => {
             console.log(response.data);
         })
         .catch((error) => {
-            console.log(error.message)
+            // console.log(error.message)
+            <Home ></Home>
         })
     }
 
@@ -56,39 +58,37 @@ const SignIn = () => {
                 </div>
             </section>
 
-            <section className="login-container container-fluid">               
-                <div className="row justify-content-center">
-                    <form className="form login-card-data col-10 col-sm-8 col-md-5" onSubmit={handleSubmit(handleLogin)}>               
-                        <div className="user">
-                            <label htmlFor="user">Email</label>
+            <section className="login-container">               
+                <form className="form login-card-data" onSubmit={handleSubmit(handleLogin)}>               
+                    <div className="user">
+                        <label className='label-email' htmlFor="usuario">Email</label>
+                        <input 
+                            id="usuario"
+                            type="email" 
+                            name="usuario"
+                            className="form-control" 
+                            {...register("usuario")} 
+                        />
+                        <p className='error-message'>{errors.usuario?.message}</p>
+                    </div>
+            
+                    <div className="password">
+                        <label htmlFor="senha">Senha</label>       
+                        <div className="input-password-eye">
                             <input 
-                                id="user"
-                                type="email" 
-                                name="user"
+                                type="password" 
                                 className="form-control" 
-                                {...register("user")} 
+                                {...register("senha")}
+                                name="senha" 
+                                id="senha" 
                             />
-                            <p className='error-message'>{errors.user?.message}</p>
+                            {/* colocar o olhinho da senha */}
+                            <p className='error-message'>{errors.senha?.message}</p>
                         </div>
-                
-                        <div className="password">
-                            <label htmlFor="password">Senha</label>
-                            
-                            <div className="input-password-eye">
-                                <input 
-                                    type="password" 
-                                    className="form-control" 
-                                    {...register("password")}
-                                    name="password" 
-                                    id="password" 
-                                />
-                                <p className='error-message'>{errors.password?.message}</p>
-                            </div>
-                        </div>
-                        
-                        <Button type="submit" buttonStyle='btn--login'>LOGIN</Button>
-                    </form>
-                </div>
+                    </div>
+                    
+                    <Button type="submit" buttonStyle='btn--login'>LOGIN</Button>
+                </form>
             </section>
         </div>
     )

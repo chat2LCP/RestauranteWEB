@@ -1,8 +1,8 @@
 @import 'src/styles/variables';
 @import 'src/styles/reset';
 
-body{
-    font-size: 10px;
+.sign-in-container{
+    min-width: 900px;
 }
 
 .sign-header {
@@ -19,7 +19,7 @@ body{
 }
 
 .logo-restaurante{
-    font-size: 100px;
+    font-size: 6.2rem;
     color: #198754;
 }
 
@@ -27,8 +27,13 @@ body{
     line-height: 170px;
     margin-left: 25px; 
     color: $white;
-    font-size: 70px;
+    font-size: 4rem;
     text-align: center;
+}
+
+.login-container{
+    display: flex;
+    justify-content: center;
 }
 
 .login-card-data{
@@ -40,24 +45,17 @@ body{
     align-items: stretch;
     justify-content: space-between;
     height: 270px;
+    width: 500px;
     margin-top: 20px;
 }
 
 .user, .password{
-    font-size: 0.81rem;
+    font-size: 1rem;
     font-weight: 660;
 }
 
 .password label{
     width: 50%;
-}
-
-.password label + label{   /*label + label é para o css selecionar a primeiro label que vier depois de uma outra label, ou seja, dentro da classe .password, procure uma label, na próxima label aplica o text-align*/
-    text-align: right;
-}
-
-.password a{
-    text-decoration: none;
 }
 
 .input-password-eye > input{
@@ -75,7 +73,7 @@ body{
     transform: translateY(-50%);
     font-size: 1.4em;
 }
+
 .error-message{
     color: rgb(243, 1, 1);
-    font-weight: normal;
 }

@@ -11,7 +11,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 170px;
+    height: 25vh;
     width: 100%;
     background-image: url('../../assets/SignIn/sign-in-capa.jpg');
     box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.5);
@@ -21,7 +21,7 @@
 }
 
 .logo-restaurante{
-    font-size: 6em;
+    font-size: 6rem;
     color: #198754;
 }
 
@@ -29,13 +29,13 @@
     line-height: 170px;
     margin-left: 25px; 
     color: $white;
-    font-size: 70px;
+    font-size: 4rem;
     text-align: center;
 }
 
 .funcionario-body{
     padding: 40px 30px;
-    height: 100%;   
+    height: 75vh;   
 }
 
 .divider::before{
@@ -60,20 +60,30 @@
 .funcionario-label-input{
     .label-nome-cargo{
         margin-top: 40px;
-        font-size: 2em;
+        font-size: 1.5rem;
         font-weight: 600;
         display: block;
+    }
+
+    .input-select-container{
+        display: flex;
+
+        .input-id{
+            margin-right: 10px;
+            width: 70px;
+            margin-top: 10px;
+        }
     }
 
     .input-funcionario{
         width: 80%;
         margin-top: 10px;
-        font-size: 2em;
+        font-size: 1.5rem;
     }
 }
 
 .funcionario-radiobutton{
-    font-size: 2em;
+    font-size: 1.5rem;
     font-weight: 400;
     display: flex;
     align-items: center;
@@ -97,5 +107,11 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 70px;
+}
+
+.funcionario-error-message{
+    color: rgb(243, 1, 1);
+    font-weight: normal;
+    font-size: 1rem;
 }
 
