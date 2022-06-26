@@ -61,17 +61,18 @@ function Itens() {
 
     const [produtos, setProdutos] = useState([{id: '', nome: ''}])
     const [valor, setValor] = useState()
+    const [setores, setSetores] = useState([{id: '', descricao: ''}])
 
     const buscaProduto = async () => {
         const id = document.getElementById('idSetor').value;
 
         if (id != ''){
             await axios.get(`/produtos/${id}`)
-            .then(({id, nome}) => {
-                if(nome == ''){
+            .then(({id, descricao}) => {
+                if(descricao == ''){
                     alert('erro ao carregar lista de setores1')      
                 }else{
-                    setSetores([{id: `${id}`, nome: `${nome}`}])
+                    setSetores([{id: `${id}`, descricao: `${descricao}`}])
                 }
             })
             .catch(() => {
@@ -79,7 +80,7 @@ function Itens() {
             })
         } else{
             await axios.get(`/produtos`)
-            .then(({id, nome}) => setProdutos([{id: `${id}`, nome: `${nome}`}]))
+            .then(({id, descricao}) => setProdutos([{id: `${id}`, descricao: `${descricao}`}]))
             .catch(() => {
                 alert('erro ao carregar lista de setores3')      
             })
