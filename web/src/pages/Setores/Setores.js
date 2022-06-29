@@ -21,7 +21,6 @@ function Setores() {
     const { 
         register,
         handleSubmit,
-        formState,
         formState: {errors},
         reset
     } = useForm({
@@ -31,26 +30,18 @@ function Setores() {
         resolver: yupResolver(validationSchema),  //aplica a validação do yup no formulário
     }) 
 
-    useEffect(() => {
-        if (formState.isSubmitSuccessful) {
-          reset({ 
-            descricao: '' 
-          })
-        }
-      }, [formState, reset]);
-
     const cadastrarSetor = async ({descricao}) => {
         await axios.put('/setores', {
             descricao
         })
-        .then(() => 
+        .then(() => { 
             setModalShow({
                 show: true, 
                 status: 'ok', 
                 message: 'Setor salvo com sucesso!'
-            }),
-            // document.getElementById('descricao').value = ' '
-        )         
+            })
+            reset()
+        })         
         .catch(() => {
            setModalShow({
                 show: true, 

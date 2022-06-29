@@ -21,7 +21,6 @@ function Categorias() {
     const { 
         register,
         handleSubmit,
-        formState,
         formState: {errors},
         reset
     } = useForm({
@@ -30,14 +29,6 @@ function Categorias() {
         },
         resolver: yupResolver(validationSchema),  //aplica a validação do yup no formulário
     }) 
-
-    useEffect(() => {
-        if (formState.isSubmitSuccessful) {
-          reset({ 
-            descricao: '' 
-          })
-        }
-      }, [formState, reset]);
 
     const cadastrarCategoria = async ({descricao}) => {
         await axios.put('/categorias', {
@@ -49,7 +40,7 @@ function Categorias() {
                 status: 'ok', 
                 message: 'Categoria salva com sucesso!'
             })
-            // document.getElementById('descricao').value = ' '
+            reset()
         })         
         .catch(() => {
            setModalShow({
