@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -7,8 +7,11 @@ import axios from 'axios';
 
 import './Setores.scss'
 import Button from '../../components/Button/Button'
+import ModalScreen from '../../components/Modal/ModalScreen';
 
 function Setores() {
+    const [modalShow, setModalShow] = useState({show: false, status: 'ok', message: ''})
+
     const validationSchema = yup.object().shape({
         descricao: yup
             .string()
@@ -18,7 +21,9 @@ function Setores() {
     const { 
         register,
         handleSubmit,
-        formState: {errors}
+        formState,
+        formState: {errors},
+        reset
     } = useForm({
         defaultValues: {
             descricao: ''
@@ -26,21 +31,43 @@ function Setores() {
         resolver: yupResolver(validationSchema),  //aplica a validação do yup no formulário
     }) 
 
+    useEffect(() => {
+        if (formState.isSubmitSuccessful) {
+          reset({ 
+            descricao: '' 
+          })
+        }
+      }, [formState, reset]);
+
     const cadastrarSetor = async ({descricao}) => {
         await axios.put('/setores', {
             descricao
         })
-        .then(
-            alert("Setor salvo com sucesso")
-        )
-        .catch((error) => {
-           alert("Erro ao salvar setor, tente novamente") 
-           console.log(error)
+        .then(() => 
+            setModalShow({
+                show: true, 
+                status: 'ok', 
+                message: 'Setor salvo com sucesso!'
+            }),
+            // document.getElementById('descricao').value = ' '
+        )         
+        .catch(() => {
+           setModalShow({
+                show: true, 
+                status: 'error', 
+                message: `Erro ao salvar setor`
+            })
         })
     }
 
     return(
         <div className='setor-container'>
+            <ModalScreen 
+                show={modalShow.show} 
+                status={modalShow.status}
+                message={modalShow.message}
+                onHide={() => setModalShow({show: false, status: modalShow.status, message: modalShow.message})}
+            />
             <section className='header'>
                 <div className='setor-header'>
                     <div className='logo-restaurante'>

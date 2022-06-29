@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -7,8 +7,11 @@ import axios from 'axios';
 
 import './Categorias.scss'
 import Button from '../../components/Button/Button'
+import ModalScreen from '../../components/Modal/ModalScreen';
 
 function Categorias() {
+    const [modalShow, setModalShow] = useState({show: false, status: 'ok', message: ''})
+
     const validationSchema = yup.object().shape({
         descricao: yup
             .string()
@@ -18,7 +21,9 @@ function Categorias() {
     const { 
         register,
         handleSubmit,
-        formState: {errors}
+        formState,
+        formState: {errors},
+        reset
     } = useForm({
         defaultValues: {
             descricao: ''
@@ -26,20 +31,43 @@ function Categorias() {
         resolver: yupResolver(validationSchema),  //aplica a validação do yup no formulário
     }) 
 
+    useEffect(() => {
+        if (formState.isSubmitSuccessful) {
+          reset({ 
+            descricao: '' 
+          })
+        }
+      }, [formState, reset]);
+
     const cadastrarCategoria = async ({descricao}) => {
         await axios.put('/categorias', {
             descricao
         })
-        .then(
-            alert("Categoria salva com sucesso")
-        )
-        .catch((erro) => {
-           alert("Erro ao salvar categoria, tente novamente") 
+        .then(() => {
+            setModalShow({
+                show: true, 
+                status: 'ok', 
+                message: 'Categoria salva com sucesso!'
+            })
+            // document.getElementById('descricao').value = ' '
+        })         
+        .catch(() => {
+           setModalShow({
+                show: true, 
+                status: 'error', 
+                message: `Erro ao salvar categoria`
+            })
         })
     }
 
     return(
         <div className='categoria-container'>
+            <ModalScreen 
+                show={modalShow.show} 
+                status={modalShow.status}
+                message={modalShow.message}
+                onHide={() => setModalShow({show: false, status: modalShow.status, message: modalShow.message})}
+            />
             <section className='header'>
                 <div className='categoria-header'>
                     <div className='logo-restaurante'>

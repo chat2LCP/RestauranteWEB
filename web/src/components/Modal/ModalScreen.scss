@@ -1,0 +1,30 @@
+@import 'src/styles/variables';
+@import 'src/styles/mixins';
+@import 'src/styles/reset';
+
+.modal-icon{
+    font-size: 3rem;
+    width: 20px;
+    height: 20px;
+}
+
+.modal-body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-body > h4{
+   margin-bottom: 20px;
+}
+
+.modal-body > p{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+ }
+
+ .btn-modal{
+    font-size: 1rem;
+    width: 160px;
+ }
