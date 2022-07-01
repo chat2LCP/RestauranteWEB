@@ -7,6 +7,7 @@ import axios from 'axios'
 
 import './Itens.scss'
 import Button from '../../components/Button/Button'
+import ModalScreen from '../../components/Modal/ModalScreen';
 
 function Itens() {
     const validationSchema = yup.object().shape({
@@ -16,7 +17,7 @@ function Itens() {
             .integer("insira um valor inteiro")
             .typeError("valor inválido")
             .required("campo obrigatório"),
-        produto: yup
+        id_produto: yup
             .string()
             .required("campo obrigatório"),
         qtd: yup
@@ -44,53 +45,54 @@ function Itens() {
     const { 
         register,
         handleSubmit,
-        formState: {errors}
+        formState: {errors},
+        reset
     } = useForm({
         resolver: yupResolver(validationSchema),  //aplica a validação do yup no formulário
     }) 
-
-    useEffect(() => {
-        // axios.get('http://localhost:8080/XXXX')
-        // .then((data) => {
-        //     console.log(data)
-        // })
-        // .catch((error) => {
-        //     console.log(error.message)
-        // })
-    }, [])
-
+    
+    const [modalShow, setModalShow] = useState({show: false, status: 'ok', message: ''})
     const [produtos, setProdutos] = useState([{id: '', nome: ''}])
     const [valor, setValor] = useState()
-    const [setores, setSetores] = useState([{id: '', descricao: ''}])
+    
+    useEffect(() => {
+        axios.get('/produtos')
+        .then((res) => {
+            setProdutos(res.data.data)
+        })    
+    }, [])
+
 
     const buscaProduto = async () => {
-        const id = document.getElementById('idSetor').value;
+        const id = document.getElementById('idProduto').value;
 
         if (id != ''){
             await axios.get(`/produtos/${id}`)
-            .then(({id, descricao}) => {
-                if(descricao == ''){
-                    alert('erro ao carregar lista de setores1')      
-                }else{
-                    setSetores([{id: `${id}`, descricao: `${descricao}`}])
-                }
+            .then((res) => {
+                setProdutos(res.data.data)
             })
             .catch(() => {
-                alert('erro ao carregar lista de setores2')      
+                setModalShow({
+                    show: true, 
+                    status: 'error', 
+                    message: 'Produto não encontrado'
+                })
+                 
+                axios.get(`/produtos`)
+                .then((res) => 
+                    setProdutos(res.data.data)
+                )
             })
         } else{
             await axios.get(`/produtos`)
-            .then(({id, descricao}) => setProdutos([{id: `${id}`, descricao: `${descricao}`}]))
-            .catch(() => {
-                alert('erro ao carregar lista de setores3')      
-            })
+            .then((res) => 
+                setProdutos(res.data.data)
+            )
         }
     }
 
     const incluirItem = (data) => {
-
-
-        console.log(data)
+        //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     }
 
     const criaMascara = () => {
@@ -104,6 +106,12 @@ function Itens() {
 
     return(
         <div className='item-container'>
+             <ModalScreen
+                show={modalShow.show} 
+                status={modalShow.status}
+                message={modalShow.message}
+                onHide={() => setModalShow({show: false, status: modalShow.status, message: modalShow.message})}
+            />
             <section className='header'>
                 <div className='item-header'>
                     <div className='logo-restaurante'>
@@ -135,22 +143,23 @@ function Itens() {
 
                             <div className='item-label-input'>
                                 <div className='item-label-input'>
+                                    <label className='label-nome-item'>Produto</label>
                                     <div className='input-select-container'>
-                                        <label className='label-nome-item'>Produto</label>
+                                        <input id='idProduto' onBlur={buscaProduto} placeholder='id' className='input-id form-control' />
                                         <select
-                                            id="produto"
-                                            name="produto"
+                                            id="id_produto"
+                                            name="id_produto"
                                             className="form-control form-select input-item"  //form-control e form-select são classes do bootstrap
                                             {...register("produto")}
                                         >
                                             {produtos.map(produto => {
                                                 return (
-                                                    <option key={produto.id}>{produto.nome}</option>
+                                                    <option key={produto.id}>{produto.descricao}</option>
                                                 )
                                             })}
                                         </select>
                                     </div>
-                                    <p className='item-error-message'>{errors.produto?.message}</p>
+                                    <p className='item-error-message'>{errors.id_produto?.message}</p>
                                 </div>
                             </div>
 

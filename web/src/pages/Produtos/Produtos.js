@@ -7,6 +7,7 @@ import axios from 'axios';
 
 import './Produtos.scss'
 import Button from '../../components/Button/Button'
+import ModalScreen from '../../components/Modal/ModalScreen';
 
 function Produtos() {
     const validationSchema = yup.object().shape({
@@ -33,11 +34,13 @@ function Produtos() {
     const { 
         register,
         handleSubmit,
-        formState: {errors}
+        formState: {errors},
+        reset
     } = useForm({
         resolver: yupResolver(validationSchema),  //aplica a validação do yup no formulário
     }) 
 
+    const [modalShow, setModalShow] = useState({show: false, status: 'ok', message: ''})
     const [categorias, setCategorias] = useState([])
     const [setores, setSetores] = useState([])
 
@@ -46,55 +49,37 @@ function Produtos() {
         .then((res) => {
             setCategorias(res.data.data)
         })
-        .catch(() => {
-            alert('erro ao carregar lista de categorias') 
-        })
 
         axios.get('/setores')
         .then((res) => {
             setSetores(res.data.data)
         })
-        .catch(() => {
-            alert('erro ao carregar lista de setores') 
-        })
     }, [])
-
-    // const cadastrarProduto = async ({descricao, preco, ativo, id_categoria, id_setor, tempopreparo}) => {
-    //     await axios.put('/produtos', {
-    //         descricao: descricao,
-    //         preco: preco,
-    //         ativo: ativo,
-    //         id_categoria: id_categoria,
-    //         id_setor: id_setor,
-    //         tempopreparo: tempopreparo
-    //     })
-    //     .then((res) => {
-    //         // setSetores(res.data.data)
-    //     })
-    //     .catch(() => {
-    //         // alert('erro ao carregar lista de setores') 
-    //     })
-
-    //     console.log(id_categoria)
-    // }
 
     const cadastrarProduto = async (data) => {
         await axios.put('/produtos', {
-            descricao: data.descricao,
+            descricao: data.descricao.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase(),
             preco: data.preco,
             ativo: data.ativo,
             id_categoria: data.id_categoria,
             id_setor: data.id_setor,
             tempopreparo: data.tempopreparo
         })
-        .then((res) => {
-            // setSetores(res.data.data)
+        .then(() => {
+            setModalShow({
+                show: true, 
+                status: 'ok', 
+                message: `Produto salvo com sucesso`
+            })
+            reset()
         })
         .catch(() => {
-            // alert('erro ao carregar lista de setores') 
+            setModalShow({
+                show: true, 
+                status: 'error', 
+                message: `Erro ao salvar produto`
+            })
         })
-
-        console.log(data)
     }
 
     const buscaSetor = async () => {
@@ -105,12 +90,16 @@ function Produtos() {
             setSetores(res.data.data)
         })
         .catch(() => {
-            alert('setor não encontrado')  
+            setModalShow({
+                show: true, 
+                status: 'error', 
+                message: 'Setor não encontrado'
+            })
+             
             axios.get(`/setores`)
-            .then((res) => setSetores(res.data.data))
-            .catch(() => {
-                alert('erro ao carregar lista de setores')      
-            })    
+            .then((res) => 
+                setSetores(res.data.data)
+            )    
         })
     }
 
@@ -122,19 +111,27 @@ function Produtos() {
             setCategorias(res.data.data)
         })
         .catch(() => {
-            alert('categoria não encontrada')  
+            setModalShow({
+                show: true, 
+                status: 'error', 
+                message: 'Categoria não encontrada'
+            })
 
             axios.get(`/categorias`)
-            .then((res) => setCategorias(res.data.data))
-            .catch(() => {
-                alert('erro ao carregar lista de categorias')      
-            })    
+            .then((res) => 
+                setCategorias(res.data.data)
+            )    
         })
     }
 
-
     return(
         <div className='produto-container'>
+            <ModalScreen 
+                show={modalShow.show} 
+                status={modalShow.status}
+                message={modalShow.message}
+                onHide={() => setModalShow({show: false, status: modalShow.status, message: modalShow.message})}
+            />
             <section className='header'>
                 <div className='produto-header'>
                     <div className='logo-restaurante'>

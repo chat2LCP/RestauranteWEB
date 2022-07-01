@@ -24,15 +24,12 @@ function Setores() {
         formState: {errors},
         reset
     } = useForm({
-        defaultValues: {
-            descricao: ''
-        },
         resolver: yupResolver(validationSchema),  //aplica a validação do yup no formulário
     }) 
 
     const cadastrarSetor = async ({descricao}) => {
         await axios.put('/setores', {
-            descricao
+            descricao: descricao.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase()
         })
         .then(() => { 
             setModalShow({

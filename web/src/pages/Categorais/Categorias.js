@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -8,9 +8,11 @@ import axios from 'axios';
 import './Categorias.scss'
 import Button from '../../components/Button/Button'
 import ModalScreen from '../../components/Modal/ModalScreen';
+import SpinnerScreen from '../../components/Spinner/SpinnerScreen';
 
 function Categorias() {
     const [modalShow, setModalShow] = useState({show: false, status: 'ok', message: ''})
+    const [showSpinner, setShowSpinner] = useState(false)
 
     const validationSchema = yup.object().shape({
         descricao: yup
@@ -24,35 +26,39 @@ function Categorias() {
         formState: {errors},
         reset
     } = useForm({
-        defaultValues: {
-            descricao: ''
-        },
         resolver: yupResolver(validationSchema),  //aplica a validação do yup no formulário
     }) 
 
     const cadastrarCategoria = async ({descricao}) => {
-        await axios.put('/categorias', {
-            descricao
-        })
-        .then(() => {
-            setModalShow({
-                show: true, 
-                status: 'ok', 
-                message: 'Categoria salva com sucesso!'
+        try{
+            setShowSpinner(true)
+
+            await axios.put('/categorias', {
+                descricao: descricao.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase()
             })
-            reset()
-        })         
-        .catch(() => {
-           setModalShow({
-                show: true, 
-                status: 'error', 
-                message: `Erro ao salvar categoria`
+            .then(() => {
+                setModalShow({
+                    show: true, 
+                    status: 'ok', 
+                    message: 'Categoria salva com sucesso'
+                })
+                reset()
+            })         
+            .catch(() => {
+               setModalShow({
+                    show: true, 
+                    status: 'error', 
+                    message: `Erro ao salvar categoria`
+                })
             })
-        })
+        }finally{
+            setShowSpinner(false)
+        }
     }
 
     return(
         <div className='categoria-container'>
+            <SpinnerScreen show={showSpinner} />
             <ModalScreen 
                 show={modalShow.show} 
                 status={modalShow.status}

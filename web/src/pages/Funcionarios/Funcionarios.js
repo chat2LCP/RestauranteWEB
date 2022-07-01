@@ -7,6 +7,7 @@ import axios from 'axios'
 
 import './Funcionarios.scss'
 import Button from '../../components/Button/Button'
+import ModalScreen from '../../components/Modal/ModalScreen';
 
 function Funcionarios() {
     const validationSchema = yup.object().shape({
@@ -19,7 +20,7 @@ function Funcionarios() {
         senha: yup
             .string()
             .required("campo obrigatório"),
-        cargo: yup
+        id_cargo: yup
             .string()
             .required("campo obrigatório")
     })
@@ -27,51 +28,78 @@ function Funcionarios() {
     const { 
         register,
         handleSubmit,
-        formState: {errors}
+        formState: {errors},
+        reset
     } = useForm({
-        defaultValues: {
-            nome: '',
-            login: '',
-            senha: '',
-            cargo: '',
-        },
         resolver: yupResolver(validationSchema),  //aplica a validação do yup no formulário
     })
 
-    const [cargos, setCargos] = useState([{id: '', nome: ''}])
+    const [modalShow, setModalShow] = useState({show: false, status: 'ok', message: ''})
+    const [cargos, setCargos] = useState([{id: '', descricao: ''}])
 
     useEffect(() => {
-        axios.get(`/setores`)
-        .then(({id, nome}) => setCargos([{id: `${id}`, nome: `${nome}`}]))
-        .catch(() => {
-            // alert('erro ao carregar lista de categorias')      
-        })
+        axios.get(`/cargos`)
+        .then(({id, descricao}) => 
+            setCargos([{id: `${id}`, descricao: `${descricao}`}])
+        )
     }, [])
-  
-    const cadastrarFuncionario = (data) => {
-        console.log(data)
-    }
-
+   
     const buscaCargos = async () => {
         const id = document.getElementById('idCargo').value;
-
+        
         if (id !== null || id !== undefined){
-            await axios.get(`/setores/${id}`)
-            .then(({id, nome}) => setCargos([{id: `${id}`, nome: `${nome}`}]))
+            await axios.get(`/cargos/${id}`)
+            .then((res) => 
+                setCargos(res.data.data)
+            )
             .catch(() => {
-                // alert('erro ao carregar lista de categorias')      
+                setModalShow({
+                    show: true, 
+                    status: 'error', 
+                    message: 'Cargo não encontrado'
+                })
             })
         } else{
-            await axios.get(`/setores`)
-            .then(({id, nome}) => setCargos([{id: `${id}`, nome: `${nome}`}]))
-            .catch(() => {
-                // alert('erro ao carregar lista de categorias')      
-            })
+            await axios.get(`/cargos`)
+            .then((res) => 
+            setCargos(res.data.data)
+            )
         }
+    }
+    
+    const cadastrarFuncionario = async ({nome, login, senha, id_cargo, ativo}) => {
+        await axios.put('/funcionarios', {
+            nome : nome.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase(),
+            login,
+            senha,
+            id_cargo,
+            ativo
+        })
+        .then(() => {
+            setModalShow({
+                show: true, 
+                status: 'ok', 
+                message: 'Funcionário salvo com sucesso'
+            })
+            reset()
+        })
+        .catch(() => {
+            setModalShow({
+                show: true, 
+                status: 'error', 
+                message: 'Erro ao salvar funcionário'
+            })
+        })
     }
 
     return(
         <div className='funcionario-container'>
+            <ModalScreen
+                show={modalShow.show} 
+                status={modalShow.status}
+                message={modalShow.message}
+                onHide={() => setModalShow({show: false, status: modalShow.status, message: modalShow.message})}
+            />
             <section className='header'>
                 <div className='funcionario-header'>
                     <div className='logo-restaurante'>
@@ -130,19 +158,19 @@ function Funcionarios() {
                                 <div className='input-select-container'>
                                     <input id='idCargo' onBlur={buscaCargos} placeholder='id' className='input-id form-control' />
                                     <select
-                                        id="cargo"
-                                        name="cargo"
+                                        id="id_cargo"
+                                        name="id_cargo"
                                         className="form-control form-select input-funcionario"  //form-control e form-select são classes do bootstrap
-                                        {...register("cargo")} 
+                                        {...register("id_cargo")} 
                                     >
                                         {cargos.map(cargo => {
                                             return (
-                                                <option key={cargo.id}>{cargo.nome}</option>
+                                                <option key={cargo.id}>{cargo.descricao}</option>
                                             )
                                         })}
                                     </select>
                                 </div>
-                                <p className='funcionario-error-message'>{errors.cargo?.message}</p>
+                                <p className='funcionario-error-message'>{errors.id_cargo?.message}</p>
                             </div>
                             
 
@@ -151,14 +179,14 @@ function Funcionarios() {
                                 <div className='funcionario-radiobutton'>
                                     <input 
                                         type="radio" 
-                                        value="S" 
+                                        value={true} 
                                         name="active" 
                                         defaultChecked={true} 
                                         {...register("ativo")}
                                     /><span>Sim</span>
                                     <input 
                                         type="radio" 
-                                        value="N" 
+                                        value={false} 
                                         name="active"
                                         {...register("ativo")} 
                                     /><span>Não</span>

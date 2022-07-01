@@ -1,9 +1,0 @@
-@import 'src/styles/reset';
-@import 'src/styles/mixins';
-
-
-.all-products-container{
-    @include flexCenter();
-    flex-direction: column;
-    height: 100vh;
-}

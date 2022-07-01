@@ -35,7 +35,6 @@
 
 .item-body{
     padding: 40px 30px;
-    height: 75vh;   
 }
 
 .divider::before{
@@ -57,25 +56,29 @@
     width: 100%;
 }
 
-.pedido-label-input{
-    .label-nome-pedido{
+.item-label-input{
+    .label-nome-item{
         margin-top: 40px;
         font-size: 1.5rem;
         font-weight: 600;
         display: block;
     }
 
+    .input-select-container{
+        display: flex;
+
+        .input-id{
+            margin-right: 10px;
+            width: 70px;
+            margin-top: 10px;
+        }
+    }
+
     .input-item{
-        width: 45%;
+        width: 80%;
         margin-top: 10px;
         font-size: 1.5rem;
     }
-}
-
-.input-item{
-    width: 80%;
-    margin-top: 10px;
-    font-size: 1.5rem;
 }
 
 .label-nome-item{
@@ -110,6 +113,7 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 70px;
+    margin-top: 40px;
 }
 
 .item-error-message{

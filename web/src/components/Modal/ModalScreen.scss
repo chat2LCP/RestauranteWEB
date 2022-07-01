@@ -2,12 +2,6 @@
 @import 'src/styles/mixins';
 @import 'src/styles/reset';
 
-.modal-icon{
-    font-size: 3rem;
-    width: 20px;
-    height: 20px;
-}
-
 .modal-body{
     display: flex;
     flex-direction: column;
@@ -22,6 +16,7 @@
     margin-top: 20px;
     margin-bottom: 20px;
     font-size: 1.3rem;
+    color: $dark-grey;
  }
 
  .btn-modal{

@@ -35,7 +35,9 @@
 
 .produto-body{
     padding: 40px 30px;
-    height: 75vh;   
+    position: relative;
+    display: flex;
+    flex-direction: column;  
 }
 
 .divider::before{
@@ -108,6 +110,7 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 70px;
+    margin-top: 40px;
 }
 
 .produto-error-message{

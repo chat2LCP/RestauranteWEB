@@ -1,9 +1,8 @@
 import React from 'react';
-import {Modal} from 'react-bootstrap'
+import { Modal } from 'react-bootstrap'
 import { EmojiSmile, EmojiFrown } from 'react-bootstrap-icons';
 
 import Button from '../Button/Button';
-
 import './ModalScreen.scss';
 
 const ModalScreen = (
@@ -12,7 +11,6 @@ const ModalScreen = (
     return(
         <Modal
             {...props}
-            size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
             className='modal-container'
@@ -20,9 +18,9 @@ const ModalScreen = (
             <Modal.Body className='modal-body'>
                 {
                     props.status == 'ok' ? 
-                    <EmojiSmile size={92} color='#03AC13'/>
+                    <EmojiSmile size={85} color='#03AC13'/>
                     :
-                    <EmojiFrown size={92} color='#B90E0A'/>
+                    <EmojiFrown size={85} color='#B90E0A'/>
                 }
                 
                 <p>{props.message}</p>

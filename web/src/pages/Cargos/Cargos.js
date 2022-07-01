@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -7,6 +7,7 @@ import axios from 'axios';
 
 import './Cargos.scss'
 import Button from '../../components/Button/Button'
+import ModalScreen from '../../components/Modal/ModalScreen';
 
 function Cargos() {
     const validationSchema = yup.object().shape({
@@ -18,28 +19,46 @@ function Cargos() {
     const { 
         register,
         handleSubmit,
-        formState: {errors}
+        formState: {errors},
+        reset
     } = useForm({
         defaultValues: {
             descricao: ''
         },
-        resolver: yupResolver(validationSchema),  //aplica a validação do yup no formulário
+        resolver: yupResolver(validationSchema),
     }) 
+
+    const [modalShow, setModalShow] = useState({show: false, status: 'ok', message: ''})
 
     const cadastrarCargo = async ({descricao}) => {
         await axios.put('/cargos', {
-            descricao
+            descricao: descricao.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase()
         })
         .then(
-            alert("Cargo salvo com sucesso")
+            setModalShow({
+                show: true, 
+                status: 'ok', 
+                message: 'Cargo salvo com sucesso'
+            }),
+            reset()
         )
         .catch(() => {
-           alert("Erro ao salvar cargo, tente novamente")
+            setModalShow({
+                show: true, 
+                status: 'error', 
+                message: 'Erro ao salvar cargo'
+            })
         })
     }
 
     return(
         <div className='cargos-container'>
+             <ModalScreen
+                show={modalShow.show} 
+                status={modalShow.status}
+                message={modalShow.message}
+                onHide={() => setModalShow({show: false, status: modalShow.status, message: modalShow.message})}
+            />
             <section className='header'>
                 <div className='cargos-header'>
                     <div className='logo-restaurante'>
