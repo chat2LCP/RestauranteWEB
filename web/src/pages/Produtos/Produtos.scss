@@ -72,13 +72,19 @@
 
         .input-id{
             margin-right: 10px;
-            width: 70px;
+            width: 80px;
             margin-top: 10px;
         }
     }
 
     .input-produto{
         width: 80%;
+        margin-top: 10px;
+        font-size: 1.5rem;
+    }
+
+    .selects{
+        width: calc(80% - 90px);
         margin-top: 10px;
         font-size: 1.5rem;
     }
@@ -102,6 +108,51 @@
 .produto-radiobutton > span{
     margin-right: 20px;
     font-size: 1.5rem;
+}
+
+.resumo-produto-container{    
+    .resumo-produto-scrollarea{
+        border: 1px solid $input-border-grey;
+        border-radius: 4px;
+        margin-top: 40px;
+        padding: 15px;
+        width: 100%;
+        height: 505px;
+        overflow-y: auto;
+        word-wrap: break-word;
+        
+        .resumo-titulo{
+            font-size: 1.5rem;
+            font-weight: 500;
+            font-style: italic;
+            text-decoration: underline;
+            text-align: center;
+        }
+
+        .resumo-container{
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+            border-bottom: 1px solid $input-border-grey;
+        }
+        
+        .resumo-info{
+            font-size: 1rem;
+            font-weight: 600;
+            color: $blue;
+            display: block;
+        }
+
+        .resumo-item{
+            font-size: 1rem;
+            font-weight: 500;
+        } 
+        
+        .resumo-subitem{
+            font-size: 1rem;
+            margin-left: 10px;
+        }
+    }
 }
 
 .produto-botoes{

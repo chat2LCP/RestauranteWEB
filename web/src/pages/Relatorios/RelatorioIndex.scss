@@ -3,7 +3,6 @@
 @import 'src/styles/mixins';
 
 .relatorioIndex-container{
-    // height: 100vh;
     min-width: 900px;
     box-sizing: border-box;
     position: relative;
@@ -22,11 +21,6 @@
     background-repeat: no-repeat;
 }
 
-.logo-restaurante{
-    font-size: 6rem;
-    color: #198754;
-}
-
 .relatorioIndex-titulo {
     line-height: 170px;
     margin-left: 25px; 
@@ -37,10 +31,11 @@
 
 .relatorioIndex-body{
     padding: 40px 30px; 
-    height: 75vh; 
+    height: 100%; 
     position: relative;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
 
 .divider::before{
@@ -55,7 +50,7 @@
 .relatorio-datepickers-container{
     display: flex;
     justify-content: space-evenly;
-    font-size: 2rem;
+    font-size: 1.2rem;
 
     .label-nome-relatorio{
         margin-top: 40px;
@@ -78,6 +73,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 40px;
 
     .relatorioIndex-botoes{
         display: flex;
@@ -89,6 +85,56 @@
         margin-top: 20px;
     }
 }
+
+.relatorio-index-container{
+    padding: 30px;
+
+    .relatorio-index-body{
+        width: 100%;
+        border: 1px solid $input-border-grey;
+        border-radius: 4px;
+
+        .tabela-dados-relatorio{
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+
+            .thead{
+                border-bottom: 1px solid $dark-grey;
+            }
+
+            .tbody{
+                height: 500px;
+            }
+
+            .colunas{
+                display: flex;
+                justify-content: space-around;
+            }
+
+            .linha-container{
+                display: flex;
+                flex-direction: column;
+                border-bottom: 1px solid $light-grey;
+
+                .row-dados{
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-around;
+                }
+
+                .row-total-valor-geral{
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-around;
+                    border-top: 1px dotted $light-grey;
+                }
+            }
+        }
+    }
+}
+
+
 
 
 

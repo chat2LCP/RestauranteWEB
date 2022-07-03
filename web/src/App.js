@@ -14,7 +14,7 @@ import Itens from './pages/Itens/Itens';
 import Categorias from './pages/Categorais/Categorias';
 import Setores from './pages/Setores/Setores';
 import RelatorioIndex from './pages/Relatorios/RelatorioIndex';
-import RelatorioData from './pages/Relatorios/RelatorioData';
+import Vendas from './pages/Venda/Vendas';
 
 function App() {
 
@@ -30,9 +30,9 @@ function App() {
           <Route path='/cadastrar-categoria' element={<Categorias />} />
           <Route path='/cadastrar-setor' element={<Setores />} />
           <Route path='/realizar-pedido' element={<Pedidos />} />  
+          <Route path='/fechar-pedido' element={<Vendas />} />  
           <Route path='/incluir-item' element={<Itens />} />       
           <Route path='/relatorios' element={<RelatorioIndex />} />  
-          <Route path='/relatorios/relatorios-data' element={<RelatorioData />} />      
           <Route path='*' element={<NotFound />} />
         </Routes>
       </BrowserRouter>

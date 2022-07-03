@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup';
+import { Apple } from 'react-bootstrap-icons';
 
 import './Pedidos.scss'
 import Button from '../../components/Button/Button'
@@ -58,9 +59,7 @@ const Pedidos = () => {
             />
             <section className='header'>
                 <div className='pedido-header'>
-                    <div className='logo-restaurante'>
-                        {/* <i class="fab fa-pagelines"></i> */}
-                    </div>
+                    <Apple size={92} color='#fefefe'></Apple>
                     <h1 className='pedido-titulo'>DRestaurante</h1>
                 </div>
             </section>

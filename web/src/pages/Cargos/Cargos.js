@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup';
 import axios from 'axios';
+import { Apple } from 'react-bootstrap-icons';
 
 import './Cargos.scss'
 import Button from '../../components/Button/Button'
 import ModalScreen from '../../components/Modal/ModalScreen';
+import SpinnerScreen from '../../components/Spinner/SpinnerScreen';
 
 function Cargos() {
     const validationSchema = yup.object().shape({
@@ -29,31 +31,47 @@ function Cargos() {
     }) 
 
     const [modalShow, setModalShow] = useState({show: false, status: 'ok', message: ''})
+    const [listaCargos, setListaCargos] = useState([{id: 0, descricao: ''}])
+    const [showSpinner, setShowSpinner] = useState(false)
+
+    useEffect(() => {
+        axios.get('/cargos')
+        .then((res) => {
+            setListaCargos(res.data.data)
+        })    
+    }, [listaCargos])
 
     const cadastrarCargo = async ({descricao}) => {
-        await axios.put('/cargos', {
-            descricao: descricao.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase()
-        })
-        .then(
-            setModalShow({
-                show: true, 
-                status: 'ok', 
-                message: 'Cargo salvo com sucesso'
-            }),
-            reset()
-        )
-        .catch(() => {
-            setModalShow({
-                show: true, 
-                status: 'error', 
-                message: 'Erro ao salvar cargo'
+        try{
+            setShowSpinner(true)
+
+            await axios.put('/cargos', {
+                descricao: descricao.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase()
             })
-        })
+            .then(
+                setModalShow({
+                    show: true, 
+                    status: 'ok', 
+                    message: 'Cargo salvo com sucesso'
+                }),
+                reset()
+            )
+            .catch(() => {
+                setModalShow({
+                    show: true, 
+                    status: 'error', 
+                    message: 'Erro ao salvar cargo'
+                })
+            })
+        }finally{
+            setShowSpinner(false)
+        }
     }
 
     return(
         <div className='cargos-container'>
-             <ModalScreen
+            <SpinnerScreen show={showSpinner} />
+            <ModalScreen
                 show={modalShow.show} 
                 status={modalShow.status}
                 message={modalShow.message}
@@ -61,9 +79,7 @@ function Cargos() {
             />
             <section className='header'>
                 <div className='cargos-header'>
-                    <div className='logo-restaurante'>
-                        <i class="fab fa-pagelines"></i>
-                    </div>
+                    <Apple size={92} color='#fefefe'></Apple>
                     <h1 className='cargos-titulo'>DRestaurante</h1>
                 </div>
             </section>
@@ -75,16 +91,38 @@ function Cargos() {
                 </div>
                 
                 <form className="form" onSubmit={handleSubmit(cadastrarCargo)}>
-                    <div className='cargos-label-input'>
-                        <label className='label-nome-cargo'>Nome do cargo</label>
-                        <input 
-                            id="descricao"
-                            name="descricao"
-                            className="form-control input-cargos" 
-                            {...register("descricao")} 
-                        />
-                        <p className='cargo-error-message'>{errors.descricao?.message}</p>
-                    </div>
+                    <div className='label-inputs'>
+                        <div className='label-input-esquerda'>
+                            <div className='cargos-label-input'>
+                                <label className='label-nome-cargo'>Nome do cargo</label>
+                                <input 
+                                    id="descricao"
+                                    name="descricao"
+                                    className="form-control input-cargos" 
+                                    {...register("descricao")} 
+                                />
+                                <p className='cargo-error-message'>{errors.descricao?.message}</p>
+                            </div>
+                        </div>
+
+                        <div className='label-input-direita'>
+                            <div className='resumo-cargo-container'>
+                                <div className='resumo-cargo-scrollarea'>
+                                    <h2 className='resumo-titulo'>Cargos cadastrados</h2>
+                                    {
+                                        listaCargos.map((cargo) => {
+                                            return(
+                                                <div key={cargo.id}>
+                                                    
+                                                    <span className='resumo-info'>{cargo.id} - {cargo.descricao}</span>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
 
                     <div className='cargos-botoes'>
                         <Button component={Button} type='submit' buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRAR</Button>

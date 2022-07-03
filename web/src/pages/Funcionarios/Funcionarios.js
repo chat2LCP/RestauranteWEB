@@ -4,10 +4,12 @@ import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup';
 import axios from 'axios'
+import { Apple } from 'react-bootstrap-icons';
 
 import './Funcionarios.scss'
 import Button from '../../components/Button/Button'
 import ModalScreen from '../../components/Modal/ModalScreen';
+import SpinnerScreen from '../../components/Spinner/SpinnerScreen';
 
 function Funcionarios() {
     const validationSchema = yup.object().shape({
@@ -19,6 +21,9 @@ function Funcionarios() {
             .required("campo obrigatório"),
         senha: yup
             .string()
+            .required("campo obrigatório"),
+        idCargo: yup
+            .string()
             .required("campo obrigatório")
     })
 
@@ -26,13 +31,17 @@ function Funcionarios() {
         register,
         handleSubmit,
         formState: {errors},
-        reset
+        reset,
+        setValue,
+        getValues,
     } = useForm({
         resolver: yupResolver(validationSchema),  //aplica a validação do yup no formulário
     })
 
     const [modalShow, setModalShow] = useState({show: false, status: 'ok', message: ''})
+    const [showSpinner, setShowSpinner] = useState(false)
     const [cargos, setCargos] = useState([{id: '', descricao: ''}])
+    const [listaFuncionarios, setListaFuncionarios] = useState([{id: 0, nome: '', login: '', senha: '', idCargo: 0, ativo: 0}])
 
     useEffect(() => {
         axios.get(`/cargos`)
@@ -40,6 +49,13 @@ function Funcionarios() {
             setCargos(res.data.data)
         })  
     }, [])
+
+    useEffect(() => {
+        axios.get('/funcionarios')
+        .then((res) => {
+            setListaFuncionarios(res.data.data)
+        })    
+    }, [listaFuncionarios])
    
     const buscaCargos = async (e) => {
         const id = e.target.value
@@ -55,6 +71,9 @@ function Funcionarios() {
                     status: 'error', 
                     message: 'Cargo não encontrado'
                 })
+
+                const descricao = getValues("descricaoCargo")
+                setValue("idCargo", descricao)
             })
         } else{
             await axios.get(`/cargos`)
@@ -63,42 +82,41 @@ function Funcionarios() {
             )
         }
     }
-
-    const defineIdCargo = () => {
-        const select = document.getElementById('select-cargo')
-        const idCargoSelecionado = select.options[select.selectedIndex].value
-        
-        const inputIdCargo = document.getElementById('idCargo')
-        inputIdCargo.value = idCargoSelecionado
-    }
     
     const cadastrarFuncionario = async ({nome, login, senha, idCargo, ativo}) => {
-        await axios.put('/funcionarios', {
-            nome : nome.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase(),
-            login,
-            senha,
-            idCargo : document.getElementById('idCargo').value,
-            ativo
-        })
-        .then(() => {
-            setModalShow({
-                show: true, 
-                status: 'ok', 
-                message: 'Funcionário salvo com sucesso'
+        try{ 
+            setShowSpinner(true)
+
+            await axios.put('/funcionarios', {
+                nome : nome.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase(),
+                login,
+                senha,
+                idCargo,
+                ativo
             })
-            reset()
-        })
-        .catch(() => {
-            setModalShow({
-                show: true, 
-                status: 'error', 
-                message: 'Erro ao salvar funcionário'
+            .then(() => {
+                setModalShow({
+                    show: true, 
+                    status: 'ok', 
+                    message: 'Funcionário salvo com sucesso'
+                })
+                reset()
             })
-        })
+            .catch(() => {
+                setModalShow({
+                    show: true, 
+                    status: 'error', 
+                    message: 'Erro ao salvar funcionário'
+                })
+            })
+        }finally{
+            setShowSpinner(false)
+        }
     }
 
     return(
         <div className='funcionario-container'>
+            <SpinnerScreen show={showSpinner} />
             <ModalScreen
                 show={modalShow.show} 
                 status={modalShow.status}
@@ -107,11 +125,7 @@ function Funcionarios() {
             />
             <section className='header'>
                 <div className='funcionario-header'>
-                    <div className='logo-restaurante'>
-
-                        LOGo
-
-                    </div>
+                    <Apple size={92} color='#fefefe'></Apple>
                     <h1 className='funcionario-titulo'>DRestaurante</h1>
                 </div>
             </section>
@@ -157,22 +171,22 @@ function Funcionarios() {
                                 />
                                 <p className='funcionario-error-message'>{errors.senha?.message}</p>
                             </div>
-                        </div>
 
-                        <div className='label-input-direita'>
                             <div className='funcionario-label-input'>
                                 <label className='label-nome-cargo'>Cargo</label>
                                 <div className='input-select-container'>
                                     <input 
                                         className='input-id form-control' 
                                         id="idCargo"
+                                        {...register("idCargo")}
                                         onBlur={buscaCargos} 
                                         defaultValue={cargos[0].id}
                                     />
                                     <select 
                                         id='select-cargo' 
-                                        onChange={defineIdCargo} 
-                                        className="form-control form-select input-funcionario"
+                                        className="form-control form-select select"
+                                        {...register("descricaoCargo")}
+                                        onChange={(e) => setValue("idCargo", e.currentTarget.value)} 
                                     >
                                         {cargos.map(cargo => {
                                             return (
@@ -200,6 +214,23 @@ function Funcionarios() {
                                         name="active"
                                         {...register("ativo")} 
                                     /><span>Não</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='label-input-direita'>
+                        <div className='resumo-funcionario-container'>
+                                <div className='resumo-funcionario-scrollarea'>
+                                    <h2 className='resumo-titulo'>Funcionarios cadastrados</h2>
+                                    {
+                                        listaFuncionarios.map((funcionario) => {
+                                            return(
+                                                <div key={funcionario.id}>
+                                                    <span className='resumo-info'>{funcionario.id} - {funcionario.nome}</span>
+                                                </div>
+                                            )
+                                        })
+                                    }
                                 </div>
                             </div>
                         </div>

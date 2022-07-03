@@ -3,7 +3,6 @@
 @import 'src/styles/mixins';
 
 .setor-container{
-    // height: 100vh;
     min-width: 900px;
     box-sizing: border-box;
     position: relative;
@@ -37,7 +36,7 @@
 
 .setor-body{
     padding: 40px 30px; 
-    height: 75vh; 
+    height: 100%; 
     position: relative;
     display: flex;
     flex-direction: column;
@@ -68,9 +67,38 @@
     }
 
     .input-setor{
-        width: 45%;
+        width: 80%;
         margin-top: 10px;
         font-size: 1.5rem;
+    }
+}
+
+.resumo-setor-container{   
+    .resumo-setor-scrollarea{
+        border: 1px solid $input-border-grey;
+        border-radius: 4px;
+        margin-top: 40px;
+        padding: 15px;
+        width: 100%;
+        height: 300px;
+        overflow-y: auto;
+        word-wrap: break-word;
+
+        .resumo-titulo{
+            font-size: 1.5rem;
+            font-weight: 500;
+            font-style: italic;
+            text-decoration: underline;
+            text-align: center;
+        }
+        
+        .resumo-info{
+            display: flex;
+            padding: 10px;
+            font-size: 1rem;
+            border-bottom: 1px solid $input-border-grey;
+
+        }
     }
 }
 
@@ -80,6 +108,7 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 70px;
+    margin-top: 40px;
 }
 
 .setores-error-message{

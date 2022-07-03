@@ -4,10 +4,12 @@ import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup';
 import axios from 'axios';
+import { Apple } from 'react-bootstrap-icons'
 
 import './Produtos.scss'
 import Button from '../../components/Button/Button'
 import ModalScreen from '../../components/Modal/ModalScreen';
+import SpinnerScreen from '../../components/Spinner/SpinnerScreen';
 
 function Produtos() {
     const validationSchema = yup.object().shape({
@@ -35,7 +37,9 @@ function Produtos() {
         register,
         handleSubmit,
         formState: {errors},
-        reset
+        reset,
+        setValue,
+        getValues
     } = useForm({
         resolver: yupResolver(validationSchema),  //aplica a validação do yup no formulário
     }) 
@@ -43,6 +47,8 @@ function Produtos() {
     const [modalShow, setModalShow] = useState({show: false, status: 'ok', message: ''})
     const [categorias, setCategorias] = useState([{id: 0, descricao: ''}])
     const [setores, setSetores] = useState([{id: 0, descricao: ''}])
+    const [listaProdutos, setListaProdutos] = useState([{id: 0, preco: 0, descricao: '', tempopreparo: 0, categoria: 0, ativo: 0, idSetor: 0}])
+    const [showSpinner, setShowSpinner] = useState(false)
 
     useEffect(() => {
         axios.get('/categorias')
@@ -56,30 +62,43 @@ function Produtos() {
         })
     }, [])
 
+    useEffect(() => {
+        axios.get('/produtos')
+        .then((res) => {
+            setListaProdutos(res.data.data)
+        })    
+    }, [listaProdutos])
+
     const cadastrarProduto = async (data) => {
-        await axios.put('/produtos', {
-            descricao: data.descricao.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase(),
-            preco: data.preco,
-            ativo: data.ativo,
-            idCategoria: data.id_categoria,
-            idSetor: data.id_setor,
-            tempopreparo: data.tempopreparo
-        })
-        .then(() => {
-            setModalShow({
-                show: true, 
-                status: 'ok', 
-                message: `Produto salvo com sucesso`
+        try{
+            setShowSpinner(true)
+
+            await axios.put('/produtos', {
+                descricao: data.descricao.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase(),
+                preco: data.preco,
+                ativo: data.ativo,
+                idCategoria: data.id_categoria,
+                idSetor: data.id_setor,
+                tempopreparo: data.tempopreparo
             })
-            reset()
-        })
-        .catch(() => {
-            setModalShow({
-                show: true, 
-                status: 'error', 
-                message: `Erro ao salvar produto`
+            .then(() => {
+                setModalShow({
+                    show: true, 
+                    status: 'ok', 
+                    message: `Produto salvo com sucesso`
+                })
+                reset()
             })
-        })
+            .catch(() => {
+                setModalShow({
+                    show: true, 
+                    status: 'error', 
+                    message: `Erro ao salvar produto`
+                })
+            })
+        }finally{
+            setShowSpinner(false)
+        }
     }
 
     const buscaSetor = async (e ) => {
@@ -100,15 +119,10 @@ function Produtos() {
             .then((res) => 
                 setSetores(res.data.data)
             )    
-        })
-    }
 
-    const defineIdSetor = () => {
-        const select = document.getElementById('select_setor')
-        const idSetorSelecionado = select.options[select.selectedIndex].value
-        
-        const inputIdSetor = document.getElementById('id_setor')
-        inputIdSetor.value = idSetorSelecionado
+            const descricao = getValues("descricaoSetor")
+            setValue("id_setor", descricao)
+        })
     }
 
     const buscaCategoria = async (e ) => {
@@ -128,20 +142,16 @@ function Produtos() {
             axios.get(`/categorias`)
             .then((res) => 
                 setCategorias(res.data.data)
-            )    
+            )  
+            
+            const descricao = getValues("descricaoCategoria")
+            setValue("id_categoria", descricao)
         })
-    }
-
-    const defineIdCategoria = () => {
-        const select = document.getElementById('select_categoria')
-        const idCargoSelecionado = select.options[select.selectedIndex].value
-        
-        const inputIdCargo = document.getElementById('id_categoria')
-        inputIdCargo.value = idCargoSelecionado
     }
 
     return(
         <div className='produto-container'>
+            <SpinnerScreen show={showSpinner} />
             <ModalScreen 
                 show={modalShow.show} 
                 status={modalShow.status}
@@ -150,9 +160,7 @@ function Produtos() {
             />
             <section className='header'>
                 <div className='produto-header'>
-                    <div className='logo-restaurante'>
-                        {/* <i class="fab fa-pagelines"></i> */}
-                    </div>
+                    <Apple size={92} color='#fefefe'></Apple>
                     <h1 className='produto-titulo'>DRestaurante</h1>
                 </div>
             </section>
@@ -199,9 +207,7 @@ function Produtos() {
                                 />
                                 <p className='produto-error-message'>{errors.tempopreparo?.message}</p>
                             </div>
-                        </div>
 
-                        <div className='label-input-direita'>
                             <div className='produto-label-input'>
                                 <label className='label-nome-produto'>Categoria</label>
                                 <div className='input-select-container'>
@@ -215,8 +221,9 @@ function Produtos() {
                                     />
                                     <select
                                         id="select_categoria"
-                                        className="form-control form-select input-produto"  //form-control e form-select são classes do bootstrap
-                                        onChange={defineIdCategoria}
+                                        className="form-control form-select selects" 
+                                        {...register("descricaoCategoria")}
+                                        onChange={(e) => setValue("id_categoria", e.currentTarget.value)} 
                                     >
                                         {categorias.map((categoria) => {
                                             return (
@@ -242,8 +249,9 @@ function Produtos() {
                                     />
                                     <select
                                         id="select_setor"
-                                        className="form-control form-select input-produto"  //form-control e form-select são classes do bootstrap
-                                        onChange={defineIdSetor}
+                                        className="form-control form-select selects"
+                                        {...register("descricaoSetor")}
+                                        onChange={(e) => setValue("id_setor", e.currentTarget.value)}
                                     >
                                         {setores.map((setor) => {
                                             return (
@@ -271,6 +279,33 @@ function Produtos() {
                                         name="ativo" 
                                         {...register("ativo")}
                                     /><span>Não</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='label-input-direita'>
+                        <div className='resumo-produto-container'>
+                                <div className='resumo-produto-scrollarea'>
+                                    <h2 className='resumo-titulo'>Produtos Cadastrados</h2>
+                                    {
+                                        listaProdutos.map((produto) => {
+                                            return(
+                                                <div key={produto.id}>
+                                                    <div className='resumo-container'>
+                                                        <span className='resumo-info'>{produto.id} - {produto.descricao}</span>
+                                                        <span className='resumo-item'>Preço</span>
+                                                        <span className='resumo-subitem'>{produto.preco}</span>
+                                                        <span className='resumo-item'>Tempo de preparo</span>
+                                                        <span className='resumo-subitem'>{produto.tempopreparo}</span>
+                                                        <span className='resumo-item'>Categoria</span>
+                                                        <span className='resumo-subitem'>{produto.idCategoria}</span>
+                                                        <span className='resumo-item'>Setor</span>
+                                                        <span className='resumo-subitem'>{produto.idSetor}</span>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })
+                                    }
                                 </div>
                             </div>
                         </div>

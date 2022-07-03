@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup';
 import axios from 'axios'
+import { Apple } from 'react-bootstrap-icons';
 
 import './Itens.scss'
 import Button from '../../components/Button/Button'
@@ -44,16 +45,18 @@ function Itens() {
         register,
         handleSubmit,
         formState: {errors},
-        reset
+        reset,
+        setValue,
+        getValues
     } = useForm({
         resolver: yupResolver(validationSchema),  //aplica a validação do yup no formulário
     }) 
     
     const listaDeProdutosVazia = [{datahora: '', id: '', itens: [{datahora: '', id: '', idPedido: '', idProduto: '', observacao: '', produto:{descricao: '', id: '', preco: ''}, quantidade: '', sequencia: '', valor: ''}], nomeCliente: '', numeroFicha: ''}]
     const [modalShow, setModalShow] = useState({show: false, status: 'ok', message: ''})
+    const [showSpinner, setShowSpinner] = useState(false)
     const [produtos, setProdutos] = useState([{id: '', nome: ''}])
     const [pedidoItens, setPedidoItens] = useState(listaDeProdutosVazia)
-    const [valor, setValor] = useState()
     const { pedido } = usePedido()
     
     useEffect(() => {
@@ -83,6 +86,9 @@ function Itens() {
                 .then((res) => 
                     setProdutos(res.data.data)
                 )
+
+                const descricao = getValues("descricaoProduto")
+                setValue("idProduto", descricao)
             })
         } else{
             await axios.get(`/produtos`)
@@ -90,14 +96,6 @@ function Itens() {
                 setProdutos(res.data.data)
             )
         }
-    }
-
-    const defineIdProduto = (cargoId) => {
-        const select = document.getElementById('select_produto')
-        const idCargoSelecionado = select.options[select.selectedIndex].value
-        
-        const inputIdCargo = document.getElementById('idProduto')
-        inputIdCargo.value = idCargoSelecionado
     }
 
     const buscaPedido = async (e) => {
@@ -117,39 +115,44 @@ function Itens() {
     }
 
     const incluirItem = async ({idPedido, idProduto, quantidade, valor, sequencia, observacao}) => {
-        
-        var data = new Date();
-        const dataFormatada = `${data.getFullYear()}-${data.getMonth()}-${data.getDate()} ${data.getHours()+3}:${data.getMinutes()}:${data.getSeconds()}`
-        
-        await axios.put('/pedidos', {
-            nomecliente: pedido.nomeCliente.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase(),
-            numeroFicha: pedido.numeroFicha,
-            datahora: dataFormatada,
-            itens: [{
-                idPedido,
-                idProduto,
-                quantidade,
-                valor,
-                sequencia,
-                observacao,
-                datahora: dataFormatada
-            }]
-        })
-        .then(() => {
-            setModalShow({
-                show: true, 
-                status: 'ok', 
-                message: `Item incluído com sucesso`
+        try{
+            setShowSpinner(true)
+
+            var data = new Date();
+            const dataFormatada = `${data.getFullYear()}-${data.getMonth()}-${data.getDate()} ${data.getHours()+3}:${data.getMinutes()}:${data.getSeconds()}`
+            
+            await axios.put('/pedidos', {
+                nomecliente: pedido.nomeCliente.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase(),
+                numeroFicha: pedido.numeroFicha,
+                datahora: dataFormatada,
+                itens: [{
+                    idPedido,
+                    idProduto,
+                    quantidade,
+                    valor,
+                    sequencia,
+                    observacao,
+                    datahora: dataFormatada
+                }]
             })
-            reset()
-        })
-        .catch(() => {
-            setModalShow({
-                show: true, 
-                status: 'error', 
-                message: `Erro ao incluir item`
+            .then(() => {
+                setModalShow({
+                    show: true, 
+                    status: 'ok', 
+                    message: `Item incluído com sucesso`
+                })
+                reset()
             })
-        })
+            .catch(() => {
+                setModalShow({
+                    show: true, 
+                    status: 'error', 
+                    message: `Erro ao incluir item`
+                })
+            })
+        }finally{
+            setShowSpinner(false)
+        }
     }
 
     // const criaMascara = () => {
@@ -163,6 +166,7 @@ function Itens() {
 
     return(
         <div className='item-container'>
+
              <ModalScreen
                 show={modalShow.show} 
                 status={modalShow.status}
@@ -171,9 +175,7 @@ function Itens() {
             />
             <section className='header'>
                 <div className='item-header'>
-                    <div className='logo-restaurante'>
-                        {/* <i class="fab fa-pagelines"></i> */}
-                    </div>
+                    <Apple size={92} color='#fefefe'></Apple>
                     <h1 className='item-titulo'>DRestaurante</h1>
                 </div>
             </section>
@@ -209,19 +211,17 @@ function Itens() {
                                         className="form-control input-id"
                                         {...register("idProduto")}
                                         onBlur={buscaProduto} 
-                                        // defaultValue={produtos[0].id}
+                                        defaultValue={produtos[0].id}
                                     />
                                     <select 
                                         id='select_produto' 
                                         className="form-select select-produto"
-                                        onChange={defineIdProduto}
+                                        {...register("descricaoProduto")}
+                                        onChange={(e) => setValue("idProduto", e.currentTarget.value)}
                                     >
                                         {produtos.map((produto) => {
                                             return (
-                                                <option 
-                                                    value={produto.id} 
-                                                    key={produto.id}
-                                                >
+                                                <option value={produto.id} key={produto.id}>
                                                     {produto.descricao}
                                                 </option>
                                             )
@@ -309,7 +309,7 @@ function Itens() {
                             </div>
 
                             <div className='item-label-input'>
-                                <label className='label-nome-item'>Observacao</label>
+                                <label className='label-nome-item'>Observação</label>
                                 <input 
                                     id="observacao"
                                     className="form-control input-item input-obs" 

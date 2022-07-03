@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup';
 import axios from 'axios';
+import { Apple } from 'react-bootstrap-icons';
 
 import './Categorias.scss'
 import Button from '../../components/Button/Button'
@@ -11,12 +12,10 @@ import ModalScreen from '../../components/Modal/ModalScreen';
 import SpinnerScreen from '../../components/Spinner/SpinnerScreen';
 
 function Categorias() {
-    const [modalShow, setModalShow] = useState({show: false, status: 'ok', message: ''})
-    const [showSpinner, setShowSpinner] = useState(false)
-
+    
     const validationSchema = yup.object().shape({
         descricao: yup
-            .string()
+        .string()
             .required("campo obrigatório"),
     })
 
@@ -28,6 +27,17 @@ function Categorias() {
     } = useForm({
         resolver: yupResolver(validationSchema),  //aplica a validação do yup no formulário
     }) 
+    
+    const [modalShow, setModalShow] = useState({show: false, status: 'ok', message: ''})
+    const [showSpinner, setShowSpinner] = useState(false)
+    const [listaCategorias, setListaCategorias] = useState([{id: 0, descricao: ''}])
+    
+    useEffect(() => {
+        axios.get('/categorias')
+        .then((res) => {
+            setListaCategorias(res.data.data)
+        })    
+    })
 
     const cadastrarCategoria = async ({descricao}) => {
         try{
@@ -67,9 +77,7 @@ function Categorias() {
             />
             <section className='header'>
                 <div className='categoria-header'>
-                    <div className='logo-restaurante'>
-                        <i class="fab fa-pagelines"></i>
-                    </div>
+                    <Apple size={92} color='#fefefe'></Apple>
                     <h1 className='categoria-titulo'>DRestaurante</h1>
                 </div>
             </section>
@@ -81,15 +89,36 @@ function Categorias() {
                 </div>
 
                 <form className="form" onSubmit={handleSubmit(cadastrarCategoria)}>
-                    <div className='categoria-label-input'>
-                        <label className='label-nome-cargo'>Nome da categoria</label>
-                        <input 
-                            id="descricao"
-                            name="descricao"
-                            className="form-control input-categoria" 
-                            {...register("descricao")} 
-                        />
-                        <p className='categoria-error-message'>{errors.descricao?.message}</p>
+                    <div className='label-inputs'>
+                        <div className='label-input-esquerda'>
+                            <div className='categoria-label-input'>
+                                <label className='label-nome-cargo'>Nome da categoria</label>
+                                <input 
+                                    id="descricao"
+                                    name="descricao"
+                                    className="form-control input-categoria" 
+                                    {...register("descricao")} 
+                                />
+                                <p className='categoria-error-message'>{errors.descricao?.message}</p>
+                            </div>
+                        </div>
+
+                        <div className='label-input-direita'>
+                            <div className='resumo-categoria-container'>
+                                <div className='resumo-categoria-scrollarea'>
+                                    <h2 className='resumo-titulo'>Categorias cadastrados</h2>
+                                    {
+                                        listaCategorias.map((categoria) => {
+                                            return(
+                                                <div key={categoria.id}>
+                                                    <span className='resumo-info'>{categoria.id} - {categoria.descricao}</span>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div className='categoria-botoes'>

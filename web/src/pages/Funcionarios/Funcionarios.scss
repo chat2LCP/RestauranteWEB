@@ -64,7 +64,7 @@
 .funcionario-label-input{
     .label-nome-cargo{
         margin-top: 40px;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         font-weight: 600;
         display: block;
     }
@@ -74,7 +74,7 @@
 
         .input-id{
             margin-right: 10px;
-            width: 70px;
+            width: 80px;
             margin-top: 10px;
         }
     }
@@ -82,12 +82,18 @@
     .input-funcionario{
         width: 80%;
         margin-top: 10px;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
+    }
+
+    .select{
+        width: calc(80% - 90px);
+        margin-top: 10px;
+        font-size: 1.2rem;
     }
 }
 
 .funcionario-radiobutton{
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 400;
     display: flex;
     align-items: center;
@@ -103,6 +109,36 @@
 
 .funcionario-radiobutton > span{
     margin-right: 20px;
+}
+
+
+.resumo-funcionario-container{   
+    .resumo-funcionario-scrollarea{
+        border: 1px solid $input-border-grey;
+        border-radius: 4px;
+        margin-top: 40px;
+        padding: 15px;
+        width: 100%;
+        height: 450px;
+        overflow-y: auto;
+        word-wrap: break-word;
+
+        .resumo-titulo{
+            font-size: 1.5rem;
+            font-weight: 500;
+            font-style: italic;
+            text-decoration: underline;
+            text-align: center;
+        }
+        
+        .resumo-info{
+            display: flex;
+            padding: 10px;
+            font-size: 1rem;
+            border-bottom: 1px solid $input-border-grey;
+            
+        }
+    }
 }
 
 .funcionario-botoes{

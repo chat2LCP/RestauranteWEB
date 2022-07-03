@@ -2,13 +2,13 @@
 @import 'src/styles/variables';
 @import 'src/styles/mixins';
 
-.cargos-container{
+.categoria-container{
     min-width: 900px;
     box-sizing: border-box;
     position: relative;
 }
 
-.cargos-header {
+.categoria-header {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -26,7 +26,7 @@
     color: #198754;
 }
 
-.cargos-titulo {
+.categoria-titulo {
     line-height: 170px;
     margin-left: 25px; 
     color: $white;
@@ -34,7 +34,7 @@
     text-align: center;
 }
 
-.cargos-body{
+.categoria-body{
     padding: 40px 30px; 
     height: 100%; 
     position: relative;
@@ -58,29 +58,29 @@
     background: $light-grey;
 }
 
-.cargos-label-input{
-    .label-nome-cargo{
+.categoria-label-input{
+    .label-id-venda{
         margin-top: 40px;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         font-weight: 600;
         display: block;
     }
 
-    .input-cargos{
-        width: 80%;
+    .input-venda{
+        width: 90px;
         margin-top: 10px;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
     }
 }
 
-.resumo-cargo-container{   
-    .resumo-cargo-scrollarea{
+.resumo-venda-container{   
+    .resumo-venda-scrollarea{
         border: 1px solid $input-border-grey;
         border-radius: 4px;
         margin-top: 40px;
         padding: 15px;
         width: 100%;
-        height: 300px;
+        height: 380px;
         overflow-y: auto;
         word-wrap: break-word;
 
@@ -92,24 +92,32 @@
             text-align: center;
         }
 
+        .resumo-info{
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            border-bottom: 1px solid $input-border-grey;
+        }
+
+        .resumo-subitem{
+            font-size: 1rem;
+        }
+
         .resumo-item{
             font-size: 1rem;
             font-weight: 500;
-            margin-top: 20px;
             color: $blue;
         }
+    }
 
-        .resumo-info{
-            display: flex;
-            padding: 10px;
-            font-size: 1rem;
-            border-bottom: 1px solid $input-border-grey;
-
-        }
+    .detalhe{
+        margin-top: 5px;
+        width: 85%;
+        height: 292px;
     }
 }
 
-.cargos-botoes{
+.categoria-botoes{
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -118,7 +126,7 @@
     margin-top: 40px;
 }
 
-.cargo-error-message{
+.categoria-error-message{
     color: rgb(243, 1, 1);
     font-weight: normal;
     font-size: 1rem;
