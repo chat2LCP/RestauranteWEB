@@ -17,13 +17,14 @@ function RelatorioIndex() {
         switch(periodo){
             case 'd':
                 console.log('d');
-            break;
+                break;
             case 's':
                 console.log('s');
-            break;
+                break;
             case 'm':
                 console.log('m');
-            break;
+                break;
+            default:
         }
     }
 

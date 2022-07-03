@@ -8,19 +8,20 @@ import axios from 'axios'
 import './Itens.scss'
 import Button from '../../components/Button/Button'
 import ModalScreen from '../../components/Modal/ModalScreen';
+import { usePedido } from '../../contexts/pedidoContext';
 
 function Itens() {
     const validationSchema = yup.object().shape({
-        pedido: yup
+        idPedido: yup
             .number("insira apenas números")
             .positive("insira um valor maior que 0")
             .integer("insira um valor inteiro")
             .typeError("valor inválido")
             .required("campo obrigatório"),
-        id_produto: yup
+        idProduto: yup
             .string()
             .required("campo obrigatório"),
-        qtd: yup
+        quantidade: yup
             .number("insira apenas números")
             .positive("insira um valor maior que 0")
             .integer("insira um valor inteiro")
@@ -37,9 +38,6 @@ function Itens() {
             .integer("insira um valor inteiro")
             .typeError("valor inválido")
             .required("campo obrigatório"),
-        obs: yup
-            .string()
-            .required("campo obrigatório"),
     })
 
     const { 
@@ -51,9 +49,12 @@ function Itens() {
         resolver: yupResolver(validationSchema),  //aplica a validação do yup no formulário
     }) 
     
+    const listaDeProdutosVazia = [{datahora: '', id: '', itens: [{datahora: '', id: '', idPedido: '', idProduto: '', observacao: '', produto:{descricao: '', id: '', preco: ''}, quantidade: '', sequencia: '', valor: ''}], nomeCliente: '', numeroFicha: ''}]
     const [modalShow, setModalShow] = useState({show: false, status: 'ok', message: ''})
     const [produtos, setProdutos] = useState([{id: '', nome: ''}])
+    const [pedidoItens, setPedidoItens] = useState(listaDeProdutosVazia)
     const [valor, setValor] = useState()
+    const { pedido } = usePedido()
     
     useEffect(() => {
         axios.get('/produtos')
@@ -63,8 +64,8 @@ function Itens() {
     }, [])
 
 
-    const buscaProduto = async () => {
-        const id = document.getElementById('idProduto').value;
+    const buscaProduto = async (e) => {
+        const id = e.target.value
 
         if (id != ''){
             await axios.get(`/produtos/${id}`)
@@ -91,18 +92,74 @@ function Itens() {
         }
     }
 
-    const incluirItem = (data) => {
-        //xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    const defineIdProduto = (cargoId) => {
+        const select = document.getElementById('select_produto')
+        const idCargoSelecionado = select.options[select.selectedIndex].value
+        
+        const inputIdCargo = document.getElementById('idProduto')
+        inputIdCargo.value = idCargoSelecionado
     }
 
-    const criaMascara = () => {
-        let valorInput = document.getElementById('valor').value;
-        // const mascara = valorInput.replace(/[^\d]/g, "").replace(/(\d{3})(\d{3})(\d{2})/, "$1.$2,$3");
+    const buscaPedido = async (e) => {
+        const id = e.target.value
 
-        // document.getElementById('valor').value = parseFloat(valorInput).toFixed(2);
-
-        setValor(valorInput.toLocaleString('pt-br', {minimumFractionDigits: 2}));
+        if (id != ''){
+            await axios.get(`/pedidos/${id}`)
+            .then((res) => {
+                setPedidoItens(res.data.data)
+            })
+            .catch(() => {
+                setPedidoItens(listaDeProdutosVazia)
+            })
+        } else{
+            setPedidoItens(listaDeProdutosVazia)
+        }
     }
+
+    const incluirItem = async ({idPedido, idProduto, quantidade, valor, sequencia, observacao}) => {
+        
+        var data = new Date();
+        const dataFormatada = `${data.getFullYear()}-${data.getMonth()}-${data.getDate()} ${data.getHours()+3}:${data.getMinutes()}:${data.getSeconds()}`
+        
+        await axios.put('/pedidos', {
+            nomecliente: pedido.nomeCliente.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase(),
+            numeroFicha: pedido.numeroFicha,
+            datahora: dataFormatada,
+            itens: [{
+                idPedido,
+                idProduto,
+                quantidade,
+                valor,
+                sequencia,
+                observacao,
+                datahora: dataFormatada
+            }]
+        })
+        .then(() => {
+            setModalShow({
+                show: true, 
+                status: 'ok', 
+                message: `Item incluído com sucesso`
+            })
+            reset()
+        })
+        .catch(() => {
+            setModalShow({
+                show: true, 
+                status: 'error', 
+                message: `Erro ao incluir item`
+            })
+        })
+    }
+
+    // const criaMascara = () => {
+    //     let valorInput = document.getElementById('valor').value;
+    //     // const mascara = valorInput.replace(/[^\d]/g, "").replace(/(\d{3})(\d{3})(\d{2})/, "$1.$2,$3");
+
+    //     // document.getElementById('valor').value = parseFloat(valorInput).toFixed(2);
+
+    //     setValor(valorInput.toLocaleString('pt-br', {minimumFractionDigits: 2}));
+    // }
 
     return(
         <div className='item-container'>
@@ -115,7 +172,7 @@ function Itens() {
             <section className='header'>
                 <div className='item-header'>
                     <div className='logo-restaurante'>
-                        <i class="fab fa-pagelines"></i>
+                        {/* <i class="fab fa-pagelines"></i> */}
                     </div>
                     <h1 className='item-titulo'>DRestaurante</h1>
                 </div>
@@ -132,54 +189,63 @@ function Itens() {
                         <div className='label-input-esquerda'>
                             <div className='item-label-input'>
                                 <label className='label-nome-item'>Número do pedido</label>
-                                <input 
-                                    id="pedido"
-                                    name="pedido"
-                                    className="form-control input-item" 
-                                    {...register("pedido")} 
-                                />
-                                <p className='item-error-message'>{errors.pedido?.message}</p>
+                                <div className='input-select-container'>
+                                    <input
+                                        name="idPedido"
+                                        className="form-control input-id" 
+                                        {...register("idPedido")} 
+                                        onBlur={buscaPedido}  
+                                    />
+                                </div>
+                                <p className='item-error-message'>{errors.idPedido?.message}</p>
                             </div>
 
                             <div className='item-label-input'>
-                                <div className='item-label-input'>
-                                    <label className='label-nome-item'>Produto</label>
-                                    <div className='input-select-container'>
-                                        <input id='idProduto' onBlur={buscaProduto} placeholder='id' className='input-id form-control' />
-                                        <select
-                                            id="id_produto"
-                                            name="id_produto"
-                                            className="form-control form-select input-item"  //form-control e form-select são classes do bootstrap
-                                            {...register("produto")}
-                                        >
-                                            {produtos.map(produto => {
-                                                return (
-                                                    <option key={produto.id}>{produto.descricao}</option>
-                                                )
-                                            })}
-                                        </select>
-                                    </div>
-                                    <p className='item-error-message'>{errors.id_produto?.message}</p>
+                                <label className='label-nome-produto'>Produto</label>
+                                <div className='input-select-container'>
+                                    <input 
+                                        id='idProduto'
+                                        name="idProduto"
+                                        className="form-control input-id"
+                                        {...register("idProduto")}
+                                        onBlur={buscaProduto} 
+                                        // defaultValue={produtos[0].id}
+                                    />
+                                    <select 
+                                        id='select_produto' 
+                                        className="form-select select-produto"
+                                        onChange={defineIdProduto}
+                                    >
+                                        {produtos.map((produto) => {
+                                            return (
+                                                <option 
+                                                    value={produto.id} 
+                                                    key={produto.id}
+                                                >
+                                                    {produto.descricao}
+                                                </option>
+                                            )
+                                        })}
+                                    </select>
                                 </div>
+                                <p className='item-error-message'>{errors.idProduto?.message}</p>
                             </div>
 
                             <div className='item-label-input'>
                                 <label className='label-nome-item'>Quantidade</label>
                                 <input 
-                                    id="qtd"
-                                    name="qtd"
+                                    id="quantidade"
+                                    name="quantidade"
                                     className="form-control input-item" 
-                                    {...register("qtd")} 
+                                    {...register("quantidade")} 
                                 />
-                                <p className='item-error-message'>{errors.qtd?.message}</p>
+                                <p className='item-error-message'>{errors.quantidade?.message}</p>
                             </div>
-                        </div>
 
-                        <div className='label-input-direita'>
                             <div className='item-label-input'>
-                                <label className='label-nome-item'>Valor</label>
+                                <label className='label-nome-item'>Valor unitário</label>
                                 <input 
-                                    onChange={criaMascara}
+                                    // onChange={criaMascara}
                                     id="valor"
                                     name="valor"
                                     className="form-control input-item" 
@@ -198,22 +264,62 @@ function Itens() {
                                 />
                                 <p className='item-error-message'>{errors.sequencia?.message}</p>
                             </div>
+                        </div>
+
+                        <div className='label-input-direita'>
+                            <div className='resumo-pedido-container'>
+                                <div className='resumo-pedido-scrollarea'>
+                                    {
+                                        pedidoItens.map((pedidoItem) => {
+                                            return(
+                                                <div key={pedidoItem.id}>
+                                                    <h2 className='resumo-titulo'>Resumo do pedido</h2>
+                                                    
+                                                    <span className='resumo-item nome'>Nome</span>
+                                                    <span className='resumo-info'>{pedidoItem.nomecliente}</span>
+                                                    {
+                                                        pedidoItem.itens.map((item) => {
+                                                            return(
+                                                                <div className='resumo-subinfo' key={item.id}>
+                                                                    <div>
+                                                                        <span className='resumo-item'>ID produto</span>
+                                                                        <span className='resumo-info'>{item.idProduto}</span>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span className='resumo-item'>Descrição</span>
+                                                                        <span className='resumo-info'>{item.produto.descricao} { item.quantidade && '(x'+item.quantidade+')'}</span>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span className='resumo-item'>Valor</span>
+                                                                        <span className='resumo-info'>{item.valor}</span>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span className='resumo-item'>Observação</span>
+                                                                        <span className='resumo-info'>{item.observacao}</span>
+                                                                    </div>
+                                                                </div>
+                                                            )
+                                                        })
+                                                    }
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </div>
+                            </div>
 
                             <div className='item-label-input'>
                                 <label className='label-nome-item'>Observacao</label>
                                 <input 
-                                    id="obs"
-                                    name="obs"
-                                    className="form-control input-item" 
-                                    {...register("obs")} 
+                                    id="observacao"
+                                    className="form-control input-item input-obs" 
                                 />
-                                <p className='item-error-message'>{errors.obs?.message}</p>
                             </div>
                         </div>
                     </div>
                     
                     <div className='item-botoes'>
-                        <Button component={Button} type='submit' buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRAR</Button>
+                        <Button component={Button} type='submit' buttonSize='btn--medium' buttonStyle='btn--green'>INCLUIR ITEM</Button>
                         <Button component={Link} to='/realizar-pedido' buttonSize='btn--medium' buttonStyle='btn--blue'>VOLTAR</Button>
                         <Button component={Link} to='/' buttonSize='btn--medium' buttonStyle='btn--red'>CANCELAR</Button>
                     </div>

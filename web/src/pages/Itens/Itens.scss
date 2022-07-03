@@ -53,11 +53,14 @@
 }
 
 .label-input-esquerda, .label-input-direita{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 100%;
 }
 
 .item-label-input{
-    .label-nome-item{
+    .label-nome-produto{
         margin-top: 40px;
         font-size: 1.5rem;
         font-weight: 600;
@@ -69,7 +72,7 @@
 
         .input-id{
             margin-right: 10px;
-            width: 70px;
+            width: 80px;
             margin-top: 10px;
         }
     }
@@ -77,7 +80,17 @@
     .input-item{
         width: 80%;
         margin-top: 10px;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
+    }
+
+    .select-produto{
+        width: calc(80% - 90px);
+        margin-top: 10px;
+        font-size: 1.2rem;
+    }
+
+    .input-obs{
+        width: 100%;
     }
 }
 
@@ -88,23 +101,53 @@
     display: block;
 }
 
-.item-radiobutton{
-    font-size: 1.5rem;
-    font-weight: 400;
+.resumo-pedido-container{
     display: flex;
-    align-items: center;
-    height: 50px;
-}
+    align-items: flex-start;
+    justify-content: center;
+    height: 74%;
+    
+    .resumo-pedido-scrollarea{
+        border: 1px solid $input-border-grey;
+        border-radius: 4px;
+        margin-top: 40px;
+        padding: 15px;
+        width: 100%;
+        height: 470px;
+        overflow-y: auto;
+        word-wrap: break-word;
 
-.item-radiobutton > input{
-    margin-right: 6px;
-    width: 16px;
-    height: 16px;
-}
+        .resumo-titulo{
+            font-size: 1.5rem;
+            font-weight: 500;
+            font-style: italic;
+            text-decoration: underline;
+            text-align: center;
+        }
 
+        .resumo-subinfo{
+            display: grid;
+            padding: 10px;
+            grid-template-columns: 1fr 2fr;
+            grid-template-columns: 1fr 2fr;
+            border-bottom: 1px solid $input-border-grey;
+        }
 
-.item-radiobutton > span{
-    margin-right: 20px;
+        .resumo-item{
+            font-size: 1rem;
+            font-weight: 500;
+            margin-top: 20px;
+            color: $blue;
+        }
+
+        .nome{
+            color: $coral  
+        }
+        .resumo-info{
+            font-size: 1rem;
+            display: block;
+        }
+    }
 }
 
 .item-botoes{

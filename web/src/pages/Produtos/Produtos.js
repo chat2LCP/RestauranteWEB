@@ -41,8 +41,8 @@ function Produtos() {
     }) 
 
     const [modalShow, setModalShow] = useState({show: false, status: 'ok', message: ''})
-    const [categorias, setCategorias] = useState([])
-    const [setores, setSetores] = useState([])
+    const [categorias, setCategorias] = useState([{id: 0, descricao: ''}])
+    const [setores, setSetores] = useState([{id: 0, descricao: ''}])
 
     useEffect(() => {
         axios.get('/categorias')
@@ -61,8 +61,8 @@ function Produtos() {
             descricao: data.descricao.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase(),
             preco: data.preco,
             ativo: data.ativo,
-            id_categoria: data.id_categoria,
-            id_setor: data.id_setor,
+            idCategoria: data.id_categoria,
+            idSetor: data.id_setor,
             tempopreparo: data.tempopreparo
         })
         .then(() => {
@@ -82,8 +82,8 @@ function Produtos() {
         })
     }
 
-    const buscaSetor = async () => {
-        const idSet = document.getElementById('idSetor').value;
+    const buscaSetor = async (e ) => {
+        const idSet = e.target.value
 
         await axios.get(`/setores/${idSet}`)
         .then((res) => {
@@ -103,8 +103,16 @@ function Produtos() {
         })
     }
 
-    const buscaCategoria = async () => {
-        const idCateg = document.getElementById('idCategoria').value;
+    const defineIdSetor = () => {
+        const select = document.getElementById('select_setor')
+        const idSetorSelecionado = select.options[select.selectedIndex].value
+        
+        const inputIdSetor = document.getElementById('id_setor')
+        inputIdSetor.value = idSetorSelecionado
+    }
+
+    const buscaCategoria = async (e ) => {
+        const idCateg = e.target.value
 
         await axios.get(`/categorias/${idCateg}`)
         .then((res) => {
@@ -124,6 +132,14 @@ function Produtos() {
         })
     }
 
+    const defineIdCategoria = () => {
+        const select = document.getElementById('select_categoria')
+        const idCargoSelecionado = select.options[select.selectedIndex].value
+        
+        const inputIdCargo = document.getElementById('id_categoria')
+        inputIdCargo.value = idCargoSelecionado
+    }
+
     return(
         <div className='produto-container'>
             <ModalScreen 
@@ -135,7 +151,7 @@ function Produtos() {
             <section className='header'>
                 <div className='produto-header'>
                     <div className='logo-restaurante'>
-                        <i class="fab fa-pagelines"></i>
+                        {/* <i class="fab fa-pagelines"></i> */}
                     </div>
                     <h1 className='produto-titulo'>DRestaurante</h1>
                 </div>
@@ -189,37 +205,49 @@ function Produtos() {
                             <div className='produto-label-input'>
                                 <label className='label-nome-produto'>Categoria</label>
                                 <div className='input-select-container'>
-                                    <input id='idCategoria' onBlur={buscaCategoria} placeholder='id' className='input-id form-control' />
-                                    <select
-                                        id="categ"
-                                        name="categ"
-                                        className="form-control form-select input-produto"  //form-control e form-select são classes do bootstrap
+                                    <input 
+                                        id='id_categoria' 
+                                        name='id_categoria'
+                                        className='input-id form-control' 
                                         {...register("id_categoria")}
-                                        >
-                                        {categorias.map(({id, descricao}) => {
+                                        onBlur={buscaCategoria} 
+                                        defaultValue={categorias[0].id}
+                                    />
+                                    <select
+                                        id="select_categoria"
+                                        className="form-control form-select input-produto"  //form-control e form-select são classes do bootstrap
+                                        onChange={defineIdCategoria}
+                                    >
+                                        {categorias.map((categoria) => {
                                             return (
-                                                <option key={id}>{descricao}</option>
+                                                <option value={categoria.id} key={categoria.id}>{categoria.descricao}</option>
                                                 )
                                             })
                                         }
                                     </select>
                                 </div>
-                                <p className='produto-error-message'>{errors.categoria?.message}</p>
+                                <p className='produto-error-message'>{errors.id_categoria?.message}</p>
                             </div>
 
                             <div className='produto-label-input'>
                                 <label className='label-nome-produto'>Setor</label>
                                 <div className='input-select-container'>
-                                    <input id='idSetor' onBlur={buscaSetor} placeholder='id' className='input-id form-control' />
-                                    <select
-                                        id="setor"
-                                        name="setor"
-                                        className="form-control form-select input-produto"  //form-control e form-select são classes do bootstrap
+                                    <input 
+                                        id='id_setor' 
+                                        name='id_setor'
+                                        className='input-id form-control' 
                                         {...register("id_setor")}
+                                        onBlur={buscaSetor} 
+                                        defaultValue={setores[0].id}
+                                    />
+                                    <select
+                                        id="select_setor"
+                                        className="form-control form-select input-produto"  //form-control e form-select são classes do bootstrap
+                                        onChange={defineIdSetor}
                                     >
-                                        {setores.map(({id, descricao}) => {
+                                        {setores.map((setor) => {
                                             return (
-                                                <option key={id}>{descricao}</option>
+                                                <option value={setor.id} key={setor.id}>{setor.descricao}</option>
                                             )
                                         })}
                                     </select>

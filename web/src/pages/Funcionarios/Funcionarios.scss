@@ -53,11 +53,13 @@
     display: flex;
     width: 100%;
     justify-content: space-evenly;
+    align-items: flex-start;
+
+    .label-input-esquerda, .label-input-direita{
+        width: 100%;
+    }
 }
 
-.label-input-esquerda, .label-input-direita{
-    width: 100%;
-}
 
 .funcionario-label-input{
     .label-nome-cargo{

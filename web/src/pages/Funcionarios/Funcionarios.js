@@ -19,9 +19,6 @@ function Funcionarios() {
             .required("campo obrigatório"),
         senha: yup
             .string()
-            .required("campo obrigatório"),
-        id_cargo: yup
-            .string()
             .required("campo obrigatório")
     })
 
@@ -39,13 +36,13 @@ function Funcionarios() {
 
     useEffect(() => {
         axios.get(`/cargos`)
-        .then(({id, descricao}) => 
-            setCargos([{id: `${id}`, descricao: `${descricao}`}])
-        )
+        .then((res) => {
+            setCargos(res.data.data)
+        })  
     }, [])
    
-    const buscaCargos = async () => {
-        const id = document.getElementById('idCargo').value;
+    const buscaCargos = async (e) => {
+        const id = e.target.value
         
         if (id !== null || id !== undefined){
             await axios.get(`/cargos/${id}`)
@@ -66,13 +63,21 @@ function Funcionarios() {
             )
         }
     }
+
+    const defineIdCargo = () => {
+        const select = document.getElementById('select-cargo')
+        const idCargoSelecionado = select.options[select.selectedIndex].value
+        
+        const inputIdCargo = document.getElementById('idCargo')
+        inputIdCargo.value = idCargoSelecionado
+    }
     
-    const cadastrarFuncionario = async ({nome, login, senha, id_cargo, ativo}) => {
+    const cadastrarFuncionario = async ({nome, login, senha, idCargo, ativo}) => {
         await axios.put('/funcionarios', {
             nome : nome.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase(),
             login,
             senha,
-            id_cargo,
+            idCargo : document.getElementById('idCargo').value,
             ativo
         })
         .then(() => {
@@ -103,7 +108,9 @@ function Funcionarios() {
             <section className='header'>
                 <div className='funcionario-header'>
                     <div className='logo-restaurante'>
-                        <i class="fab fa-pagelines"></i>
+
+                        LOGo
+
                     </div>
                     <h1 className='funcionario-titulo'>DRestaurante</h1>
                 </div>
@@ -156,24 +163,27 @@ function Funcionarios() {
                             <div className='funcionario-label-input'>
                                 <label className='label-nome-cargo'>Cargo</label>
                                 <div className='input-select-container'>
-                                    <input id='idCargo' onBlur={buscaCargos} placeholder='id' className='input-id form-control' />
-                                    <select
-                                        id="id_cargo"
-                                        name="id_cargo"
-                                        className="form-control form-select input-funcionario"  //form-control e form-select são classes do bootstrap
-                                        {...register("id_cargo")} 
+                                    <input 
+                                        className='input-id form-control' 
+                                        id="idCargo"
+                                        onBlur={buscaCargos} 
+                                        defaultValue={cargos[0].id}
+                                    />
+                                    <select 
+                                        id='select-cargo' 
+                                        onChange={defineIdCargo} 
+                                        className="form-control form-select input-funcionario"
                                     >
                                         {cargos.map(cargo => {
                                             return (
-                                                <option key={cargo.id}>{cargo.descricao}</option>
+                                                <option value={cargo.id} key={cargo.id}>{cargo.descricao}</option>
                                             )
                                         })}
                                     </select>
                                 </div>
-                                <p className='funcionario-error-message'>{errors.id_cargo?.message}</p>
+                                <p className='funcionario-error-message'>{errors.idCargo?.message}</p>
                             </div>
                             
-
                             <div className='funcionario-label-input'>
                                 <label className='label-nome-cargo'>Ativo</label>
                                 <div className='funcionario-radiobutton'>

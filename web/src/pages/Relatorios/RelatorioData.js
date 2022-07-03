@@ -6,7 +6,7 @@ import Button from '../../components/Button/Button'
 
 function RelatorioData() {
 
-    const [data, setData] = useState([{id: '1', nome: 'teste', pedido: '2', valor: '2,55'}])
+    const [data] = useState([{id: '1', nome: 'teste', pedido: '2', valor: '2,55'}])
 
     useEffect(() => {
         //fazer o get p pegar dados da tabela e grafico
