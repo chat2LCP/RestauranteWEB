@@ -5,7 +5,7 @@ import './App.scss'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import Home from './pages/Home/Home'
 import NotFound from './pages/notFound/NotFound'
-// import SignIn from './pages/SignIn/SignIn';
+import SignIn from './pages/SignIn/SignIn';
 import Cargos from './pages/Cargos/Cargos';
 import Pedidos from './pages/Pedidos/Pedidos';
 import Produtos from './pages/Produtos/Produtos';
@@ -22,7 +22,7 @@ function App() {
     <>
       <BrowserRouter>      
         <Routes>
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={<SignIn />} />
           <Route path='/home' element={<Home />} />
           <Route path='/cadastrar-cargo' element={<Cargos />} />
           <Route path='/cadastrar-produto' element={<Produtos />} />

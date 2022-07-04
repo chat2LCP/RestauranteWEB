@@ -1,5 +1,6 @@
 @import 'src/styles/mixins';
 @import 'src/styles/reset';
+@import 'src/styles/variables';
 
 .page-not-found-container{
     @include flexCenter();
@@ -7,9 +8,8 @@
     margin-top: 80px; 
 }
 
-
-.page-not-found-container i{
-    font-size: 5rem;
-    color: #198754;
-    margin-bottom: 20px;
+.page-not-found-container h1{
+    font-size: 2rem;
+    color: $dark-grey;
+    margin-top: 20px;
 }
