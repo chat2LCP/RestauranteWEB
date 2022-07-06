@@ -45,7 +45,7 @@ function Home() {
                         <div className='botoes-operacionais'>
                             <Button component={Link} to='/realizar-pedido' buttonSize='btn--medium' buttonStyle='btn--blue'>REALIZAR PEDIDO</Button>
                             <Button component={Link} to='/fechar-pedido' buttonSize='btn--medium' buttonStyle='btn--red'>FECHAR PEDIDO</Button>
-                            <Button component={Link} to='/incluir-item' buttonSize='btn--medium' buttonStyle='btn--green'>INCLUIR ITEM</Button>
+                            {/* <Button component={Link} to='/incluir-item' buttonSize='btn--medium' buttonStyle='btn--green'>INCLUIR ITEM</Button> */}
                         </div>
                     </div>        
                 </div>       

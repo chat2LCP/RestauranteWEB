@@ -35,7 +35,7 @@ function Cargos() {
     const [showSpinner, setShowSpinner] = useState(false)
 
     useEffect(() => {
-        axios.get('/cargos')
+        axios.get(`${process.env.REACT_APP_URL_BASE}/cargos`)
         .then((res) => {
             setListaCargos(res.data.data)
         })    
@@ -45,7 +45,7 @@ function Cargos() {
         try{
             setShowSpinner(true)
 
-            await axios.put('/cargos', {
+            await axios.put(`${process.env.REACT_APP_URL_BASE}/cargos`, {
                 descricao: descricao.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase()
             })
             .then(

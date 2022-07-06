@@ -60,7 +60,7 @@ function Itens() {
     const { pedido } = usePedido()
     
     useEffect(() => {
-        axios.get('/produtos')
+        axios.get(`${process.env.REACT_APP_URL_BASE}/produtos`)
         .then((res) => {
             setProdutos(res.data.data)
         })    
@@ -71,7 +71,7 @@ function Itens() {
         const id = e.target.value
 
         if (id != ''){
-            await axios.get(`/produtos/${id}`)
+            await axios.get(`${process.env.REACT_APP_URL_BASE}/produtos/${id}`)
             .then((res) => {
                 setProdutos(res.data.data)
             })
@@ -82,7 +82,7 @@ function Itens() {
                     message: 'Produto não encontrado'
                 })
                  
-                axios.get(`/produtos`)
+                axios.get(`${process.env.REACT_APP_URL_BASE}/produtos`)
                 .then((res) => 
                     setProdutos(res.data.data)
                 )
@@ -91,7 +91,7 @@ function Itens() {
                 setValue("idProduto", descricao)
             })
         } else{
-            await axios.get(`/produtos`)
+            await axios.get(`${process.env.REACT_APP_URL_BASE}/produtos`)
             .then((res) => 
                 setProdutos(res.data.data)
             )
@@ -102,7 +102,7 @@ function Itens() {
         const id = e.target.value
 
         if (id != ''){
-            await axios.get(`/pedidos/${id}`)
+            await axios.get(`${process.env.REACT_APP_URL_BASE}/pedidos/${id}`)
             .then((res) => {
                 setPedidoItens(res.data.data)
             })
@@ -121,7 +121,7 @@ function Itens() {
             var data = new Date();
             const dataFormatada = `${data.getFullYear()}-${data.getMonth()}-${data.getDate()} ${data.getHours()+3}:${data.getMinutes()}:${data.getSeconds()}`
             
-            await axios.put('/pedidos', {
+            await axios.put(`${process.env.REACT_APP_URL_BASE}/pedidos`, {
                 nomecliente: pedido.nomeCliente.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase(),
                 numeroFicha: pedido.numeroFicha,
                 datahora: dataFormatada,

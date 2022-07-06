@@ -61,7 +61,7 @@ function Funcionarios() {
         const id = e.target.value
         
         if (id !== null || id !== undefined){
-            await axios.get(`/cargos/${id}`)
+            await axios.get(`${process.env.REACT_APP_URL_BASE}/cargos/${id}`)
             .then((res) => 
                 setCargos(res.data.data)
             )
@@ -76,7 +76,7 @@ function Funcionarios() {
                 setValue("idCargo", descricao)
             })
         } else{
-            await axios.get(`/cargos`)
+            await axios.get(`${process.env.REACT_APP_URL_BASE}/cargos`)
             .then((res) => 
             setCargos(res.data.data)
             )
@@ -87,7 +87,7 @@ function Funcionarios() {
         try{ 
             setShowSpinner(true)
 
-            await axios.put('/funcionarios', {
+            await axios.put(`${process.env.REACT_APP_URL_BASE}/funcionarios`, {
                 nome : nome.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase(),
                 login,
                 senha,

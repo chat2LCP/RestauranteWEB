@@ -51,19 +51,19 @@ function Produtos() {
     const [showSpinner, setShowSpinner] = useState(false)
 
     useEffect(() => {
-        axios.get('/categorias')
+        axios.get(`${process.env.REACT_APP_URL_BASE}/categorias`)
         .then((res) => {
             setCategorias(res.data.data)
         })
 
-        axios.get('/setores')
+        axios.get(`${process.env.REACT_APP_URL_BASE}/setores`)
         .then((res) => {
             setSetores(res.data.data)
         })
     }, [])
 
     useEffect(() => {
-        axios.get('/produtos')
+        axios.get(`${process.env.REACT_APP_URL_BASE}/produtos`)
         .then((res) => {
             setListaProdutos(res.data.data)
         })    
@@ -73,7 +73,7 @@ function Produtos() {
         try{
             setShowSpinner(true)
 
-            await axios.put('/produtos', {
+            await axios.put(`${process.env.REACT_APP_URL_BASE}/produtos`, {
                 descricao: data.descricao.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase(),
                 preco: data.preco,
                 ativo: data.ativo,
@@ -104,7 +104,7 @@ function Produtos() {
     const buscaSetor = async (e ) => {
         const idSet = e.target.value
 
-        await axios.get(`/setores/${idSet}`)
+        await axios.get(`${process.env.REACT_APP_URL_BASE}/setores/${idSet}`)
         .then((res) => {
             setSetores(res.data.data)
         })
@@ -115,7 +115,7 @@ function Produtos() {
                 message: 'Setor não encontrado'
             })
              
-            axios.get(`/setores`)
+            axios.get(`${process.env.REACT_APP_URL_BASE}/setores`)
             .then((res) => 
                 setSetores(res.data.data)
             )    
@@ -128,7 +128,7 @@ function Produtos() {
     const buscaCategoria = async (e ) => {
         const idCateg = e.target.value
 
-        await axios.get(`/categorias/${idCateg}`)
+        await axios.get(`${process.env.REACT_APP_URL_BASE}/categorias/${idCateg}`)
         .then((res) => {
             setCategorias(res.data.data)
         })
@@ -139,7 +139,7 @@ function Produtos() {
                 message: 'Categoria não encontrada'
             })
 
-            axios.get(`/categorias`)
+            axios.get(`${process.env.REACT_APP_URL_BASE}/categorias`)
             .then((res) => 
                 setCategorias(res.data.data)
             )  

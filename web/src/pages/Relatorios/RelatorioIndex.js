@@ -23,7 +23,7 @@ function RelatorioIndex() {
         const dataDeInicio = dataInicio.toISOString().substr(0, 10)
         const dataDeFim = dataFim.toISOString().substr(0, 10)
 
-        await axios.get('/vendas/total', {
+        await axios.get(`${process.env.REACT_APP_URL_BASE}/vendas/total`, {
             params:{
                 dataInicial: dataDeInicio,
                 dataFinal: dataDeFim,

@@ -34,7 +34,7 @@ function Vendas() {
     const [detalheVenda, setDetalheVenda] = useState(listaVendasVazia)
     
     useEffect(() => {
-        axios.get('/vendas')
+        axios.get(`${process.env.REACT_APP_URL_BASE}/vendas`)
         .then((res) => {
             setListaVendas(res.data.data)
         })    
@@ -44,20 +44,26 @@ function Vendas() {
         const id = e.target.value
         
         if (id !== null || id !== undefined){
-            await axios.get(`/vendas/${id}`)
-            .then((res) => 
-                setDetalheVenda(res.data.data)
-            )
-            .catch(() => {
-                setModalShow({
-                    show: true, 
-                    status: 'error', 
-                    message: 'Venda não encontrada'
-                })
+            try{
+                setShowSpinner(true)
 
-                setDetalheVenda(listaVendasVazia)
-                setValue("idVenda", '')
-            })
+                await axios.get(`${process.env.REACT_APP_URL_BASE}/vendas/${id}`)
+                .then((res) => 
+                    setDetalheVenda(res.data.data)
+                )
+                .catch(() => {
+                    setModalShow({
+                        show: true, 
+                        status: 'error', 
+                        message: 'Venda não encontrada'
+                    })
+                    
+                    setDetalheVenda(listaVendasVazia)
+                    setValue("idVenda", '')
+                })
+            }finally{
+                setShowSpinner(false)
+            }
         }
     }
 

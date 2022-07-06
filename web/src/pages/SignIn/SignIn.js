@@ -3,13 +3,13 @@ import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup';
 import { Apple } from 'react-bootstrap-icons';
+import axios from 'axios';
 
 import Button from '../../components/Button/Button'
 import './SignIn.scss'
-import axios from 'axios';
-import Home from '../Home/Home';
 
 const SignIn = () => {    
+
     const validationSchema = yup.object().shape({
         usuario: yup
             .string()
@@ -32,26 +32,27 @@ const SignIn = () => {
     })    
     
     const handleLogin = async ({usuario, senha}) => {
-        await axios.get('/funcionarios', {
-            url: 'http://10.0.0.104:8080/oauth/token',
-            auth: { 
-                username: "api", 
-                password: "secret"
+        const options = {
+            method: 'PUT',
+            url: `${process.env.REACT_APP_URL_BASE}/oauth/token`,
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              Authorization: 'Basic YXBpOnNlY3JldA=='
             },
             data: {
-                "grant_type": 'resource_owner_password_credentials',  
-            },
-        })
-        .then((res) => 
-            console.log(res.data.data)
+                username: usuario, 
+                password: senha, 
+                grant_type: 'password'
+            }
+        };
+
+        axios.request(options)
+        .then((response) =>
+            console.log(response.data)
         )
-        .then((response) => {
-            console.log(response.data);
-        })
-        .catch((error) => {
-            console.log(error.message)
-            // <Home ></Home>
-        })
+        .catch((error) =>
+            console.error(error)
+        )
     }
 
     return (

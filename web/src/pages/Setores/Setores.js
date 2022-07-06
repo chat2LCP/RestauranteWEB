@@ -33,7 +33,7 @@ function Setores() {
     const [listaSetores, setListaSetores] = useState([{id: 0, descricao: ''}])
 
     useEffect(() => {
-        axios.get('/setores')
+        axios.get(`${process.env.REACT_APP_URL_BASE}/setores`)
         .then((res) => {
             setListaSetores(res.data.data)
         })    
@@ -43,7 +43,7 @@ function Setores() {
         try{
             setShowSpinner(true)
 
-            await axios.put('/setores', {
+            await axios.put(`${process.env.REACT_APP_URL_BASE}/setores`, {
                 descricao: descricao.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase()
             })
             .then(() => { 

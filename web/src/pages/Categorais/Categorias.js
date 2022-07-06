@@ -33,7 +33,7 @@ function Categorias() {
     const [listaCategorias, setListaCategorias] = useState([{id: 0, descricao: ''}])
     
     useEffect(() => {
-        axios.get('/categorias')
+        axios.get(`${process.env.REACT_APP_URL_BASE}/categorias`)
         .then((res) => {
             setListaCategorias(res.data.data)
         })    
@@ -43,7 +43,7 @@ function Categorias() {
         try{
             setShowSpinner(true)
 
-            await axios.put('/categorias', {
+            await axios.put(`${process.env.REACT_APP_URL_BASE}/categorias`, {
                 descricao: descricao.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase()
             })
             .then(() => {
