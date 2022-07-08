@@ -4,12 +4,16 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup';
 import { Apple } from 'react-bootstrap-icons';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 import Button from '../../components/Button/Button'
 import './SignIn.scss'
+import qs from 'qs'
+
 
 const SignIn = () => {    
-
+    const navigate = useNavigate();
+    
     const validationSchema = yup.object().shape({
         usuario: yup
             .string()
@@ -31,28 +35,31 @@ const SignIn = () => {
         resolver: yupResolver(validationSchema),  //aplica a validação do yup no formulário
     })    
     
-    const handleLogin = async ({usuario, senha}) => {
+    const handleLogin = async ({usuario, senha}) => {        
         const options = {
-            method: 'PUT',
+            method: 'POST',
             url: `${process.env.REACT_APP_URL_BASE}/oauth/token`,
             headers: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-              Authorization: 'Basic YXBpOnNlY3JldA=='
+                'Content-Type': 'application/x-www-form-urlencoded',
+                Authorization: 'Basic YXBpOnNlY3JldA==',
+                'Access-Control-Allow-Origin' : '*',
             },
-            data: {
+            data: qs.stringify({
                 username: usuario, 
                 password: senha, 
-                grant_type: 'password'
-            }
+                "grant_type": "password"
+            })
         };
 
         axios.request(options)
-        .then((response) =>
-            console.log(response.data)
+        .then((res) =>{
+            console.log(res.data)
+            localStorage.setItem("access_token", res.data.access_token)
+            res && navigate('/Home')}
         )
-        .catch((error) =>
+        .catch((error) => {
             console.error(error)
-        )
+        })
     }
 
     return (

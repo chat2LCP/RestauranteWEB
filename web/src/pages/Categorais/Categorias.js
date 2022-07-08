@@ -31,27 +31,46 @@ function Categorias() {
     const [modalShow, setModalShow] = useState({show: false, status: 'ok', message: ''})
     const [showSpinner, setShowSpinner] = useState(false)
     const [listaCategorias, setListaCategorias] = useState([{id: 0, descricao: ''}])
-    
-    useEffect(() => {
-        axios.get(`${process.env.REACT_APP_URL_BASE}/categorias`)
+    const AuthStr = 'Bearer '.concat(localStorage.getItem("access_token"));
+
+    const atualizaListaDeCategorias = () => {
+        axios.get(`${process.env.REACT_APP_URL_BASE}/categorias`, {
+            headers: {
+                Authorization: AuthStr
+            },
+        })
         .then((res) => {
             setListaCategorias(res.data.data)
-        })    
-    })
+        }) 
+    }
+
+    useEffect(() => {
+        atualizaListaDeCategorias()
+    }, [])
 
     const cadastrarCategoria = async ({descricao}) => {
         try{
             setShowSpinner(true)
 
-            await axios.put(`${process.env.REACT_APP_URL_BASE}/categorias`, {
-                descricao: descricao.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase()
-            })
+            const options = {
+                method: 'PUT',
+                url: `${process.env.REACT_APP_URL_BASE}/categorias`,
+                headers: {
+                    Authorization: AuthStr
+                },
+                data: {
+                    descricao: descricao.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase()
+                }
+            };
+    
+            axios.request(options)
             .then(() => {
                 setModalShow({
                     show: true, 
                     status: 'ok', 
                     message: 'Categoria salva com sucesso'
                 })
+                atualizaListaDeCategorias()
                 reset()
             })         
             .catch(() => {
@@ -60,7 +79,7 @@ function Categorias() {
                     status: 'error', 
                     message: `Erro ao salvar categoria`
                 })
-            })
+            })                 
         }finally{
             setShowSpinner(false)
         }
@@ -123,7 +142,7 @@ function Categorias() {
 
                     <div className='categoria-botoes'>
                         <Button component={Button} type='submit' buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRAR</Button>
-                        <Button component={Link} to='/' buttonSize='btn--medium' buttonStyle='btn--red'>CANCELAR</Button>
+                        <Button component={Link} to='/home' buttonSize='btn--medium' buttonStyle='btn--red'>CANCELAR</Button>
                     </div>
                 </form>
             </section>

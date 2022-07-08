@@ -57,9 +57,26 @@
         font-weight: 600;
         display: block;
     }
+    
+    .date-picker-and-icon{
+        display: flex;
+        position: relative;
+        align-items: center;
+        
+        .dtpicker{
+            width: 200px;  
+            background-color: transparent;
+            border: 1px solid $dark-grey;
+            padding-left: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
 
-    .dtpicker{
-        width: 200px;  
+        .calendar-icon{
+            position: absolute;
+            right: 10px;
+            z-index: -2;
+        }
     }
 
     .react-datepicker__input-container{

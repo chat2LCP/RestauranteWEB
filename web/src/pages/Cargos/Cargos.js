@@ -34,35 +34,53 @@ function Cargos() {
     const [listaCargos, setListaCargos] = useState([{id: 0, descricao: ''}])
     const [showSpinner, setShowSpinner] = useState(false)
 
-    useEffect(() => {
-        axios.get(`${process.env.REACT_APP_URL_BASE}/cargos`)
+    const atualizaListaDeCargos = () => {
+        axios.get(`${process.env.REACT_APP_URL_BASE}/cargos`, {
+            headers: {
+                Authorization: 'Bearer '.concat(localStorage.getItem("access_token"))
+            }
+        })
         .then((res) => {
             setListaCargos(res.data.data)
-        })    
-    }, [listaCargos])
+        })
+    }
+
+    useEffect(() => {
+        atualizaListaDeCargos()  
+    }, [])
 
     const cadastrarCargo = async ({descricao}) => {
         try{
             setShowSpinner(true)
 
-            await axios.put(`${process.env.REACT_APP_URL_BASE}/cargos`, {
-                descricao: descricao.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase()
-            })
-            .then(
+            const options = {
+                method: 'PUT',
+                url: `${process.env.REACT_APP_URL_BASE}/cargos`,
+                headers: {
+                    Authorization: 'Bearer '.concat(localStorage.getItem("access_token"))
+                },
+                data: {
+                    descricao: descricao.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase(),
+                }
+            };
+    
+            axios.request(options)
+            .then(() => {
                 setModalShow({
                     show: true, 
                     status: 'ok', 
                     message: 'Cargo salvo com sucesso'
-                }),
+                })
+                atualizaListaDeCargos()
                 reset()
-            )
+            })
             .catch(() => {
                 setModalShow({
                     show: true, 
                     status: 'error', 
                     message: 'Erro ao salvar cargo'
                 })
-            })
+            })    
         }finally{
             setShowSpinner(false)
         }
@@ -113,7 +131,6 @@ function Cargos() {
                                         listaCargos.map((cargo) => {
                                             return(
                                                 <div key={cargo.id}>
-                                                    
                                                     <span className='resumo-info'>{cargo.id} - {cargo.descricao}</span>
                                                 </div>
                                             )
@@ -126,7 +143,7 @@ function Cargos() {
 
                     <div className='cargos-botoes'>
                         <Button component={Button} type='submit' buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRAR</Button>
-                        <Button component={Link} to='/' buttonSize='btn--medium' buttonStyle='btn--red'>CANCELAR</Button>
+                        <Button component={Link} to='/home' buttonSize='btn--medium' buttonStyle='btn--red'>CANCELAR</Button>
                     </div>
                 </form>
             </section>

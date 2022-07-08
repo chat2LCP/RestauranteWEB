@@ -27,7 +27,7 @@ function Home() {
                     <div className='home-botoes'>
                         <div className='botoes-gerenciais-superiores'>
                             <Button component={Link} to='/cadastrar-produto' buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRO DE PRODUTOS</Button>
-                            <Button component={Link} to='cadastrar-cargo' buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRO DE CARGOS</Button>
+                            <Button component={Link} to='/cadastrar-cargo' buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRO DE CARGOS</Button>
                             <Button component={Link} to='/cadastrar-funcionario' buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRO DE FUNCIONÁRIOS</Button>
                         </div>
                         <div className='botoes-gerenciais-inferiores'>

@@ -82,15 +82,34 @@ const Pedidos = () => {
                         <p className='item-error-message'>{errors.nome?.message}</p>
                     </div>
 
-                    <div className='pedido-label-input'>
-                        <label className='label-nome-pedido'>Número da ficha</label>
-                        <input 
-                            id="ficha"
-                            name="ficha"
-                            className="form-control input-pedido" 
-                            {...register("ficha")} 
-                        />
-                        <p className='item-error-message'>{errors.ficha?.message}</p>
+                    <div className='label-input-esquerda'>
+                        <div className='pedido-label-input'>
+                            <label className='label-nome-pedido'>Número da ficha</label>
+                            <input 
+                                id="ficha"
+                                name="ficha"
+                                className="form-control input-pedido" 
+                                {...register("ficha")} 
+                                />
+                            <p className='item-error-message'>{errors.ficha?.message}</p>
+                        </div>
+                    </div>
+
+                    <div className='label-input-direita'>
+                        <div className='resumo-categoria-container'>
+                            <div className='resumo-categoria-scrollarea'>
+                                <h2 className='resumo-titulo'>Categorias cadastrados</h2>
+                                {
+                                    // listaCategorias.map((categoria) => {
+                                    //     return(
+                                    //         <div key={categoria.id}>
+                                    //             <span className='resumo-info'>{categoria.id} - {categoria.descricao}</span>
+                                    //         </div>
+                                    //     )
+                                    // })
+                                }
+                            </div>
+                        </div>
                     </div>
 
                     <div className='pedido-botoes'>

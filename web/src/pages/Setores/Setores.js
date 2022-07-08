@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup';
 import axios from 'axios';
 import { Apple } from 'react-bootstrap-icons';
+import qs from 'qs'
 
 import './Setores.scss'
 import Button from '../../components/Button/Button'
@@ -31,27 +32,46 @@ function Setores() {
     }) 
 
     const [listaSetores, setListaSetores] = useState([{id: 0, descricao: ''}])
+    const AuthStr = 'Bearer '.concat(localStorage.getItem("access_token"))
 
-    useEffect(() => {
-        axios.get(`${process.env.REACT_APP_URL_BASE}/setores`)
+    const atualizaListaDeSetores = () => {
+        axios.get(`${process.env.REACT_APP_URL_BASE}/setores`, {
+            headers: {
+                Authorization: AuthStr
+            }
+        })
         .then((res) => {
             setListaSetores(res.data.data)
-        })    
-    })
+        }) 
+    }
+
+    useEffect(() => {
+        atualizaListaDeSetores()
+    }, [])
 
     const cadastrarSetor = async ({descricao}) => {
         try{
             setShowSpinner(true)
 
-            await axios.put(`${process.env.REACT_APP_URL_BASE}/setores`, {
-                descricao: descricao.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase()
-            })
+            const options = {
+                method: 'PUT',
+                url: `${process.env.REACT_APP_URL_BASE}/setores`,
+                headers: {
+                    Authorization: AuthStr
+                },
+                data: {
+                    descricao: descricao.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase(),
+                }
+            };
+    
+            axios.request(options)
             .then(() => { 
                 setModalShow({
                     show: true, 
                     status: 'ok', 
                     message: 'Setor salvo com sucesso!'
                 })
+                atualizaListaDeSetores()
                 reset()
             })         
             .catch(() => {
@@ -123,7 +143,7 @@ function Setores() {
 
                     <div className='setor-botoes'>
                         <Button component={Button} type='submit' buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRAR</Button>
-                        <Button component={Link} to='/' buttonSize='btn--medium' buttonStyle='btn--red'>CANCELAR</Button>
+                        <Button component={Link} to='/Home' buttonSize='btn--medium' buttonStyle='btn--red'>CANCELAR</Button>
                     </div>
                 </form>
             </section>

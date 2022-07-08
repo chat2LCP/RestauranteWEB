@@ -49,44 +49,76 @@ function Produtos() {
     const [setores, setSetores] = useState([{id: 0, descricao: ''}])
     const [listaProdutos, setListaProdutos] = useState([{id: 0, preco: 0, descricao: '', tempopreparo: 0, categoria: 0, ativo: 0, idSetor: 0}])
     const [showSpinner, setShowSpinner] = useState(false)
+    const AuthStr = 'Bearer '.concat(localStorage.getItem("access_token"));
 
-    useEffect(() => {
-        axios.get(`${process.env.REACT_APP_URL_BASE}/categorias`)
+    const atualizaListaDeCategorias = () => {
+        axios.get(`${process.env.REACT_APP_URL_BASE}/categorias`, {
+            headers: {
+                Authorization: AuthStr
+            }
+        })
         .then((res) => {
             setCategorias(res.data.data)
         })
+    }
 
-        axios.get(`${process.env.REACT_APP_URL_BASE}/setores`)
+    const atualizaListaDeSetores = () => {
+        axios.get(`${process.env.REACT_APP_URL_BASE}/setores`, {
+            headers: {
+                Authorization: AuthStr
+            }
+        })
         .then((res) => {
             setSetores(res.data.data)
         })
-    }, [])
+    }
 
-    useEffect(() => {
-        axios.get(`${process.env.REACT_APP_URL_BASE}/produtos`)
+    const atualizaListaDeProdutos = () => {
+        axios.get(`${process.env.REACT_APP_URL_BASE}/produtos`, {
+            headers: {
+                Authorization: AuthStr
+            }
+        })
         .then((res) => {
             setListaProdutos(res.data.data)
         })    
-    }, [listaProdutos])
+    }
+
+    useEffect(() => {
+        atualizaListaDeCategorias()
+        atualizaListaDeSetores()
+        atualizaListaDeProdutos()
+    }, [])
 
     const cadastrarProduto = async (data) => {
         try{
             setShowSpinner(true)
 
-            await axios.put(`${process.env.REACT_APP_URL_BASE}/produtos`, {
-                descricao: data.descricao.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase(),
-                preco: data.preco,
-                ativo: data.ativo,
-                idCategoria: data.id_categoria,
-                idSetor: data.id_setor,
-                tempopreparo: data.tempopreparo
-            })
+
+            const options = {
+                method: 'PUT',
+                url: `${process.env.REACT_APP_URL_BASE}/produtos`,
+                headers: {
+                    Authorization: AuthStr
+                },
+                data: {
+                    descricao: data.descricao.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase(),
+                    preco: data.preco,
+                    ativo: data.ativo,
+                    idCategoria: data.id_categoria,
+                    idSetor: data.id_setor,
+                    tempopreparo: data.tempopreparo
+                }
+            };
+    
+            axios.request(options)
             .then(() => {
                 setModalShow({
                     show: true, 
                     status: 'ok', 
                     message: `Produto salvo com sucesso`
                 })
+                atualizaListaDeProdutos()
                 reset()
             })
             .catch(() => {
@@ -95,7 +127,7 @@ function Produtos() {
                     status: 'error', 
                     message: `Erro ao salvar produto`
                 })
-            })
+            })      
         }finally{
             setShowSpinner(false)
         }
@@ -104,7 +136,11 @@ function Produtos() {
     const buscaSetor = async (e ) => {
         const idSet = e.target.value
 
-        await axios.get(`${process.env.REACT_APP_URL_BASE}/setores/${idSet}`)
+        await axios.get(`${process.env.REACT_APP_URL_BASE}/setores/${idSet}`, {
+            headers: {
+                Authorization: AuthStr
+            }
+        })
         .then((res) => {
             setSetores(res.data.data)
         })
@@ -115,7 +151,11 @@ function Produtos() {
                 message: 'Setor não encontrado'
             })
              
-            axios.get(`${process.env.REACT_APP_URL_BASE}/setores`)
+            axios.get(`${process.env.REACT_APP_URL_BASE}/setores`, {
+                headers: {
+                    Authorization: AuthStr
+                }
+            })
             .then((res) => 
                 setSetores(res.data.data)
             )    
@@ -128,7 +168,11 @@ function Produtos() {
     const buscaCategoria = async (e ) => {
         const idCateg = e.target.value
 
-        await axios.get(`${process.env.REACT_APP_URL_BASE}/categorias/${idCateg}`)
+        await axios.get(`${process.env.REACT_APP_URL_BASE}/categorias/${idCateg}`, {
+            headers: {
+                Authorization: AuthStr
+            }
+        })
         .then((res) => {
             setCategorias(res.data.data)
         })
@@ -139,7 +183,11 @@ function Produtos() {
                 message: 'Categoria não encontrada'
             })
 
-            axios.get(`${process.env.REACT_APP_URL_BASE}/categorias`)
+            axios.get(`${process.env.REACT_APP_URL_BASE}/categorias`, {
+                headers: {
+                    Authorization: AuthStr
+                }
+            })
             .then((res) => 
                 setCategorias(res.data.data)
             )  
@@ -313,7 +361,7 @@ function Produtos() {
                 
                     <div className='produto-botoes'>
                         <Button component={Button} type="submit" buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRAR</Button>
-                        <Button component={Link} to='/' buttonSize='btn--medium' buttonStyle='btn--red'>CANCELAR</Button>
+                        <Button component={Link} to='/home' buttonSize='btn--medium' buttonStyle='btn--red'>CANCELAR</Button>
                     </div>
                 </form>
             </section>

@@ -4,6 +4,7 @@ import DatePicker, { registerLocale } from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import ptbr from 'date-fns/locale/pt-BR';
 import { Apple } from 'react-bootstrap-icons'
+import { Calendar } from 'react-bootstrap-icons'
 
 import './RelatorioIndex.scss'
 import Button from '../../components/Button/Button'
@@ -18,12 +19,16 @@ function RelatorioIndex() {
     const [dataFim, setDataFim] = useState(new Date())
     const [dadosRelatorio, setDadosRelatorio] = useState([{itens: [{data: '', quantidade: 0, valor: 0}], quantidade: 0, valor: 0}])
     const [modalShow, setModalShow] = useState({show: false, status: 'ok', message: ''})
+    const AuthStr = 'Bearer '.concat(localStorage.getItem("access_token"))
 
-    const geraRelatorio = async (periodo) => {         
+    const geraRelatorio = async () => {         
         const dataDeInicio = dataInicio.toISOString().substr(0, 10)
         const dataDeFim = dataFim.toISOString().substr(0, 10)
 
         await axios.get(`${process.env.REACT_APP_URL_BASE}/vendas/total`, {
+            headers:{
+                Authorization: AuthStr
+            },
             params:{
                 dataInicial: dataDeInicio,
                 dataFinal: dataDeFim,
@@ -39,24 +44,6 @@ function RelatorioIndex() {
                 message: 'Não há dados para o período selecionado'
             })
         })
-
-        console.log(dadosRelatorio)
-        
-        // switch(periodo){
-        //     case 'd':
-        //         console.log('d');
-
-        //         break;
-        //     case 's':
-        //         console.log('s');
-
-        //         break;
-        //     case 'm':
-        //         console.log('m');
-
-        //         break;
-        //     default:
-        // }
     }
 
     const handleDateChange = () => {
@@ -91,27 +78,33 @@ function RelatorioIndex() {
                 <div className='relatorio-datepickers-container'>
                     <div className='dtpicker inicial'>
                         <label className='label-nome-relatorio'>Data inicial</label>
-                        <DatePicker
-                            className='dtpicker'
-                            dateFormat="dd/MM/yyyy"
-                            selected={dataInicio}
-                            onSelect={setDataInicio}
-                            onChange={handleDateChange} //only when value has changed
-                            locale={'ptbr'}
-                            withPortal
-                        />
+                        <div className='date-picker-and-icon'>
+                            <DatePicker
+                                className='dtpicker'
+                                dateFormat="dd/MM/yyyy"
+                                selected={dataInicio}
+                                onSelect={setDataInicio}
+                                onChange={handleDateChange} //only when value has changed
+                                locale={'ptbr'}
+                                withPortal
+                                />
+                            <Calendar className='calendar-icon'/>
+                        </div>
                     </div>
                     <div className='dtpicker final'>
                         <label className='label-nome-relatorio'>Data final</label>
-                        <DatePicker
-                            className='dtpicker'
-                            dateFormat="dd/MM/yyyy"
-                            selected={dataFim}
-                            onSelect={setDataFim} //when day is clicked
-                            onChange={handleDateChange} //only when value has changed
-                            locale={'ptbr'}
-                            withPortal
-                        />
+                        <div className='date-picker-and-icon'>
+                            <DatePicker
+                                className='dtpicker'
+                                dateFormat="dd/MM/yyyy"
+                                selected={dataFim}
+                                onSelect={setDataFim} //when day is clicked
+                                onChange={handleDateChange} //only when value has changed
+                                locale={'ptbr'}
+                                withPortal
+                            />
+                            <Calendar className='calendar-icon'/>
+                        </div>
                     </div>
                 </div>
 
@@ -166,7 +159,7 @@ function RelatorioIndex() {
                 </section>
             
                 <div className='relatorioData-botoes'>
-                    <Button component={Link} to='/' buttonSize='btn--medium' buttonStyle='btn--blue'>VOLTAR</Button>
+                    <Button component={Link} to='/home' buttonSize='btn--medium' buttonStyle='btn--blue'>VOLTAR</Button>
                 </div>
             </section>
         </div>

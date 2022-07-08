@@ -42,26 +42,44 @@ function Funcionarios() {
     const [showSpinner, setShowSpinner] = useState(false)
     const [cargos, setCargos] = useState([{id: '', descricao: ''}])
     const [listaFuncionarios, setListaFuncionarios] = useState([{id: 0, nome: '', login: '', senha: '', idCargo: 0, ativo: 0}])
+    const AuthStr = 'Bearer '.concat(localStorage.getItem("access_token"))
 
-    useEffect(() => {
-        axios.get(`/cargos`)
-        .then((res) => {
-            setCargos(res.data.data)
-        })  
-    }, [])
-
-    useEffect(() => {
-        axios.get('/funcionarios')
+    const atualizaListaDeFuncionarios = () => {
+        axios.get(`${process.env.REACT_APP_URL_BASE}/funcionarios`, {
+            headers: {
+                Authorization: AuthStr
+            }
+        })
         .then((res) => {
             setListaFuncionarios(res.data.data)
-        })    
-    }, [listaFuncionarios])
+        })
+    }
+
+    const atualizaListaDeCargos = () => {
+        axios.get(`${process.env.REACT_APP_URL_BASE}/cargos`,{
+            headers: {
+                Authorization: AuthStr
+            }
+        })
+        .then((res) => {
+            setCargos(res.data.data)
+        })
+    }
+    
+    useEffect(() => {
+        atualizaListaDeFuncionarios()
+        atualizaListaDeCargos()
+    }, [])
    
     const buscaCargos = async (e) => {
         const id = e.target.value
         
         if (id !== null || id !== undefined){
-            await axios.get(`${process.env.REACT_APP_URL_BASE}/cargos/${id}`)
+            await axios.get(`${process.env.REACT_APP_URL_BASE}/cargos/${id}`, {
+                headers: {
+                    Authorization: AuthStr
+                }
+            })
             .then((res) => 
                 setCargos(res.data.data)
             )
@@ -76,7 +94,11 @@ function Funcionarios() {
                 setValue("idCargo", descricao)
             })
         } else{
-            await axios.get(`${process.env.REACT_APP_URL_BASE}/cargos`)
+            await axios.get(`${process.env.REACT_APP_URL_BASE}/cargos`, {
+                headers: {
+                    Authorization: AuthStr
+                }
+            })
             .then((res) => 
             setCargos(res.data.data)
             )
@@ -87,19 +109,29 @@ function Funcionarios() {
         try{ 
             setShowSpinner(true)
 
-            await axios.put(`${process.env.REACT_APP_URL_BASE}/funcionarios`, {
-                nome : nome.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase(),
-                login,
-                senha,
-                idCargo,
-                ativo
-            })
+            const options = {
+                method: 'PUT',
+                url: `${process.env.REACT_APP_URL_BASE}/funcionarios`,
+                headers: {
+                    Authorization: 'Bearer '.concat(localStorage.getItem("access_token"))
+                },
+                data: {
+                    nome : nome.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase(),
+                    login,
+                    senha,
+                    idCargo,
+                    ativo
+                }
+            };
+    
+            axios.request(options)
             .then(() => {
                 setModalShow({
                     show: true, 
                     status: 'ok', 
                     message: 'Funcionário salvo com sucesso'
                 })
+                atualizaListaDeFuncionarios()
                 reset()
             })
             .catch(() => {
@@ -108,7 +140,7 @@ function Funcionarios() {
                     status: 'error', 
                     message: 'Erro ao salvar funcionário'
                 })
-            })
+            })       
         }finally{
             setShowSpinner(false)
         }
@@ -238,7 +270,7 @@ function Funcionarios() {
                     
                     <div className='funcionario-botoes'>
                         <Button component={Button} type='submit' buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRAR</Button>
-                        <Button component={Link} to='/' buttonSize='btn--medium' buttonStyle='btn--red'>CANCELAR</Button>
+                        <Button component={Link} to='/home' buttonSize='btn--medium' buttonStyle='btn--red'>CANCELAR</Button>
                     </div>
                 </form>
             </section>
