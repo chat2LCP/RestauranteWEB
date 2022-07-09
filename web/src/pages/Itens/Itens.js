@@ -145,18 +145,18 @@ function Itens() {
         }
     }
 
-    const incluirItem = async ({idPedido, idProduto, quantidade, valor, sequencia, observacao}) => {
+    const incluirPedido = async ({idPedido, idProduto, quantidade, valor, sequencia, observacao}) => {
         try{
             setShowSpinner(true)
 
             var data = new Date();
             const dataFormatada = `${data.getFullYear()}-${data.getMonth()}-${data.getDate()} ${data.getHours()+3}:${data.getMinutes()}:${data.getSeconds()}`
-            const idPedidoBanco = idPedido
+            let idPedidoBanco = idPedido
 
             console.log('idpedidobanco '+idPedidoBanco)
             console.log('idproduto '+idProduto)
 
-            //busca o id do pedido gerado no banco
+            //busca o id do pedido gerado pelo banco
             if (idPedido == 0 || idPedido == undefined || idPedido == ''){
                 const options1 = {
                     method: 'PUT',
@@ -171,13 +171,9 @@ function Itens() {
                     }
                 }
 
-                console.log('==aquiiiiiiiiiiiiii====')
-
-                axios.request(options1)
+                await axios.request(options1)
                 .then((res) => {
-                    idPedidoBanco = res.data.data
-
-                    console.log('================='+idPedidoBanco)
+                    idPedidoBanco = res.data.data[0].id
                 })
                 .catch(() => {
                     setModalShow({
@@ -186,11 +182,9 @@ function Itens() {
                         message: `Erro ao gerar pedido`
                     })
                 }) 
-
-                console.log('/////////////'+idPedidoBanco)
-
             }
-   
+            
+            //salva item no pedido
             const options2 = {
                 method: 'PUT',
                 url: `${process.env.REACT_APP_URL_BASE}/pedidos`,
@@ -198,9 +192,6 @@ function Itens() {
                     Authorization: AuthStr
                 },
                 data: {
-                    // nomecliente: pedido.nomeCliente.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase(),
-                    // numeroFicha: pedido.numeroFicha,
-                    // datahora: dataFormatada,
                     itens: [{
                         idPedido : idPedidoBanco,
                         idProduto,
@@ -213,7 +204,7 @@ function Itens() {
                 }
             };
                 
-            axios.request(options2)
+            await axios.request(options2)
             .then(() => {
                 setModalShow({
                     show: true, 
@@ -266,7 +257,7 @@ function Itens() {
                     <span className='divider'></span>
                 </div>
 
-                <form className="form" onSubmit={handleSubmit(incluirItem)}>
+                <form className="form" onSubmit={handleSubmit(incluirPedido)}>
                     <div className='label-inputs'>
                         <div className='label-input-esquerda'>
                             <div className='item-label-input'>
