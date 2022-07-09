@@ -15,6 +15,7 @@ import Categorias from './pages/Categorais/Categorias';
 import Setores from './pages/Setores/Setores';
 import RelatorioIndex from './pages/Relatorios/RelatorioIndex';
 import Vendas from './pages/Venda/Vendas';
+import Impressoras from './pages/Impressoras/Impressoras';
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
           <Route path='/cadastrar-funcionario' element={<Funcionarios />} />
           <Route path='/cadastrar-categoria' element={<Categorias />} />
           <Route path='/cadastrar-setor' element={<Setores />} />
+          <Route path='/cadastrar-impressora' element={<Impressoras />} />
           <Route path='/realizar-pedido' element={<Pedidos />} />  
           <Route path='/fechar-pedido' element={<Vendas />} />  
           <Route path='/incluir-item' element={<Itens />} />       

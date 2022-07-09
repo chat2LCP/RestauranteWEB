@@ -142,7 +142,7 @@ function Setores() {
 
                     <div className='setor-botoes'>
                         <Button component={Button} type='submit' buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRAR</Button>
-                        <Button component={Link} to='/Home' buttonSize='btn--medium' buttonStyle='btn--red'>CANCELAR</Button>
+                        <Button component={Link} to='/Home' buttonSize='btn--medium' buttonStyle='btn--red'>VOLTAR</Button>
                     </div>
                 </form>
             </section>

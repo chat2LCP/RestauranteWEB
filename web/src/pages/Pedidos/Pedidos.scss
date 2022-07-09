@@ -60,7 +60,7 @@
 .pedido-label-input{
     .label-nome-pedido{
         margin-top: 40px;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         font-weight: 600;
         display: block;
     }
@@ -68,7 +68,7 @@
     .input-pedido{
         width: 80%;
         margin-top: 10px;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
     }
 
     .ficha{
@@ -101,6 +101,9 @@
             padding: 10px;
             grid-template-columns: 1fr 2fr;
             grid-template-columns: 1fr 2fr;
+        }
+
+        .resumo-item-container{
             border-bottom: 1px solid $input-border-grey;
         }
         
@@ -110,12 +113,18 @@
             margin-top: 20px;
             color: $blue;
         }
+
+        .resumo-subitem{
+            font-size: 1rem;
+            font-weight: 500;
+            margin-top: 20px;
+            color: $dark-grey;
+        }
         
         .resumo-info{
             display: flex;
             padding: 10px;
             font-size: 1rem;
-            border-bottom: 1px solid $input-border-grey;
         }
     }
 }

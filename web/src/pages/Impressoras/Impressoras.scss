@@ -2,12 +2,13 @@
 @import 'src/styles/variables';
 @import 'src/styles/mixins';
 
-.item-container{
-    height: 100%;
+.impressora-container{
     min-width: 900px;
+    box-sizing: border-box;
+    position: relative;
 }
 
-.item-header {
+.impressora-header {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -25,7 +26,7 @@
     color: #198754;
 }
 
-.item-titulo {
+.impressora-titulo {
     line-height: 170px;
     margin-left: 25px; 
     color: $white;
@@ -33,8 +34,19 @@
     text-align: center;
 }
 
-.item-body{
-    padding: 40px 30px;
+.impressora-body{
+    padding: 40px 30px; 
+    height: 100%; 
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    .form{
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        justify-content: space-between;
+    }
 }
 
 .divider::before{
@@ -46,78 +58,59 @@
     background: $light-grey;
 }
 
-.label-inputs{
-    display: flex;
-    width: 100%;
-    justify-content: space-evenly;
-}
-
-.label-input-esquerda, .label-input-direita{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 100%;
-}
-
-.item-label-input{
-    .label-nome-produto{
+.impressora-label-input{
+    .label-nome-impressora{
         margin-top: 40px;
         font-size: 1.2rem;
         font-weight: 600;
         display: block;
     }
 
-    .input-select-container{
-        display: flex;
-
-        .input-id{
-            margin-right: 10px;
-            width: 80px;
-            margin-top: 10px;
-        }
-    }
-
-    .input-item{
+    .input-impressora{
         width: 80%;
         margin-top: 10px;
         font-size: 1.2rem;
     }
 
-    .select-produto{
-        width: calc(80% - 90px);
-        margin-top: 10px;
-        font-size: 1.2rem;
-    }
-
-    .input-obs{
-        width: 100%;
+    .impressora{
+        width: 90px;
     }
 }
 
-.label-nome-item{
-    margin-top: 40px;
-    font-size: 1.2rem;
-    font-weight: 600;
-    display: block;
-}
-
-.ficha{
-    color: $green
-}
-
-.resumo-pedido-container{
+.ip-porta{
     display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    height: 74%;
+    width: 80%;
     
-    .resumo-pedido-scrollarea{
+    .ip-contaner{
+        width: 75%;
+
+        .input-ip{
+            margin-right: 10px;
+            width: 90%;
+            margin-top: 10px;
+        }
+    }
+    
+    .porta-container{
+        width: 25%;
+
+        .input-porta{
+            margin-right: 10px;
+            width: 100%;
+            margin-top: 10px;
+        }
+    }
+}
+
+
+.resumo-impressora-container{   
+    .resumo-impressora-scrollarea{
         border: 1px solid $input-border-grey;
         border-radius: 4px;
         margin-top: 40px;
         padding: 15px;
         width: 100%;
-        height: 470px;
+        height: 300px;
         overflow-y: auto;
         word-wrap: break-word;
 
@@ -127,34 +120,34 @@
             font-style: italic;
             text-decoration: underline;
             text-align: center;
-        }
 
-        .resumo-subinfo{
-            display: grid;
-            padding: 10px;
-            grid-template-columns: 1fr 2fr;
-            grid-template-columns: 1fr 2fr;
+        }
+        
+        .impressora-info-container{
             border-bottom: 1px solid $input-border-grey;
         }
-
+        
         .resumo-item{
             font-size: 1rem;
             font-weight: 500;
             margin-top: 20px;
             color: $blue;
         }
-
-        .nome{
-            color: $green  
-        }
+        
         .resumo-info{
+            display: flex;
+            padding: 4px;
             font-size: 1rem;
-            display: block;
+
+            .info-title{
+                font-weight: bold;
+                margin-right: 5px;
+            }
         }
     }
 }
 
-.item-botoes{
+.impressora-botoes{
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -163,9 +156,9 @@
     margin-top: 40px;
 }
 
-.item-error-message{
+.impressoras-error-message{
     color: rgb(243, 1, 1);
     font-weight: normal;
-    font-size: 1rem; 
+    font-size: 1rem;
 }
 

@@ -33,6 +33,9 @@ function Home() {
                         <div className='botoes-gerenciais-inferiores'>
                             <Button component={Link} to='/cadastrar-setor' buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRO DE SETORES</Button>
                             <Button component={Link} to='/cadastrar-categoria' buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRO DE CATEGORIAS</Button>
+                            <Button component={Link} to='/cadastrar-impressora' buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRO DE IMPRESSORAS</Button>
+                        </div>
+                        <div className='botoes-gerenciais-inferiores'>
                             <Button component={Link} to='/relatorios' buttonSize='btn--medium' buttonStyle='btn--blue'>RELATÓRIOS</Button>
                         </div>
                     </div>        
@@ -45,7 +48,6 @@ function Home() {
                         <div className='botoes-operacionais'>
                             <Button component={Link} to='/realizar-pedido' buttonSize='btn--medium' buttonStyle='btn--blue'>REALIZAR PEDIDO</Button>
                             <Button component={Link} to='/fechar-pedido' buttonSize='btn--medium' buttonStyle='btn--red'>FECHAR PEDIDO</Button>
-                            {/* <Button component={Link} to='/incluir-item' buttonSize='btn--medium' buttonStyle='btn--green'>INCLUIR ITEM</Button> */}
                         </div>
                     </div>        
                 </div>       

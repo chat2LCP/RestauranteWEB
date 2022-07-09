@@ -32,7 +32,7 @@ const Pedidos = () => {
         resolver: yupResolver(validationSchema),  //aplica a validação do yup no formulário
     }) 
 
-    const listaDeProdutosVazia = [{datahora: '', id: '', itens: [{datahora: '', id: '', idPedido: '', idProduto: '', observacao: '', produto:{descricao: '', id: '', preco: ''}, quantidade: '', sequencia: '', valor: ''}], nomeCliente: '', numeroFicha: ''}]
+    const listaDeProdutosVazia = [{datahora: '', id: '', itens: [{datahora: '', id: 0, idPedido: 0, idProduto: 0, observacao: '', produto:{descricao: '', id: 0, preco: 0}, quantidade: 0, sequencia: 0, valor: 0}], nomeCliente: '', numeroFicha: 0}]
     const [modalShow, setModalShow] = useState({show: false, status: 'ok', message: ''})
     const [showSpinner, setShowSpinner] = useState(false)
     const [listaFichas, setListaFichas] = useState([{id: 0}])
@@ -59,7 +59,7 @@ const Pedidos = () => {
         })
     }
 
-    const atalizaListaDePedidos = async () => {
+    const atualizaListaDePedidos = async () => {
         await axios.get(`${process.env.REACT_APP_URL_BASE}/pedidos`, {
             headers: {
                 Authorization: AuthStr
@@ -67,19 +67,24 @@ const Pedidos = () => {
         })
         .then((res) => {
             setListaPedidos(res.data.data)
+
+            // console.log(listaPedidos)
+            console.log(res.data.data)
         })
-        .catch(() => {
+        .catch((error) => {
             setModalShow({
                 show: true, 
                 status: 'error', 
                 message: 'Erro ao buscar lista de pedidos'
             })
+
+            console.log(error)
         })
     }
 
     useEffect(() => {
         atualizaListaDeFichas()
-        atalizaListaDePedidos() 
+        atualizaListaDePedidos() 
     }, [])
 
     // const buscaFicha = async (e) => {
@@ -190,21 +195,24 @@ const Pedidos = () => {
                                     {
                                         listaFichas.map((ficha) => {
                                             return(
-                                                <div key={ficha.id}>
+                                                <div className='resumo-item-container' key={ficha.id}>
                                                     <span className='resumo-item'>{ficha.id}</span>
                                                     {
                                                         listaPedidos.map((pedido) => {
-                                                            pedido.numero_ficha == ficha.id && 
-                                                                <div className='resumo-subinfo' key={pedido.id}>
-                                                                    <div>
-                                                                        <span className='resumo-item'>ID pedido</span>
-                                                                        <span className='resumo-info'>{pedido.id}</span>
+                                                            if(pedido.numeroFicha == ficha.id){
+                                                                return(
+                                                                    <div className='resumo-subinfo' key={pedido.id}>
+                                                                        <div>
+                                                                            <span className='resumo-subitem'>ID pedido</span>
+                                                                            <span className='resumo-info'>{pedido.id}</span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <span className='resumo-subitem'>Cliente</span>
+                                                                            <span className='resumo-info'>{pedido.nomecliente}</span>
+                                                                        </div>
                                                                     </div>
-                                                                    <div>
-                                                                        <span className='resumo-item'>Cliente</span>
-                                                                        <span className='resumo-info'>{pedido.nomecliente}</span>
-                                                                    </div>
-                                                                </div>
+                                                                )
+                                                            }
                                                         })
                                                     }
                                                 </div>
@@ -218,7 +226,7 @@ const Pedidos = () => {
 
                     <div className='pedido-botoes'>
                         <Button component={Button} type="submit" buttonSize='btn--medium' buttonStyle='btn--green'>INCLUIR ITEM</Button>
-                        <Button component={Link} to='/home' buttonSize='btn--medium' buttonStyle='btn--red'>CANCELAR</Button>
+                        <Button component={Link} to='/home' buttonSize='btn--medium' buttonStyle='btn--red'>VOLTAR</Button>
                     </div>
                 </form>
             </section>

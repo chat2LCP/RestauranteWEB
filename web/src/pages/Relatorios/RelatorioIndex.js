@@ -20,7 +20,8 @@ function RelatorioIndex() {
     const [dataInicio, setDataInicio] = useState(new Date())
     const [dataFim, setDataFim] = useState(new Date())
     const [dadosRelatorio, setDadosRelatorio] = useState([{itens: [{data: '', quantidade: 0, valor: 0}], quantidade: 0, valor: 0}])
-    const [dadosRelatorioVendas, setDadosRelatorioVendas] = useState(['',0])
+    const [dadosRelatorioVendas, setDadosRelatorioVendas] = useState(["",0])
+    const [dadosRelatorioQuantidades, setDadosRelatorioQuantidades] = useState(["",0])
     const [modalShow, setModalShow] = useState({show: false, status: 'ok', message: ''})
     const AuthStr = 'Bearer '.concat(localStorage.getItem("access_token"))
 
@@ -48,6 +49,15 @@ function RelatorioIndex() {
                 )
             })
             setDadosRelatorioVendas(...vendas)
+
+            const quantidade = res.data.data.map(({itens}) => {
+                return(
+                    itens.map(({data, quantidade}) => {
+                        return [data, quantidade]
+                    })
+                )
+            })
+            setDadosRelatorioQuantidades(...quantidade)
         })
         .catch(()=> {
             setModalShow({
@@ -69,6 +79,11 @@ function RelatorioIndex() {
     const chartSalesData=[
         ["Ano", "Vendas"], 
         ...dadosRelatorioVendas
+    ]
+
+    const chartQuantidadeData=[
+        ["Ano", "Vendas"], 
+        ...dadosRelatorioQuantidades
     ]
 
     return(
@@ -174,17 +189,34 @@ function RelatorioIndex() {
                         </table>
                     </div>
                 </section>
+                
+                {
+                    [...dadosRelatorioVendas][0] != "" &&
+                        <section>
+                            <span className='grafico-titulo'>Titulo grafico</span>
+                            <Chart
+                                chartType='LineChart'
+                                data={chartSalesData}
+                                width="100%"
+                                height="300px"
+                                legendToggle
+                            />
+                        </section>      
+                }
 
-                <section className='chart-container'>
-                    <Chart
-                        chartType='LineChart'
-                        data={chartSalesData}
-                        width="100%"
-                        height="400px"
-                        legendToggle
-                    />
-                </section>
-            
+                {
+                    [...dadosRelatorioQuantidades][0] != "" &&
+                        <section>
+                            <span className='grafico-titulo'>Titulo grafico</span>
+                            <Chart
+                                chartType='LineChart'
+                                data={chartQuantidadeData}
+                                width="100%"
+                                height="300px"
+                                legendToggle
+                            />
+                        </section>
+                }
                 <div className='relatorio-botao'>
                     <Button component={Link} to='/home' buttonSize='btn--medium' buttonStyle='btn--blue'>VOLTAR</Button>
                 </div>

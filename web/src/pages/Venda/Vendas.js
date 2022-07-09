@@ -218,7 +218,7 @@ function Vendas() {
 
                     <div className='categoria-botoes'>
                         <Button component={Button} type='submit' buttonSize='btn--medium' buttonStyle='btn--green'>FINALIZAR</Button>
-                        <Button component={Link} to='/home' buttonSize='btn--medium' buttonStyle='btn--red'>CANCELAR</Button>
+                        <Button component={Link} to='/home' buttonSize='btn--medium' buttonStyle='btn--red'>VOLTAR</Button>
                     </div>
                 </form>
             </section>

@@ -261,6 +261,9 @@ function Itens() {
                     <div className='label-inputs'>
                         <div className='label-input-esquerda'>
                             <div className='item-label-input'>
+                                <label className='label-nome-item'>Ficha: <span className='ficha'>{pedido.numeroFicha}</span></label>
+                            </div>
+                            <div className='item-label-input'>
                                 <label className='label-nome-item'>Número do pedido</label>
                                 <div className='input-select-container'>
                                     <input

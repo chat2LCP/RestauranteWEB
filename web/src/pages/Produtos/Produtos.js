@@ -308,7 +308,7 @@ function Produtos() {
                                         })}
                                     </select>
                                 </div>
-                                <p className='produto-error-message'>{errors.setor?.message}</p>
+                                <p className='produto-error-message'>{errors.id_setor?.message}</p>
                             </div>
 
                             <div className='produto-label-input'>
@@ -361,7 +361,7 @@ function Produtos() {
                 
                     <div className='produto-botoes'>
                         <Button component={Button} type="submit" buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRAR</Button>
-                        <Button component={Link} to='/home' buttonSize='btn--medium' buttonStyle='btn--red'>CANCELAR</Button>
+                        <Button component={Link} to='/home' buttonSize='btn--medium' buttonStyle='btn--red'>VOLTAR</Button>
                     </div>
                 </form>
             </section>
