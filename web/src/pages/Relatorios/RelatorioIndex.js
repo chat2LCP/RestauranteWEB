@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import DatePicker, { registerLocale } from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import ptbr from 'date-fns/locale/pt-BR';
 import { Apple } from 'react-bootstrap-icons'
 import { Calendar } from 'react-bootstrap-icons'
+import { Chart } from 'react-google-charts'
+import _ from 'lodash'
 
 import './RelatorioIndex.scss'
 import Button from '../../components/Button/Button'
@@ -18,6 +20,7 @@ function RelatorioIndex() {
     const [dataInicio, setDataInicio] = useState(new Date())
     const [dataFim, setDataFim] = useState(new Date())
     const [dadosRelatorio, setDadosRelatorio] = useState([{itens: [{data: '', quantidade: 0, valor: 0}], quantidade: 0, valor: 0}])
+    const [dadosRelatorioVendas, setDadosRelatorioVendas] = useState(['',0])
     const [modalShow, setModalShow] = useState({show: false, status: 'ok', message: ''})
     const AuthStr = 'Bearer '.concat(localStorage.getItem("access_token"))
 
@@ -36,6 +39,15 @@ function RelatorioIndex() {
         })
         .then((res) => {
             setDadosRelatorio(res.data.data)
+
+            const vendas = res.data.data.map(({itens}) => {
+                return(
+                    itens.map(({data, valor}) => {
+                        return [data, valor]
+                    })
+                )
+            })
+            setDadosRelatorioVendas(...vendas)
         })
         .catch(()=> {
             setModalShow({
@@ -44,6 +56,8 @@ function RelatorioIndex() {
                 message: 'Não há dados para o período selecionado'
             })
         })
+
+        console.log('----------',dadosRelatorioVendas)
     }
 
     const handleDateChange = () => {
@@ -53,6 +67,11 @@ function RelatorioIndex() {
         //     //
         // }
     }
+
+    const chartSalesData=[
+        ["Ano", "Vendas"], 
+        ...dadosRelatorioVendas
+    ]
 
     return(
         <div className='relatorioIndex-container'>
@@ -157,8 +176,18 @@ function RelatorioIndex() {
                         </table>
                     </div>
                 </section>
+
+                <section className='chart-container'>
+                    <Chart
+                        chartType='LineChart'
+                        data={chartSalesData}
+                        width="100%"
+                        height="400px"
+                        legendToggle
+                    />
+                </section>
             
-                <div className='relatorioData-botoes'>
+                <div className='relatorio-botao'>
                     <Button component={Link} to='/home' buttonSize='btn--medium' buttonStyle='btn--blue'>VOLTAR</Button>
                 </div>
             </section>

@@ -14,11 +14,12 @@ import SpinnerScreen from '../../components/Spinner/SpinnerScreen';
 function Vendas() { 
     const validationSchema = yup.object().shape({
         idVenda: yup
-        .string()
-        .required("campo obrigatório"),
+            .string()
+            .required("campo obrigatório"),
     })
 
     const { 
+        handleSubmit,
         register,
         formState: {errors},
         reset,
@@ -32,43 +33,99 @@ function Vendas() {
     const [showSpinner, setShowSpinner] = useState(false)
     const [listaVendas, setListaVendas] = useState(listaVendasVazia)
     const [detalheVenda, setDetalheVenda] = useState(listaVendasVazia)
-    
-    useEffect(() => {
-        axios.get(`${process.env.REACT_APP_URL_BASE}/vendas`)
+    const AuthStr = 'Bearer '.concat(localStorage.getItem("access_token"))
+
+    const atualizaListaDeVendas = async () => {
+        await axios.get(`${process.env.REACT_APP_URL_BASE}/vendas`, {
+            headers:{
+                Authorization: AuthStr
+            }
+        })
         .then((res) => {
             setListaVendas(res.data.data)
-        })    
-    })
+        })
+        .catch(()=> {
+            setModalShow({
+                show: true, 
+                status: 'error', 
+                message: 'Erro ao carregar lista de vendas'
+            })
+        })
+    }
+
+    useEffect(() => {
+        atualizaListaDeVendas()
+    }, [])
 
     const buscaVenda = async (e) => {
         const id = e.target.value
         
-        if (id !== null || id !== undefined){
-            try{
-                setShowSpinner(true)
-
-                await axios.get(`${process.env.REACT_APP_URL_BASE}/vendas/${id}`)
-                .then((res) => 
-                    setDetalheVenda(res.data.data)
-                )
-                .catch(() => {
-                    setModalShow({
-                        show: true, 
-                        status: 'error', 
-                        message: 'Venda não encontrada'
-                    })
-                    
-                    setDetalheVenda(listaVendasVazia)
-                    setValue("idVenda", '')
+        if(id == ''){
+            setDetalheVenda(listaVendasVazia)
+        }else if (id !== null || id !== undefined){
+            await axios.get(`${process.env.REACT_APP_URL_BASE}/vendas/${id}`, {
+                headers: {
+                    Authorization: AuthStr
+                }
+            })
+            .then((res) => 
+                setDetalheVenda(res.data.data)
+            )
+            .catch(() => {
+                setModalShow({
+                    show: true, 
+                    status: 'error', 
+                    message: 'Venda não encontrada'
                 })
-            }finally{
-                setShowSpinner(false)
-            }
+                
+                setDetalheVenda(listaVendasVazia)
+                setValue("idVenda", '')
+            })
         }
     }
 
-    const finalizarPedido = {
+    const finalizarPedido = (data) => {
+        try{
+            setShowSpinner(true)
 
+            var data = new Date();
+            const dataFormatada = `${data.getFullYear()}-${data.getMonth()}-${data.getDate()} ${data.getHours()+3}:${data.getMinutes()}:${data.getSeconds()}`
+
+            const options = {
+                method: 'PUT',
+                url: `${process.env.REACT_APP_URL_BASE}/vendas`,
+                headers: {
+                    Authorization: AuthStr
+                },
+                data: {
+                    idProduto: 0,
+                    valor: 0,
+                    quantidade: 0,
+                    datahora: dataFormatada,
+                }
+            };
+    
+            axios.request(options)
+            .then(() => { 
+                setModalShow({
+                    show: true, 
+                    status: 'ok', 
+                    message: 'Pedido finalizado com sucesso!'
+                })
+                atualizaListaDeVendas()
+                setDetalheVenda(listaVendasVazia)
+                reset()
+            })         
+            .catch(() => {
+            setModalShow({
+                    show: true, 
+                    status: 'error', 
+                    message: `Erro ao finalizar pedido`
+                })
+            })
+        }finally{
+            setShowSpinner(false)
+        }
     }
 
     return(
@@ -92,76 +149,78 @@ function Vendas() {
                     <h3>FINALIZAR PEDIDO</h3>
                     <span className='divider'></span>
                 </div>
-
-                <div className='label-inputs'>
-                    <div className='label-input-esquerda'>
-                        <div className='categoria-label-input'>
-                            <label className='label-id-venda'>Id da venda</label>
-                            <input 
-                                id="idVenda"
-                                name="idVenda"
-                                className="form-control input-venda" 
-                                {...register("idVenda")} 
-                                onBlur={buscaVenda}
-                            />
-                            <p className='categoria-error-message'>{errors.idVenda?.message}</p>
-                        </div>
-                        <div className='resumo-venda-container'>
-                            <div className='resumo-venda-scrollarea detalhe'>
-                                <h2 className='resumo-titulo'>Detalhe da venda</h2>
-                                {
-                                    detalheVenda.map((detalhe) => {
-                                        return(
-                                            <div key={detalhe.id}>
-                                                <div className='resumo-info'>
-                                                    <span className='resumo-item'>ID da venda</span>
-                                                    <span className='resumo-subitem'>{detalhe.id}</span>
-                                                    <span className='resumo-item'>ID produto</span>
-                                                    <span className='resumo-subitem'>{detalhe.idProduto}</span>
-                                                    <span className='resumo-item'>Quantidade</span>
-                                                    <span className='resumo-subitem'>{detalhe.quantidade}</span>
-                                                    <span className='resumo-item'>Valor</span>
-                                                    <span className='resumo-subitem'>{detalhe.valor}</span>
+                
+                <form className="form" onSubmit={handleSubmit(finalizarPedido)}>
+                    <div className='label-inputs'>
+                        <div className='label-input-esquerda'>
+                            <div className='categoria-label-input'>
+                                <label className='label-id-venda'>Id da venda</label>
+                                <input 
+                                    id="idVenda"
+                                    name="idVenda"
+                                    className="form-control input-venda" 
+                                    {...register("idVenda")} 
+                                    onBlur={buscaVenda}
+                                />
+                                <p className='categoria-error-message'>{errors.idVenda?.message}</p>
+                            </div>
+                            <div className='resumo-venda-container'>
+                                <div className='resumo-venda-scrollarea detalhe'>
+                                    <h2 className='resumo-titulo'>Detalhe da venda</h2>
+                                    {
+                                        detalheVenda.map((detalhe) => {
+                                            return(
+                                                <div key={detalhe.id}>
+                                                    <div className='resumo-info'>
+                                                        <span className='resumo-item venda'>Venda</span>
+                                                        <span className='resumo-subitem'>{detalhe.id}</span>
+                                                        <span className='resumo-item'>ID produto</span>
+                                                        <span className='resumo-subitem'>{detalhe.idProduto}</span>
+                                                        <span className='resumo-item'>Quantidade</span>
+                                                        <span className='resumo-subitem'>{detalhe.quantidade}</span>
+                                                        <span className='resumo-item'>Valor</span>
+                                                        <span className='resumo-subitem'>{detalhe.valor}</span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        )
-                                    })
-                                }
+                                            )
+                                        })
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='label-input-direita'>
+                            <div className='resumo-venda-container'>
+                            <div className='resumo-venda-scrollarea'>
+                                    <h2 className='resumo-titulo'>Resumo de vendas</h2>
+                                    {
+                                        listaVendas.map((venda) => {
+                                            return(
+                                                <div key={venda.id}>
+                                                    <div className='resumo-info'>
+                                                        <span className='resumo-item venda'>Venda</span>
+                                                        <span className='resumo-subitem'>{venda.id}</span>
+                                                        <span className='resumo-item'>ID produto</span>
+                                                        <span className='resumo-subitem'>{venda.idProduto}</span>
+                                                        <span className='resumo-item'>Quantidade</span>
+                                                        <span className='resumo-subitem'>{venda.quantidade}</span>
+                                                        <span className='resumo-item'>Valor</span>
+                                                        <span className='resumo-subitem'>{venda.valor}</span>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div className='label-input-direita'>
-                        <div className='resumo-venda-container'>
-                        <div className='resumo-venda-scrollarea'>
-                                <h2 className='resumo-titulo'>Resumo de vendas</h2>
-                                {
-                                    listaVendas.map((venda) => {
-                                        return(
-                                            <div key={venda.id}>
-                                                <div className='resumo-info'>
-                                                    <span className='resumo-item'>ID da venda</span>
-                                                    <span className='resumo-subitem'>{venda.id}</span>
-                                                    <span className='resumo-item'>ID produto</span>
-                                                    <span className='resumo-subitem'>{venda.idProduto}</span>
-                                                    <span className='resumo-item'>Quantidade</span>
-                                                    <span className='resumo-subitem'>{venda.quantidade}</span>
-                                                    <span className='resumo-item'>Valor</span>
-                                                    <span className='resumo-subitem'>{venda.valor}</span>
-                                                </div>
-                                            </div>
-                                        )
-                                    })
-                                }
-                            </div>
-                        </div>
+                    <div className='categoria-botoes'>
+                        <Button component={Button} type='submit' buttonSize='btn--medium' buttonStyle='btn--green'>FINALIZAR</Button>
+                        <Button component={Link} to='/home' buttonSize='btn--medium' buttonStyle='btn--red'>CANCELAR</Button>
                     </div>
-                </div>
-
-                <div className='categoria-botoes'>
-                    <Button component={Button} type='submit' buttonSize='btn--medium' buttonStyle='btn--green'>FINALIZAR</Button>
-                    <Button component={Link} to='/' buttonSize='btn--medium' buttonStyle='btn--red'>CANCELAR</Button>
-                </div>
+                </form>
             </section>
         </div>
     )

@@ -28,10 +28,6 @@ const SignIn = () => {
         handleSubmit,
         formState: {errors}
     } = useForm({
-        defaultValues: {
-            usuario: "",
-            senha: ""
-        },
         resolver: yupResolver(validationSchema),  //aplica a validação do yup no formulário
     })    
     
@@ -53,7 +49,6 @@ const SignIn = () => {
 
         axios.request(options)
         .then((res) =>{
-            console.log(res.data)
             localStorage.setItem("access_token", res.data.access_token)
             res && navigate('/Home')}
         )

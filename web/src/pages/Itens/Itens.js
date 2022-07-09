@@ -10,6 +10,7 @@ import './Itens.scss'
 import Button from '../../components/Button/Button'
 import ModalScreen from '../../components/Modal/ModalScreen';
 import { usePedido } from '../../contexts/pedidoContext';
+import SpinnerScreen from '../../components/Spinner/SpinnerScreen';
 
 function Itens() {
     const validationSchema = yup.object().shape({
@@ -58,12 +59,21 @@ function Itens() {
     const [produtos, setProdutos] = useState([{id: '', nome: ''}])
     const [pedidoItens, setPedidoItens] = useState(listaDeProdutosVazia)
     const { pedido } = usePedido()
-    
-    useEffect(() => {
-        axios.get(`${process.env.REACT_APP_URL_BASE}/produtos`)
+    const AuthStr = 'Bearer '.concat(localStorage.getItem("access_token"))
+
+    const atualizaListaDeProdutos = () => {
+        axios.get(`${process.env.REACT_APP_URL_BASE}/produtos`, {
+            headers: {
+                Authorization: AuthStr
+            }
+        })
         .then((res) => {
             setProdutos(res.data.data)
-        })    
+        }) 
+    }
+
+    useEffect(() => {
+        atualizaListaDeProdutos() 
     }, [])
 
 
@@ -71,7 +81,11 @@ function Itens() {
         const id = e.target.value
 
         if (id != ''){
-            await axios.get(`${process.env.REACT_APP_URL_BASE}/produtos/${id}`)
+            await axios.get(`${process.env.REACT_APP_URL_BASE}/produtos/${id}`, {
+                headers: {
+                    Authorization: AuthStr
+                }
+            })
             .then((res) => {
                 setProdutos(res.data.data)
             })
@@ -82,7 +96,11 @@ function Itens() {
                     message: 'Produto não encontrado'
                 })
                  
-                axios.get(`${process.env.REACT_APP_URL_BASE}/produtos`)
+                axios.get(`${process.env.REACT_APP_URL_BASE}/produtos`, {
+                    headers: {
+                        Authorization: AuthStr
+                    }
+                })
                 .then((res) => 
                     setProdutos(res.data.data)
                 )
@@ -91,7 +109,11 @@ function Itens() {
                 setValue("idProduto", descricao)
             })
         } else{
-            await axios.get(`${process.env.REACT_APP_URL_BASE}/produtos`)
+            await axios.get(`${process.env.REACT_APP_URL_BASE}/produtos`, {
+                headers: {
+                    Authorization: AuthStr
+                }
+            })
             .then((res) => 
                 setProdutos(res.data.data)
             )
@@ -102,12 +124,22 @@ function Itens() {
         const id = e.target.value
 
         if (id != ''){
-            await axios.get(`${process.env.REACT_APP_URL_BASE}/pedidos/${id}`)
+            await axios.get(`${process.env.REACT_APP_URL_BASE}/pedidos/${id}`, {
+                headers: {
+                    Authorization: AuthStr
+                }
+            })
             .then((res) => {
                 setPedidoItens(res.data.data)
             })
             .catch(() => {
+                // setModalShow({
+                //     show: true, 
+                //     status: 'error', 
+                //     message: 'Pedido não encontrado'
+                // })
                 setPedidoItens(listaDeProdutosVazia)
+                // setValue("idPedido", '')
             })
         } else{
             setPedidoItens(listaDeProdutosVazia)
@@ -121,20 +153,29 @@ function Itens() {
             var data = new Date();
             const dataFormatada = `${data.getFullYear()}-${data.getMonth()}-${data.getDate()} ${data.getHours()+3}:${data.getMinutes()}:${data.getSeconds()}`
             
-            await axios.put(`${process.env.REACT_APP_URL_BASE}/pedidos`, {
-                nomecliente: pedido.nomeCliente.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase(),
-                numeroFicha: pedido.numeroFicha,
-                datahora: dataFormatada,
-                itens: [{
-                    idPedido,
-                    idProduto,
-                    quantidade,
-                    valor,
-                    sequencia,
-                    observacao,
-                    datahora: dataFormatada
-                }]
-            })
+            const options = {
+                method: 'PUT',
+                url: `${process.env.REACT_APP_URL_BASE}/pedidos`,
+                headers: {
+                    Authorization: AuthStr
+                },
+                data: {
+                    nomecliente: pedido.nomeCliente.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase(),
+                    numeroFicha: pedido.numeroFicha,
+                    datahora: dataFormatada,
+                    itens: [{
+                        idPedido,
+                        idProduto,
+                        quantidade,
+                        valor,
+                        sequencia,
+                        observacao,
+                        datahora: dataFormatada
+                    }]
+                }
+            };
+    
+            axios.request(options)
             .then(() => {
                 setModalShow({
                     show: true, 
@@ -149,7 +190,7 @@ function Itens() {
                     status: 'error', 
                     message: `Erro ao incluir item`
                 })
-            })
+            }) 
         }finally{
             setShowSpinner(false)
         }
@@ -166,7 +207,7 @@ function Itens() {
 
     return(
         <div className='item-container'>
-
+            <SpinnerScreen show={showSpinner} />
              <ModalScreen
                 show={modalShow.show} 
                 status={modalShow.status}

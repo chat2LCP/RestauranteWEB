@@ -5,7 +5,6 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup';
 import axios from 'axios';
 import { Apple } from 'react-bootstrap-icons';
-import qs from 'qs'
 
 import './Setores.scss'
 import Button from '../../components/Button/Button'

@@ -46,6 +46,17 @@
     background: $light-grey;
 }
 
+.label-inputs{
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: flex-start;
+
+    .label-input-esquerda, .label-input-direita{
+        width: 100%;
+    }
+}
+
 .pedido-label-input{
     .label-nome-pedido{
         margin-top: 40px;
@@ -55,11 +66,61 @@
     }
 
     .input-pedido{
-        width: 45%;
+        width: 80%;
         margin-top: 10px;
         font-size: 1.5rem;
     }
+
+    .ficha{
+        width: 90px;
+    }
+
 }
+
+.resumo-ficha-container{   
+    .resumo-ficha-scrollarea{
+        border: 1px solid $input-border-grey;
+        border-radius: 4px;
+        margin-top: 40px;
+        padding: 15px;
+        width: 100%;
+        height: 300px;
+        overflow-y: auto;
+        word-wrap: break-word;
+
+        .resumo-titulo{
+            font-size: 1.5rem;
+            font-weight: 500;
+            font-style: italic;
+            text-decoration: underline;
+            text-align: center;
+        }
+
+        .resumo-subinfo{
+            display: grid;
+            padding: 10px;
+            grid-template-columns: 1fr 2fr;
+            grid-template-columns: 1fr 2fr;
+            border-bottom: 1px solid $input-border-grey;
+        }
+        
+        .resumo-item{
+            font-size: 1rem;
+            font-weight: 500;
+            margin-top: 20px;
+            color: $blue;
+        }
+        
+        .resumo-info{
+            display: flex;
+            padding: 10px;
+            font-size: 1rem;
+            border-bottom: 1px solid $input-border-grey;
+        }
+    }
+}
+
+
 
 .pedido-botoes{
     width: 100%;

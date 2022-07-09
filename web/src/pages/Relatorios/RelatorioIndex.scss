@@ -97,10 +97,11 @@
         justify-content: center;
         gap: 70px; 
     }
+}
 
-    .botoes-inferior{
-        margin-top: 20px;
-    }
+.relatorio-botao{
+    display: flex;
+    justify-content: center;
 }
 
 .relatorio-index-container{

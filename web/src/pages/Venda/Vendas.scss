@@ -108,12 +108,17 @@
             font-weight: 500;
             color: $blue;
         }
+
+        .venda{
+            color: $coral;
+        }
     }
 
     .detalhe{
+        overflow-y: hidden;
         margin-top: 5px;
         width: 85%;
-        height: 292px;
+        height: 255px;
     }
 }
 
