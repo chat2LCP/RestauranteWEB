@@ -56,8 +56,6 @@ function RelatorioIndex() {
                 message: 'Não há dados para o período selecionado'
             })
         })
-
-        console.log('----------',dadosRelatorioVendas)
     }
 
     const handleDateChange = () => {

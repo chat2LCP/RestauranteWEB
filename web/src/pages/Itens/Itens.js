@@ -14,12 +14,11 @@ import SpinnerScreen from '../../components/Spinner/SpinnerScreen';
 
 function Itens() {
     const validationSchema = yup.object().shape({
-        idPedido: yup
-            .number("insira apenas números")
-            .positive("insira um valor maior que 0")
-            .integer("insira um valor inteiro")
-            .typeError("valor inválido")
-            .required("campo obrigatório"),
+        // idPedido: yup
+            // .number("insira apenas números")
+            // .positive("insira um valor maior que 0")
+            // .integer("insira um valor inteiro")
+            // .typeError("valor inválido"),
         idProduto: yup
             .string()
             .required("campo obrigatório"),
@@ -133,13 +132,13 @@ function Itens() {
                 setPedidoItens(res.data.data)
             })
             .catch(() => {
-                // setModalShow({
-                //     show: true, 
-                //     status: 'error', 
-                //     message: 'Pedido não encontrado'
-                // })
+                setModalShow({
+                    show: true, 
+                    status: 'error', 
+                    message: 'Pedido não encontrado'
+                })
                 setPedidoItens(listaDeProdutosVazia)
-                // setValue("idPedido", '')
+                setValue("idPedido", '')
             })
         } else{
             setPedidoItens(listaDeProdutosVazia)
@@ -152,19 +151,58 @@ function Itens() {
 
             var data = new Date();
             const dataFormatada = `${data.getFullYear()}-${data.getMonth()}-${data.getDate()} ${data.getHours()+3}:${data.getMinutes()}:${data.getSeconds()}`
-            
-            const options = {
+            const idPedidoBanco = idPedido
+
+            console.log('idpedidobanco '+idPedidoBanco)
+            console.log('idproduto '+idProduto)
+
+            //busca o id do pedido gerado no banco
+            if (idPedido == 0 || idPedido == undefined || idPedido == ''){
+                const options1 = {
+                    method: 'PUT',
+                    url: `${process.env.REACT_APP_URL_BASE}/pedidos`,
+                    headers: {
+                        Authorization: AuthStr
+                    },
+                    data : {
+                        nomecliente: pedido.nomeCliente.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase(),
+                        numeroFicha: pedido.numeroFicha,
+                        datahora: dataFormatada,
+                    }
+                }
+
+                console.log('==aquiiiiiiiiiiiiii====')
+
+                axios.request(options1)
+                .then((res) => {
+                    idPedidoBanco = res.data.data
+
+                    console.log('================='+idPedidoBanco)
+                })
+                .catch(() => {
+                    setModalShow({
+                        show: true, 
+                        status: 'error', 
+                        message: `Erro ao gerar pedido`
+                    })
+                }) 
+
+                console.log('/////////////'+idPedidoBanco)
+
+            }
+   
+            const options2 = {
                 method: 'PUT',
                 url: `${process.env.REACT_APP_URL_BASE}/pedidos`,
                 headers: {
                     Authorization: AuthStr
                 },
                 data: {
-                    nomecliente: pedido.nomeCliente.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase(),
-                    numeroFicha: pedido.numeroFicha,
-                    datahora: dataFormatada,
+                    // nomecliente: pedido.nomeCliente.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase(),
+                    // numeroFicha: pedido.numeroFicha,
+                    // datahora: dataFormatada,
                     itens: [{
-                        idPedido,
+                        idPedido : idPedidoBanco,
                         idProduto,
                         quantidade,
                         valor,
@@ -174,14 +212,15 @@ function Itens() {
                     }]
                 }
             };
-    
-            axios.request(options)
+                
+            axios.request(options2)
             .then(() => {
                 setModalShow({
                     show: true, 
                     status: 'ok', 
                     message: `Item incluído com sucesso`
                 })
+                setPedidoItens(listaDeProdutosVazia)
                 reset()
             })
             .catch(() => {
@@ -362,7 +401,7 @@ function Itens() {
                     <div className='item-botoes'>
                         <Button component={Button} type='submit' buttonSize='btn--medium' buttonStyle='btn--green'>INCLUIR ITEM</Button>
                         <Button component={Link} to='/realizar-pedido' buttonSize='btn--medium' buttonStyle='btn--blue'>VOLTAR</Button>
-                        <Button component={Link} to='/' buttonSize='btn--medium' buttonStyle='btn--red'>CANCELAR</Button>
+                        <Button component={Link} to='/home' buttonSize='btn--medium' buttonStyle='btn--red'>CANCELAR</Button>
                     </div>
                 </form>
             </section>
