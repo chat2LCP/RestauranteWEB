@@ -63,6 +63,7 @@ function Funcionarios() {
         })
         .then((res) => {
             setCargos(res.data.data)
+            setValue("idCargo", res.data.data[0].id)
         })
     }
     
@@ -133,6 +134,7 @@ function Funcionarios() {
                 })
                 atualizaListaDeFuncionarios()
                 reset()
+                setValue("idCargo", cargos[0].id)
             })
             .catch(() => {
                 setModalShow({
@@ -212,7 +214,6 @@ function Funcionarios() {
                                         id="idCargo"
                                         {...register("idCargo")}
                                         onBlur={buscaCargos} 
-                                        defaultValue={cargos[0].id}
                                     />
                                     <select 
                                         id='select-cargo' 
@@ -270,7 +271,7 @@ function Funcionarios() {
                     
                     <div className='funcionario-botoes'>
                         <Button component={Button} type='submit' buttonSize='btn--medium' buttonStyle='btn--green'>CADASTRAR</Button>
-                        <Button component={Link} to='/home' buttonSize='btn--medium' buttonStyle='btn--red'>CANCELAR</Button>
+                        <Button component={Link} to='/home' buttonSize='btn--medium' buttonStyle='btn--red'>VOLTAR</Button>
                     </div>
                 </form>
             </section>

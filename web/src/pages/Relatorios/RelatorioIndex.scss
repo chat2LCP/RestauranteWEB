@@ -47,42 +47,54 @@
     background: $light-grey;
 }
 
-.relatorio-datepickers-container{
-    display: flex;
-    justify-content: space-evenly;
-    font-size: 1.2rem;
+.datepicker-button{
+    border: 1px solid $input-border-grey;
+    border-radius: 4px;
 
-    .label-nome-relatorio{
-        margin-top: 40px;
-        font-weight: 600;
-        display: block;
-    }
-    
-    .date-picker-and-icon{
+    .relatorio-datepickers-container{
         display: flex;
-        position: relative;
-        align-items: center;
+        justify-content: space-evenly;
+        font-size: 1.2rem;
         
-        .dtpicker{
-            width: 200px;  
-            background-color: transparent;
-            border: 1px solid $dark-grey;
-            padding-left: 10px;
-            cursor: pointer;
-            border-radius: 4px;
+        .label-nome-relatorio{
+            margin-top: 40px;
+            font-weight: 600;
+            display: block;
         }
-
-        .calendar-icon{
-            position: absolute;
-            right: 10px;
-            z-index: -2;
+    
+        .date-picker-and-icon{
+            display: flex;
+            position: relative;
+            align-items: center;
+            
+            .dtpicker{
+                width: 200px;  
+                background-color: transparent;
+                border: 1px solid $dark-grey;
+                padding-left: 10px;
+                cursor: pointer;
+                border-radius: 4px;
+            }
+            
+            .calendar-icon{
+                position: absolute;
+                right: 10px;
+                z-index: -2;
+            }
         }
+    
+        .react-datepicker__input-container{
+            display: flex;
+            justify-content: center;
+        } 
     }
 
-    .react-datepicker__input-container{
+    .datepButton{
+        width: 100%;
         display: flex;
         justify-content: center;
-    } 
+        margin: 20px 0;
+    }
 }
 
 .relatorioIndex-botoes-container{
@@ -90,7 +102,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 40px;
+    margin-top: 20px;
+    border: 1px solid $input-border-grey;
+    border-radius: 4px;
+    padding: 20px 0;
 
     .relatorioIndex-botoes{
         display: flex;
@@ -102,10 +117,11 @@
 .relatorio-botao{
     display: flex;
     justify-content: center;
+    margin-top: 30px;
 }
 
 .relatorio-index-container{
-    padding: 30px;
+    margin: 20px 0;
 
     .relatorio-index-body{
         width: 100%;
@@ -120,36 +136,49 @@
 
             .thead{
                 border-bottom: 1px solid $dark-grey;
+
+                .colunas{
+                    width: 100%;
+                    display: grid;
+                    grid-template-columns: 1fr 1fr 1fr;
+                    text-align: center;
+                }
             }
 
             .tbody{
                 height: 500px;
-            }
 
-            .colunas{
-                display: flex;
-                justify-content: space-around;
-            }
-
-            .linha-container{
-                display: flex;
-                flex-direction: column;
-
-                .row-dados{
-                    width: 100%;
+                .linha-container{
                     display: flex;
-                    justify-content: space-around;
-                }
-
-                .row-total-valor-geral{
-                    width: 100%;
-                    display: flex;
-                    justify-content: space-around;
-                    border-top: 1px dotted $dark-grey;
+                    flex-direction: column;
+    
+                    .row-dados{
+                        width: 100%;
+                        display: grid;
+                        grid-template-columns: 1fr 1fr 1fr;
+                        text-align: center;
+                    }
+    
+                    .row-total-valor-geral{
+                        width: 100%;
+                        display: grid;
+                        grid-template-columns: 1fr 1fr 1fr;
+                        text-align: center;
+                        border-top: 1px dotted $dark-grey;
+                    }
                 }
             }
         }
     }
+}
+
+.aviso-periodo{
+    font-size: 0.8rem;
+    color: $light-grey;
+}
+
+.grafico-section{
+    border: 1px solid $input-border-grey;
 }
 
 .grafico-titulo{
@@ -157,6 +186,9 @@
     font-weight: 500;
     color: $dark-grey;
     text-decoration: underline;
+    text-align: center;
+    width: 100%;
+    margin-top: 10px;
 }
 
 

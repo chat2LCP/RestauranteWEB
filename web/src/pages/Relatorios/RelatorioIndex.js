@@ -6,7 +6,6 @@ import ptbr from 'date-fns/locale/pt-BR';
 import { Apple } from 'react-bootstrap-icons'
 import { Calendar } from 'react-bootstrap-icons'
 import { Chart } from 'react-google-charts'
-import _ from 'lodash'
 
 import './RelatorioIndex.scss'
 import Button from '../../components/Button/Button'
@@ -20,52 +19,101 @@ function RelatorioIndex() {
     const [dataInicio, setDataInicio] = useState(new Date())
     const [dataFim, setDataFim] = useState(new Date())
     const [dadosRelatorio, setDadosRelatorio] = useState([{itens: [{data: '', quantidade: 0, valor: 0}], quantidade: 0, valor: 0}])
-    const [dadosRelatorioVendas, setDadosRelatorioVendas] = useState(["",0])
-    const [dadosRelatorioQuantidades, setDadosRelatorioQuantidades] = useState(["",0])
+    const [dadosRelatorioVendas, setDadosRelatorioVendas] = useState(["",0,0])
+    const [periodo, setPeriodo] = useState('')
     const [modalShow, setModalShow] = useState({show: false, status: 'ok', message: ''})
     const AuthStr = 'Bearer '.concat(localStorage.getItem("access_token"))
 
-    const geraRelatorio = async () => {         
+    const geraRelatorio = async (periodo) => {         
         const dataDeInicio = dataInicio.toISOString().substr(0, 10)
         const dataDeFim = dataFim.toISOString().substr(0, 10)
 
-        await axios.get(`${process.env.REACT_APP_URL_BASE}/vendas/total`, {
-            headers:{
-                Authorization: AuthStr
-            },
-            params:{
-                dataInicial: dataDeInicio,
-                dataFinal: dataDeFim,
-            }
-        })
-        .then((res) => {
-            setDadosRelatorio(res.data.data)
+        switch(periodo){
+            case 's':
+                setPeriodo('Semana')
 
-            const vendas = res.data.data.map(({itens}) => {
-                return(
-                    itens.map(({data, valor}) => {
-                        return [data, valor]
+                await axios.get(`${process.env.REACT_APP_URL_BASE}/vendas/totalsemana`, {
+                    headers:{
+                        Authorization: AuthStr
+                    }
+                })
+                .then((res) => {
+                    const vendas = res.data.data.map(({itens}) => {
+                        return(
+                            itens.map(({data, valor, quantidade}) => {
+                                return [data, valor, quantidade]
+                            })
+                        )
                     })
-                )
-            })
-            setDadosRelatorioVendas(...vendas)
+                    setDadosRelatorio(res.data.data)
+                    setDadosRelatorioVendas(...vendas)
+                })
+                .catch(()=> {
+                    setModalShow({
+                        show: true, 
+                        status: 'error', 
+                        message: 'Não há dados para o período selecionado'
+                    })
+                }) 
+                break;
+            case 'm':  
+                setPeriodo('Mes')
 
-            const quantidade = res.data.data.map(({itens}) => {
-                return(
-                    itens.map(({data, quantidade}) => {
-                        return [data, quantidade]
+                await axios.get(`${process.env.REACT_APP_URL_BASE}/vendas/totalmes`, {
+                    headers:{
+                        Authorization: AuthStr
+                    }
+                })
+                .then((res) => {
+                    const vendas = res.data.data.map(({itens}) => {
+                        return(
+                            itens.map(({data, valor, quantidade}) => {
+                                return [data, valor, quantidade]
+                            })
+                        )
                     })
-                )
-            })
-            setDadosRelatorioQuantidades(...quantidade)
-        })
-        .catch(()=> {
-            setModalShow({
-                show: true, 
-                status: 'error', 
-                message: 'Não há dados para o período selecionado'
-            })
-        })
+                    setDadosRelatorio(res.data.data)
+                    setDadosRelatorioVendas(...vendas)
+                })
+                .catch(()=> {
+                    setModalShow({
+                        show: true, 
+                        status: 'error', 
+                        message: 'Não há dados para o período selecionado'
+                    })
+                }) 
+                break;
+            default:
+                setPeriodo('Data')
+
+                await axios.get(`${process.env.REACT_APP_URL_BASE}/vendas/total`, {
+                    headers:{
+                        Authorization: AuthStr
+                    },
+                    params:{
+                        dataInicial: dataDeInicio,
+                        dataFinal: dataDeFim,
+                    }
+                })
+                .then((res) => {
+                    const vendas = res.data.data.map(({itens}) => {
+                        return(
+                            itens.map(({data, valor, quantidade}) => {
+                                return [data, valor, quantidade]
+                            })
+                        )
+                    })
+                    setDadosRelatorio(res.data.data)
+                    setDadosRelatorioVendas(...vendas)
+                })
+                .catch(()=> {
+                    setModalShow({
+                        show: true, 
+                        status: 'error', 
+                        message: 'Não há dados para o período selecionado'
+                    })
+                }) 
+        }
     }
 
     const handleDateChange = () => {
@@ -77,13 +125,8 @@ function RelatorioIndex() {
     }
 
     const chartSalesData=[
-        ["Ano", "Vendas"], 
+        ["Ano", "Valor", "Quantidade"], 
         ...dadosRelatorioVendas
-    ]
-
-    const chartQuantidadeData=[
-        ["Ano", "Vendas"], 
-        ...dadosRelatorioQuantidades
     ]
 
     return(
@@ -107,42 +150,46 @@ function RelatorioIndex() {
                     <span className='divider'></span>
                 </div>
 
-                <div className='relatorio-datepickers-container'>
-                    <div className='dtpicker inicial'>
-                        <label className='label-nome-relatorio'>Data inicial</label>
-                        <div className='date-picker-and-icon'>
-                            <DatePicker
-                                className='dtpicker'
-                                dateFormat="dd/MM/yyyy"
-                                selected={dataInicio}
-                                onSelect={setDataInicio}
-                                onChange={handleDateChange} //only when value has changed
-                                locale={'ptbr'}
-                                withPortal
+                <div className='datepicker-button'>
+                    <div className='relatorio-datepickers-container'>
+                        <div className='dtpicker inicial'>
+                            <label className='label-nome-relatorio'>Data inicial</label>
+                            <div className='date-picker-and-icon'>
+                                <DatePicker
+                                    className='dtpicker'
+                                    dateFormat="dd/MM/yyyy"
+                                    selected={dataInicio}
+                                    onSelect={setDataInicio}
+                                    onChange={handleDateChange} //only when value has changed
+                                    locale={'ptbr'}
+                                    withPortal
+                                    />
+                                <Calendar className='calendar-icon'/>
+                            </div>
+                        </div>
+                        <div className='dtpicker final'>
+                            <label className='label-nome-relatorio'>Data final</label>
+                            <div className='date-picker-and-icon'>
+                                <DatePicker
+                                    className='dtpicker'
+                                    dateFormat="dd/MM/yyyy"
+                                    selected={dataFim}
+                                    onSelect={setDataFim} //when day is clicked
+                                    onChange={handleDateChange} //only when value has changed
+                                    locale={'ptbr'}
+                                    withPortal
                                 />
-                            <Calendar className='calendar-icon'/>
-                        </div>
+                                <Calendar className='calendar-icon'/>
+                            </div>
+                        </div> 
                     </div>
-                    <div className='dtpicker final'>
-                        <label className='label-nome-relatorio'>Data final</label>
-                        <div className='date-picker-and-icon'>
-                            <DatePicker
-                                className='dtpicker'
-                                dateFormat="dd/MM/yyyy"
-                                selected={dataFim}
-                                onSelect={setDataFim} //when day is clicked
-                                onChange={handleDateChange} //only when value has changed
-                                locale={'ptbr'}
-                                withPortal
-                            />
-                            <Calendar className='calendar-icon'/>
-                        </div>
+                    <div className='datepButton'>
+                        <Button component={Button} onClick={() => geraRelatorio('d')} buttonSize='btn--medium' buttonStyle='btn--green'>RELATÓRIO DIÁRIO</Button>
                     </div>
                 </div>
 
                 <div className='relatorioIndex-botoes-container'>
                     <div className='relatorioIndex-botoes'>
-                        <Button component={Button} onClick={() => geraRelatorio('d')} buttonSize='btn--medium' buttonStyle='btn--green'>RELATÓRIO DIÁRIO</Button>
                         <Button component={Button} onClick={() => geraRelatorio('s')} buttonSize='btn--medium' buttonStyle='btn--green'>RELATÓRIO SEMANAL</Button>
                         <Button component={Button} onClick={() => geraRelatorio('m')} buttonSize='btn--medium' buttonStyle='btn--green'>RELATÓRIO MENSAL</Button>
                     </div>
@@ -153,9 +200,9 @@ function RelatorioIndex() {
                         <table className='tabela-dados-relatorio'>
                             <thead className='thead'>
                                 <tr className='colunas'>
-                                    <th>Data</th>
+                                    <th>{periodo}*</th>
                                     <th>Quantidade</th>
-                                    <th>Valor</th>
+                                    <th>Valor (R$)</th>
                                 </tr>
                             </thead>
                             <tbody className='tbody'>
@@ -170,7 +217,7 @@ function RelatorioIndex() {
                                                                 <tr className='row-dados' key={index}>
                                                                     <td>{item.data}</td>
                                                                     <td>{item.quantidade}</td>
-                                                                    <td>{item.valor}</td>
+                                                                    <td>{parseFloat(item.valor).toFixed(2)}</td>
                                                                 </tr>
                                                             )
                                                         })
@@ -179,11 +226,20 @@ function RelatorioIndex() {
                                                 <tr className='row-total-valor-geral'>
                                                     <td></td>
                                                     <td><b>Quantidade total: {dado.quantidade}</b></td>
-                                                    <td><b>Valor total: {dado.valor}</b></td>
+                                                    <td><b>Valor total: R$ {parseFloat(dado.valor).toFixed(2)}</b></td>
                                                 </tr>
                                             </tr>
                                         )
-                                    })    
+                                    })  
+                                }
+                                {
+                                    periodo == 'Semana' ? 
+                                        <span className='aviso-periodo'>*Semana do ano. Período correspondente às últimas 12 semanas a partir da data atual</span>
+                                        :
+                                        periodo == 'Mes' ?
+                                            <span className='aviso-periodo'>*Período correspondente aos últimos seis meses a partir da data atual</span>
+                                            : 
+                                            ''
                                 }
                             </tbody>
                         </table>
@@ -192,8 +248,8 @@ function RelatorioIndex() {
                 
                 {
                     [...dadosRelatorioVendas][0] != "" &&
-                        <section>
-                            <span className='grafico-titulo'>Titulo grafico</span>
+                        <section className='grafico-section'>
+                            <h2 className='grafico-titulo'>Gráfico de vendas</h2>
                             <Chart
                                 chartType='LineChart'
                                 data={chartSalesData}
@@ -204,19 +260,6 @@ function RelatorioIndex() {
                         </section>      
                 }
 
-                {
-                    [...dadosRelatorioQuantidades][0] != "" &&
-                        <section>
-                            <span className='grafico-titulo'>Titulo grafico</span>
-                            <Chart
-                                chartType='LineChart'
-                                data={chartQuantidadeData}
-                                width="100%"
-                                height="300px"
-                                legendToggle
-                            />
-                        </section>
-                }
                 <div className='relatorio-botao'>
                     <Button component={Link} to='/home' buttonSize='btn--medium' buttonStyle='btn--blue'>VOLTAR</Button>
                 </div>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup';
@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import Button from '../../components/Button/Button'
 import './SignIn.scss'
 import qs from 'qs'
+import ModalScreen from '../../components/Modal/ModalScreen';
 
 
 const SignIn = () => {    
@@ -28,8 +29,10 @@ const SignIn = () => {
         handleSubmit,
         formState: {errors}
     } = useForm({
-        resolver: yupResolver(validationSchema),  //aplica a validação do yup no formulário
+        resolver: yupResolver(validationSchema),
     })    
+
+    const [modalShow, setModalShow] = useState({show: false, status: 'ok', message: ''})
     
     const handleLogin = async ({usuario, senha}) => {        
         const options = {
@@ -50,15 +53,26 @@ const SignIn = () => {
         axios.request(options)
         .then((res) =>{
             localStorage.setItem("access_token", res.data.access_token)
-            res && navigate('/Home')}
-        )
+            navigate('/Home')
+        })
         .catch((error) => {
-            console.error(error)
+            setModalShow({
+                show: true, 
+                status: 'error', 
+                message: 'Usuário/Senha incorretos'
+            })
         })
     }
 
     return (
         <div className='sign-in-container'>
+             <ModalScreen
+                show={modalShow.show} 
+                status={modalShow.status}
+                message={modalShow.message}
+                onHide={() => setModalShow({show: false, status: modalShow.status, message: modalShow.message})}
+            />
+
             <section className='header'>
                 <div className='sign-header'>
                     <Apple size={92} color='#fefefe'></Apple>
@@ -69,7 +83,7 @@ const SignIn = () => {
             <section className="login-container">               
                 <form className="form login-card-data" onSubmit={handleSubmit(handleLogin)}>               
                     <div className="user">
-                        <label className='label-email' htmlFor="usuario">Email</label>
+                        <label className='label-email' htmlFor="usuario">Usuário</label>
                         <input 
                             id="usuario"
                             name="usuario"
@@ -94,7 +108,9 @@ const SignIn = () => {
                         </div>
                     </div>
                     
-                    <Button type="submit" buttonStyle='btn--login'>LOGIN</Button>
+                    <div className='btn'>
+                        <Button type="submit" buttonStyle='btn--login'>LOGIN</Button>
+                    </div>
                 </form>
             </section>
         </div>

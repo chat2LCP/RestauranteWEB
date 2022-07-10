@@ -14,11 +14,6 @@ import SpinnerScreen from '../../components/Spinner/SpinnerScreen';
 
 function Itens() {
     const validationSchema = yup.object().shape({
-        // idPedido: yup
-            // .number("insira apenas números")
-            // .positive("insira um valor maior que 0")
-            // .integer("insira um valor inteiro")
-            // .typeError("valor inválido"),
         idProduto: yup
             .string()
             .required("campo obrigatório"),
@@ -28,11 +23,6 @@ function Itens() {
             .integer("insira um valor inteiro")
             .typeError("valor inválido")
             .required("campo obrigatório"),
-        // valor: yup
-        //     .string()
-        //     // .min(0, "valor negativo não permitido")
-        //     .typeError("valor inválido")
-        //     .required("campo obrigatório"),
         sequencia: yup
             .number("insira apenas números")
             .positive("insira um valor maior que 0")
@@ -55,7 +45,6 @@ function Itens() {
     const listaDeProdutosVazia = [{datahora: '', id: '', itens: [{datahora: '', id: '', idPedido: '', idProduto: '', observacao: '', produto:{descricao: '', id: '', preco: ''}, quantidade: '', sequencia: '', valor: ''}], nomeCliente: '', numeroFicha: ''}]
     const [modalShow, setModalShow] = useState({show: false, status: 'ok', message: ''})
     const [showSpinner, setShowSpinner] = useState(false)
-    const [ultimoValor, setUltimoValor] = useState(0)
     const [produtos, setProdutos] = useState([{id: '', preco: 0, descricao: '', tempopreparo: 0, idCategoria: 0, ativo: true, idSetor: 0}])
     const [pedidoItens, setPedidoItens] = useState(listaDeProdutosVazia)
     const { pedido } = usePedido()
@@ -69,25 +58,14 @@ function Itens() {
         })
         .then((res) => {
             setProdutos(res.data.data)
+            setValue("idProduto", res.data.data[0].id)
+            setValue("valor", res.data.data[0].preco)
         }) 
     }
 
     useEffect(() => {
         atualizaListaDeProdutos() 
     }, [])
-
-    const calculaValor = (valorPassado) => { 
-
-        // let valorTot = 0
-
-        // if(valorPassado == 0){
-        //     valorTot =  ultimoValor * getValues("quantidade")   
-        // }else{
-        //     valorTot = valorPassado * getValues("quantidade")
-        // }
-
-        // setValue("valor", parseFloat(valorTot).toFixed(2))
-    }
 
     const buscaProduto = async (e) => {
         const id = e.target.value
@@ -100,8 +78,6 @@ function Itens() {
             })
             .then((res) => {
                 setProdutos(res.data.data)                
-                // setUltimoValor(res.data.data[0].preco)
-                // calculaValor(res.data.data[0].preco)
                 setValue("valor", res.data.data[0].preco)
             })
             .catch(() => {
@@ -132,7 +108,6 @@ function Itens() {
             .then((res) => 
                 setProdutos(res.data.data)
             )
-
             setValue("valor", 0)
         }
     }
@@ -241,15 +216,6 @@ function Itens() {
         }
     }
 
-    // const criaMascara = () => {
-    //     let valorInput = document.getElementById('valor').value;
-    //     // const mascara = valorInput.replace(/[^\d]/g, "").replace(/(\d{3})(\d{3})(\d{2})/, "$1.$2,$3");
-
-    //     // document.getElementById('valor').value = parseFloat(valorInput).toFixed(2);
-
-    //     setValor(valorInput.toLocaleString('pt-br', {minimumFractionDigits: 2}));
-    // }
-
     return(
         <div className='item-container'>
             <SpinnerScreen show={showSpinner} />
@@ -308,8 +274,6 @@ function Itens() {
                                         {...register("descricaoProduto")}
                                         onChange={(e) => {
                                             setValue("idProduto", e.currentTarget.value.split(',')[0])
-                                            // setUltimoValor(e.currentTarget.value.split(',')[1])
-                                            // calculaValor(e.currentTarget.value.split(',')[1])
                                             setValue("valor", e.currentTarget.value.split(',')[1])
                                         }}
                                     >

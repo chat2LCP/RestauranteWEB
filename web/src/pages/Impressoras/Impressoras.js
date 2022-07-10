@@ -45,9 +45,9 @@ function Impressoras() {
     const [modalShow, setModalShow] = useState({show: false, status: 'ok', message: ''})
     const [showSpinner, setShowSpinner] = useState(false)
     const [listaImpressora, setListaImpressora] = useState([{id: 0, descricao: ''}])
-    const AuthStr = 'Bearer '.concat(localStorage.getItem("access_token"))
     const [impressoras, setImpressoras] = useState([{id: 0, descricao: '', ip: '', porta: '', idSetor: 0}])
     const [setores, setSetores] = useState([{id: 0, descricao: ''}])
+    const AuthStr = 'Bearer '.concat(localStorage.getItem("access_token"))
 
     const atualizaListaDeImpressoras = () => {
         axios.get(`${process.env.REACT_APP_URL_BASE}/impressoras`, {
@@ -68,6 +68,8 @@ function Impressoras() {
         })
         .then((res) => {
             setSetores(res.data.data)
+
+            setValue("idSetor", res.data.data[0].id)
         })
     }
 
@@ -141,6 +143,7 @@ function Impressoras() {
                 })
                 atualizaListaDeImpressoras()
                 reset()
+                setValue("idSetor", setores[0].id)
             })         
             .catch(() => {
             setModalShow({

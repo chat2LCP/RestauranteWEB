@@ -23,7 +23,6 @@ function Vendas() {
         register,
         formState: {errors},
         reset,
-        setValue
     } = useForm({
         resolver: yupResolver(validationSchema),
     }) 
@@ -32,37 +31,12 @@ function Vendas() {
     const [modalShow, setModalShow] = useState({show: false, status: 'ok', message: ''})
     const [showSpinner, setShowSpinner] = useState(false)
     const [listaPedidos, setListaPedidos] = useState(listaPedidosVazia)
-    const [totalPedido, setTotalPedido] = useState(0)
-    const [detalhePedido, setDetalhePedido] = useState(listaPedidosVazia)
     const AuthStr = 'Bearer '.concat(localStorage.getItem("access_token"))
-
-    // const atualizaListaDeVendas = async () => {
-    //     await axios.get(`${process.env.REACT_APP_URL_BASE}/vendas`, {
-    //         headers:{
-    //             Authorization: AuthStr
-    //         }
-    //     })
-    //     .then((res) => {
-    //         setListaVendas(res.data.data)
-    //     })
-    //     .catch(()=> {
-    //         setModalShow({
-    //             show: true, 
-    //             status: 'error', 
-    //             message: 'Erro ao carregar lista de vendas'
-    //         })
-    //     })
-    // }
-
-    // useEffect(() => {
-    //     atualizaListaDeVendas()
-    // }, [])
 
     const buscaPedido = async (e) => {
         const id = e.target.value
         
         if(id == ''){
-            setTotalPedido(0)
             setListaPedidos(listaPedidosVazia)
         }else if (id !== null || id !== undefined){
             await axios.get(`${process.env.REACT_APP_URL_BASE}/pedidos/${id}`, {
@@ -72,11 +46,6 @@ function Vendas() {
             })
             .then((res) => {
                 setListaPedidos(res.data.data)
-
-                const total = res.data.data[0].itens.reduce((accum, curr) => accum + curr.valor, 0 )
-                
-                
-                setTotalPedido(total)
             })
             .catch(() => {
                 setModalShow({
@@ -86,8 +55,7 @@ function Vendas() {
                 })
                 
                 setListaPedidos(listaPedidosVazia)
-                setTotalPedido(0)
-                setValue("idPedido", '')
+                reset()
             })
         }
     }
@@ -97,38 +65,41 @@ function Vendas() {
             setShowSpinner(true)
 
             var data = new Date();
-            const dataFormatada = `${data.getFullYear()}-${data.getMonth()}-${data.getDate()} ${data.getHours()+3}:${data.getMinutes()}:${data.getSeconds()}`
+            const dataFormatada = `${data.getFullYear()}-${data.getMonth()+1}-${data.getDate()} ${data.getHours()+3}:${data.getMinutes()}:${data.getSeconds()}`
 
-            const options = {
-                method: 'PUT',
-                url: `${process.env.REACT_APP_URL_BASE}/vendas`,
-                headers: {
-                    Authorization: AuthStr
-                },
-                data: {
-                    idProduto: 0,
-                    valor: 0,
-                    quantidade: 0,
-                    datahora: dataFormatada,
+
+            listaPedidos[0].itens.map((pedido) => {
+                const options = {
+                    method: 'PUT',
+                    url: `${process.env.REACT_APP_URL_BASE}/vendas`,
+                    headers: {
+                        Authorization: AuthStr
+                    },
+                    data: {
+                        idProduto: pedido.idProduto,
+                        valor: pedido.valor,
+                        quantidade: pedido.quantidade,
+                        datahora: dataFormatada,
+                    }
+                };
+        
+                axios.request(options)
+                .then(() => {
+                    setModalShow({
+                        show: true, 
+                        status: 'ok', 
+                        message: 'Venda finalizada com sucesso'
+                    })
+                    setListaPedidos(listaPedidosVazia)
+                    reset()
                 }
-            };
-    
-            axios.request(options)
-            .then(() => { 
-                setModalShow({
-                    show: true, 
-                    status: 'ok', 
-                    message: 'Pedido finalizado com sucesso!'
-                })
-                setDetalhePedido(listaPedidosVazia)
-                setTotalPedido(0)
-                reset()
-            })         
-            .catch(() => {
-            setModalShow({
-                    show: true, 
-                    status: 'error', 
-                    message: `Erro ao finalizar pedido`
+                )
+                .catch(() => {
+                    setModalShow({
+                        show: true, 
+                        status: 'error', 
+                        message: 'Erro ao finalizar venda'
+                    })
                 })
             })
         }finally{

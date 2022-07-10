@@ -58,22 +58,6 @@
     width: 50%;
 }
 
-.input-password-eye > input{
-    padding: 6px 25px 6px 12px;
-}
-
-.input-password-eye{
-    position: relative;
-}
-
-.input-password-eye .eye{
-    position: absolute;
-    right: 7px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.4em;
-}
-
 .signin-error-message{
     color: rgb(243, 1, 1);
     font-weight: normal;

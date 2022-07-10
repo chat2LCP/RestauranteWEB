@@ -19,7 +19,6 @@ function Produtos() {
         preco: yup
             .number("insira apenas números")
             .positive("insira um valor maior que 0")
-            .integer("insira um valor inteiro")
             .typeError("valor inválido")
             .required("campo obrigatório"),
         tempopreparo: yup
@@ -93,7 +92,6 @@ function Produtos() {
     const cadastrarProduto = async (data) => {
         try{
             setShowSpinner(true)
-
 
             const options = {
                 method: 'PUT',
@@ -190,7 +188,7 @@ function Produtos() {
             })
             .then((res) => 
                 setCategorias(res.data.data)
-            )  
+            )
             
             const descricao = getValues("descricaoCategoria")
             setValue("id_categoria", descricao)
