@@ -13,7 +13,7 @@ import SpinnerScreen from '../../components/Spinner/SpinnerScreen';
 
 function Vendas() { 
     const validationSchema = yup.object().shape({
-        idVenda: yup
+        idPedido: yup
             .string()
             .required("campo obrigatório"),
     })
@@ -25,61 +25,69 @@ function Vendas() {
         reset,
         setValue
     } = useForm({
-        resolver: yupResolver(validationSchema),  //aplica a validação do yup no formulário
+        resolver: yupResolver(validationSchema),
     }) 
     
-    const listaVendasVazia = [{id: 0, datahora: '', idProduto: 0, quantidade: 0, valor: 0}]
+    const listaPedidosVazia = [{id: 0, nomecliente: '', numeroFicha: '', datahora: '', itens: [{idPedido: 0, idProduto: '', quantidade: '', valor: 0, sequencia: 0, observacao: '', datahora: '', produto: {id: 0, preco: 0, descricao: ''}}]}]
     const [modalShow, setModalShow] = useState({show: false, status: 'ok', message: ''})
     const [showSpinner, setShowSpinner] = useState(false)
-    const [listaVendas, setListaVendas] = useState(listaVendasVazia)
-    const [detalheVenda, setDetalheVenda] = useState(listaVendasVazia)
+    const [listaPedidos, setListaPedidos] = useState(listaPedidosVazia)
+    const [totalPedido, setTotalPedido] = useState(0)
+    const [detalhePedido, setDetalhePedido] = useState(listaPedidosVazia)
     const AuthStr = 'Bearer '.concat(localStorage.getItem("access_token"))
 
-    const atualizaListaDeVendas = async () => {
-        await axios.get(`${process.env.REACT_APP_URL_BASE}/vendas`, {
-            headers:{
-                Authorization: AuthStr
-            }
-        })
-        .then((res) => {
-            setListaVendas(res.data.data)
-        })
-        .catch(()=> {
-            setModalShow({
-                show: true, 
-                status: 'error', 
-                message: 'Erro ao carregar lista de vendas'
-            })
-        })
-    }
+    // const atualizaListaDeVendas = async () => {
+    //     await axios.get(`${process.env.REACT_APP_URL_BASE}/vendas`, {
+    //         headers:{
+    //             Authorization: AuthStr
+    //         }
+    //     })
+    //     .then((res) => {
+    //         setListaVendas(res.data.data)
+    //     })
+    //     .catch(()=> {
+    //         setModalShow({
+    //             show: true, 
+    //             status: 'error', 
+    //             message: 'Erro ao carregar lista de vendas'
+    //         })
+    //     })
+    // }
 
-    useEffect(() => {
-        atualizaListaDeVendas()
-    }, [])
+    // useEffect(() => {
+    //     atualizaListaDeVendas()
+    // }, [])
 
-    const buscaVenda = async (e) => {
+    const buscaPedido = async (e) => {
         const id = e.target.value
         
         if(id == ''){
-            setDetalheVenda(listaVendasVazia)
+            setTotalPedido(0)
+            setListaPedidos(listaPedidosVazia)
         }else if (id !== null || id !== undefined){
-            await axios.get(`${process.env.REACT_APP_URL_BASE}/vendas/${id}`, {
+            await axios.get(`${process.env.REACT_APP_URL_BASE}/pedidos/${id}`, {
                 headers: {
                     Authorization: AuthStr
                 }
             })
-            .then((res) => 
-                setDetalheVenda(res.data.data)
-            )
+            .then((res) => {
+                setListaPedidos(res.data.data)
+
+                const total = res.data.data[0].itens.reduce((accum, curr) => accum + curr.valor, 0 )
+                
+                
+                setTotalPedido(total)
+            })
             .catch(() => {
                 setModalShow({
                     show: true, 
                     status: 'error', 
-                    message: 'Venda não encontrada'
+                    message: 'Pedido não encontrado'
                 })
                 
-                setDetalheVenda(listaVendasVazia)
-                setValue("idVenda", '')
+                setListaPedidos(listaPedidosVazia)
+                setTotalPedido(0)
+                setValue("idPedido", '')
             })
         }
     }
@@ -112,8 +120,8 @@ function Vendas() {
                     status: 'ok', 
                     message: 'Pedido finalizado com sucesso!'
                 })
-                atualizaListaDeVendas()
-                setDetalheVenda(listaVendasVazia)
+                setDetalhePedido(listaPedidosVazia)
+                setTotalPedido(0)
                 reset()
             })         
             .catch(() => {
@@ -154,63 +162,61 @@ function Vendas() {
                     <div className='label-inputs'>
                         <div className='label-input-esquerda'>
                             <div className='categoria-label-input'>
-                                <label className='label-id-venda'>Id da venda</label>
+                                <label className='label-id-venda'>Id do pedido</label>
                                 <input 
-                                    id="idVenda"
-                                    name="idVenda"
+                                    id="idPedido"
+                                    name="idPedido"
                                     className="form-control input-venda" 
-                                    {...register("idVenda")} 
-                                    onBlur={buscaVenda}
+                                    {...register("idPedido")} 
+                                    onBlur={buscaPedido}
                                 />
-                                <p className='categoria-error-message'>{errors.idVenda?.message}</p>
+                                <p className='categoria-error-message'>{errors.idPedido?.message}</p>
                             </div>
                             <div className='resumo-venda-container'>
-                                <div className='resumo-venda-scrollarea detalhe'>
-                                    <h2 className='resumo-titulo'>Detalhe da venda</h2>
+                                <div className='resumo-venda-scrollarea'>
                                     {
-                                        detalheVenda.map((detalhe) => {
-                                            return(
-                                                <div key={detalhe.id}>
-                                                    <div className='resumo-info'>
-                                                        <span className='resumo-item venda'>Venda</span>
-                                                        <span className='resumo-subitem'>{detalhe.id}</span>
-                                                        <span className='resumo-item'>ID produto</span>
-                                                        <span className='resumo-subitem'>{detalhe.idProduto}</span>
-                                                        <span className='resumo-item'>Quantidade</span>
-                                                        <span className='resumo-subitem'>{detalhe.quantidade}</span>
-                                                        <span className='resumo-item'>Valor</span>
-                                                        <span className='resumo-subitem'>{detalhe.valor}</span>
-                                                    </div>
-                                                </div>
-                                            )
-                                        })
+                                        <div className='cliente-ficha-container'>                                        
+                                            <span className='cliente-ficha'>Cliente: </span>
+                                            <span>{listaPedidos[0].nomecliente}</span><br />
+                                            <span className='cliente-ficha'>Ficha: </span>
+                                            <span>{listaPedidos[0].numeroFicha}</span>
+                                        </div>
                                     }
+                                    <table className='tabela-dados-venda'>
+                                        <thead className='thead'>
+                                            <tr className='colunas'>
+                                                <th>Id Produto</th>
+                                                <th>Descricao</th>
+                                                <th>Preço</th>
+                                                <th>Quantidade</th>
+                                                <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className='tbody'>
+                                            {
+                                                listaPedidos[0].itens.map((pedido, index) => {
+                                                    return(
+                                                        <tr className='row-dados' key={index}>
+                                                            <td className='resumo-subitem'>{pedido.idProduto}</td>
+                                                            <td className='resumo-subitem'>{pedido.produto.descricao}</td>
+                                                            <td className='resumo-subitem'>{parseFloat(pedido.valor).toFixed(2)}</td>
+                                                            <td className='resumo-subitem'>{pedido.quantidade}</td>
+                                                            <td className='resumo-subitem'>{parseFloat(pedido.quantidade * pedido.valor).toFixed(2)}</td>
+                                                        </tr>
+                                                    )
+                                                })    
+                                            }
+                                        </tbody>
+                                    </table>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div className='label-input-direita'>
-                            <div className='resumo-venda-container'>
-                            <div className='resumo-venda-scrollarea'>
-                                    <h2 className='resumo-titulo'>Resumo de vendas</h2>
-                                    {
-                                        listaVendas.map((venda) => {
-                                            return(
-                                                <div key={venda.id}>
-                                                    <div className='resumo-info'>
-                                                        <span className='resumo-item venda'>Venda</span>
-                                                        <span className='resumo-subitem'>{venda.id}</span>
-                                                        <span className='resumo-item'>ID produto</span>
-                                                        <span className='resumo-subitem'>{venda.idProduto}</span>
-                                                        <span className='resumo-item'>Quantidade</span>
-                                                        <span className='resumo-subitem'>{venda.quantidade}</span>
-                                                        <span className='resumo-item'>Valor</span>
-                                                        <span className='resumo-subitem'>{venda.valor}</span>
-                                                    </div>
-                                                </div>
-                                            )
-                                        })
-                                    }
+                                
+                                <div className='total-container'>
+                                    <span>TOTAL: </span>
+                                    <span>
+                                        R$ {
+                                            parseFloat(listaPedidos[0].itens.reduce((accum, curr) => accum + (curr.valor * curr.quantidade), 0)).toFixed(2)
+                                        }
+                                    </span>
                                 </div>
                             </div>
                         </div>

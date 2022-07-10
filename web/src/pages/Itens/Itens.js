@@ -28,11 +28,11 @@ function Itens() {
             .integer("insira um valor inteiro")
             .typeError("valor inválido")
             .required("campo obrigatório"),
-        valor: yup
-            .string()
-            // .min(0, "valor negativo não permitido")
-            .typeError("valor inválido")
-            .required("campo obrigatório"),
+        // valor: yup
+        //     .string()
+        //     // .min(0, "valor negativo não permitido")
+        //     .typeError("valor inválido")
+        //     .required("campo obrigatório"),
         sequencia: yup
             .number("insira apenas números")
             .positive("insira um valor maior que 0")
@@ -55,7 +55,8 @@ function Itens() {
     const listaDeProdutosVazia = [{datahora: '', id: '', itens: [{datahora: '', id: '', idPedido: '', idProduto: '', observacao: '', produto:{descricao: '', id: '', preco: ''}, quantidade: '', sequencia: '', valor: ''}], nomeCliente: '', numeroFicha: ''}]
     const [modalShow, setModalShow] = useState({show: false, status: 'ok', message: ''})
     const [showSpinner, setShowSpinner] = useState(false)
-    const [produtos, setProdutos] = useState([{id: '', nome: ''}])
+    const [ultimoValor, setUltimoValor] = useState(0)
+    const [produtos, setProdutos] = useState([{id: '', preco: 0, descricao: '', tempopreparo: 0, idCategoria: 0, ativo: true, idSetor: 0}])
     const [pedidoItens, setPedidoItens] = useState(listaDeProdutosVazia)
     const { pedido } = usePedido()
     const AuthStr = 'Bearer '.concat(localStorage.getItem("access_token"))
@@ -75,6 +76,18 @@ function Itens() {
         atualizaListaDeProdutos() 
     }, [])
 
+    const calculaValor = (valorPassado) => { 
+
+        // let valorTot = 0
+
+        // if(valorPassado == 0){
+        //     valorTot =  ultimoValor * getValues("quantidade")   
+        // }else{
+        //     valorTot = valorPassado * getValues("quantidade")
+        // }
+
+        // setValue("valor", parseFloat(valorTot).toFixed(2))
+    }
 
     const buscaProduto = async (e) => {
         const id = e.target.value
@@ -86,7 +99,10 @@ function Itens() {
                 }
             })
             .then((res) => {
-                setProdutos(res.data.data)
+                setProdutos(res.data.data)                
+                // setUltimoValor(res.data.data[0].preco)
+                // calculaValor(res.data.data[0].preco)
+                setValue("valor", res.data.data[0].preco)
             })
             .catch(() => {
                 setModalShow({
@@ -100,12 +116,12 @@ function Itens() {
                         Authorization: AuthStr
                     }
                 })
-                .then((res) => 
+                .then((res) => {
                     setProdutos(res.data.data)
-                )
+                })
 
                 const descricao = getValues("descricaoProduto")
-                setValue("idProduto", descricao)
+                setValue("idProduto", descricao.split(',')[0]) 
             })
         } else{
             await axios.get(`${process.env.REACT_APP_URL_BASE}/produtos`, {
@@ -116,6 +132,8 @@ function Itens() {
             .then((res) => 
                 setProdutos(res.data.data)
             )
+
+            setValue("valor", 0)
         }
     }
 
@@ -152,9 +170,6 @@ function Itens() {
             var data = new Date();
             const dataFormatada = `${data.getFullYear()}-${data.getMonth()}-${data.getDate()} ${data.getHours()+3}:${data.getMinutes()}:${data.getSeconds()}`
             let idPedidoBanco = idPedido
-
-            console.log('idpedidobanco '+idPedidoBanco)
-            console.log('idproduto '+idProduto)
 
             //busca o id do pedido gerado pelo banco
             if (idPedido == 0 || idPedido == undefined || idPedido == ''){
@@ -291,11 +306,16 @@ function Itens() {
                                         id='select_produto' 
                                         className="form-select select-produto"
                                         {...register("descricaoProduto")}
-                                        onChange={(e) => setValue("idProduto", e.currentTarget.value)}
+                                        onChange={(e) => {
+                                            setValue("idProduto", e.currentTarget.value.split(',')[0])
+                                            // setUltimoValor(e.currentTarget.value.split(',')[1])
+                                            // calculaValor(e.currentTarget.value.split(',')[1])
+                                            setValue("valor", e.currentTarget.value.split(',')[1])
+                                        }}
                                     >
                                         {produtos.map((produto) => {
                                             return (
-                                                <option value={produto.id} key={produto.id}>
+                                                <option value={[produto.id, produto.preco]} key={produto.id}>
                                                     {produto.descricao}
                                                 </option>
                                             )
@@ -312,18 +332,20 @@ function Itens() {
                                     name="quantidade"
                                     className="form-control input-item" 
                                     {...register("quantidade")} 
+                                    // onBlur={() => calculaValor(0)}
                                 />
                                 <p className='item-error-message'>{errors.quantidade?.message}</p>
                             </div>
 
                             <div className='item-label-input'>
-                                <label className='label-nome-item'>Valor unitário</label>
+                                <label className='label-nome-item'>Valor</label>
                                 <input 
                                     // onChange={criaMascara}
                                     id="valor"
                                     name="valor"
                                     className="form-control input-item" 
                                     {...register("valor")} 
+                                    disabled={true}
                                 />
                                 <p className='item-error-message'>{errors.valor?.message}</p>
                             </div>

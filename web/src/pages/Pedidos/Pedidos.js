@@ -191,7 +191,7 @@ const Pedidos = () => {
                         <div className='label-input-direita'>
                             <div className='resumo-ficha-container'>
                                 <div className='resumo-ficha-scrollarea'>
-                                    <h2 className='resumo-titulo'>Fichas cadastrados</h2>
+                                    <h2 className='resumo-titulo'>Fichas cadastradas</h2>
                                     {
                                         listaFichas.map((ficha) => {
                                             return(

@@ -77,19 +77,21 @@
     .resumo-venda-scrollarea{
         border: 1px solid $input-border-grey;
         border-radius: 4px;
-        margin-top: 40px;
+        margin-top: 10px;
         padding: 15px;
         width: 100%;
-        height: 380px;
+        height: 320px;
         overflow-y: auto;
         word-wrap: break-word;
+        
+        .cliente-ficha-container{
+            width: 100%;
+            border-bottom: 1px solid $dark-grey;
+        }
 
-        .resumo-titulo{
-            font-size: 1.5rem;
+        .cliente-ficha{
+            color: $coral;
             font-weight: 500;
-            font-style: italic;
-            text-decoration: underline;
-            text-align: center;
         }
 
         .resumo-info{
@@ -112,13 +114,31 @@
         .venda{
             color: $coral;
         }
-    }
 
-    .detalhe{
-        overflow-y: hidden;
-        margin-top: 5px;
-        width: 85%;
-        height: 255px;
+        .tabela-dados-venda{
+            width: 100%;
+            margin-top: 15px;
+            text-align: center;
+
+            .thead{
+                .colunas{
+                    color: $blue;
+                }
+            }
+        }
+    }
+    
+    .total-container{
+        background-color: rgba(219, 237, 250, 0.788);
+        margin-top: 10px;
+        padding: 5px 10px;
+        border: 1px solid $input-border-grey;
+        border-radius: 4px;
+        font-size: 1.8rem;
+        font-weight: 500;
+        display: flex;
+        justify-content: space-between;
+        letter-spacing: 2.5px;
     }
 }
 
