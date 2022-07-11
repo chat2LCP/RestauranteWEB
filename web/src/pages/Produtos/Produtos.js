@@ -100,7 +100,7 @@ function Produtos() {
                     Authorization: AuthStr
                 },
                 data: {
-                    descricao: data.descricao.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase(),
+                    descricao: data.descricao.normalize("NFD").replace(/[^a-zA-Zs ]/g, "").toUpperCase(),
                     preco: data.preco,
                     ativo: data.ativo,
                     idCategoria: data.id_categoria,

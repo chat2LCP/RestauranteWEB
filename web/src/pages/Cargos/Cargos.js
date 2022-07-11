@@ -60,7 +60,7 @@ function Cargos() {
                     Authorization: 'Bearer '.concat(localStorage.getItem("access_token"))
                 },
                 data: {
-                    descricao: descricao.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase(),
+                    descricao: descricao.normalize("NFD").replace(/[^a-zA-Zs ]/g, "").toUpperCase(),
                 }
             };
     

@@ -59,7 +59,7 @@ function Categorias() {
                     Authorization: AuthStr
                 },
                 data: {
-                    descricao: descricao.normalize("NFD").replace(/[^a-zA-Zs]/g, "").toUpperCase()
+                    descricao: descricao.normalize("NFD").replace(/[^a-zA-Zs ]/g, "").toUpperCase()
                 }
             };
     
