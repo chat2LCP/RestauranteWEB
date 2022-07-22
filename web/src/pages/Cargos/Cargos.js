@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup';
@@ -44,6 +44,8 @@ function Cargos() {
             setListaCargos(res.data.data)
         })
     }
+
+    const location = useLocation()
 
     useEffect(() => {
         atualizaListaDeCargos()  
@@ -117,6 +119,7 @@ function Cargos() {
                                     id="descricao"
                                     name="descricao"
                                     className="form-control input-cargos" 
+                                    defaultValue={(location.state === null ? "" : location.state.nome)}
                                     {...register("descricao")} 
                                 />
                                 <p className='cargo-error-message'>{errors.descricao?.message}</p>

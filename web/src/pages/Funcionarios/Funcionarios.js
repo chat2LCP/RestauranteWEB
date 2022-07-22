@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup';
@@ -66,6 +66,8 @@ function Funcionarios() {
             setValue("idCargo", res.data.data[0].id)
         })
     }
+
+    const location = useLocation()
     
     useEffect(() => {
         atualizaListaDeFuncionarios()
@@ -179,6 +181,7 @@ function Funcionarios() {
                                     id="nome"
                                     name="nome"
                                     className="form-control input-funcionario" 
+                                    defaultValue={(location.state === null ? "" : location.state.nome)}
                                     {...register("nome")} 
                                 />
                                 <p className='funcionario-error-message'>{errors.nome?.message}</p>
@@ -190,6 +193,7 @@ function Funcionarios() {
                                     id="login"
                                     name="login"
                                     className="form-control input-funcionario" 
+                                    defaultValue={(location.state === null ? "" : location.state.login)}
                                     {...register("login")} 
                                 />
                                 <p className='funcionario-error-message'>{errors.login?.message}</p>
@@ -201,6 +205,7 @@ function Funcionarios() {
                                     id="senha"
                                     name="senha"
                                     className="form-control input-funcionario" 
+                                    defaultValue={(location.state === null ? "" : location.state.senha)}
                                     {...register("senha")} 
                                 />
                                 <p className='funcionario-error-message'>{errors.senha?.message}</p>

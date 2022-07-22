@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup';
@@ -43,6 +43,8 @@ function Categorias() {
             setListaCategorias(res.data.data)
         }) 
     }
+
+    const location = useLocation()
 
     useEffect(() => {
         atualizaListaDeCategorias()
@@ -116,6 +118,7 @@ function Categorias() {
                                     id="descricao"
                                     name="descricao"
                                     className="form-control input-categoria" 
+                                    defaultValue={(location.state === null ? "" : location.state.nome)}
                                     {...register("descricao")} 
                                 />
                                 <p className='categoria-error-message'>{errors.descricao?.message}</p>

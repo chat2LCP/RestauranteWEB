@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup';
@@ -105,6 +105,8 @@ function Impressoras() {
         })
     }
 
+    const location = useLocation();
+
     useEffect(() => {
         atualizaListaDeImpressoras()
         atualizaListaDeSetores()
@@ -188,6 +190,7 @@ function Impressoras() {
                                     id="id"
                                     name="id"
                                     className="form-control input-impressora impressora" 
+                                    defaultValue={(location.state === null ? "" : location.state.id)}
                                     {...register("id")} 
                                     // onBlur={buscaFicha}
                                     />
@@ -200,6 +203,7 @@ function Impressoras() {
                                     id="descricao"
                                     name="descricao"
                                     className="form-control input-impressora" 
+                                    defaultValue={(location.state === null ? "" : location.state.nome)}
                                     {...register("descricao")} 
                                 />
                                 <p className='impressoras-error-message'>{errors.descricao?.message}</p>
@@ -211,6 +215,7 @@ function Impressoras() {
                                         id="ip"
                                         name="ip"
                                         className="form-control input-ip" 
+                                        defaultValue={(location.state === null ? "" : location.state.ip)}
                                         {...register("ip")} 
                                     />
                                     <p className='impressoras-error-message'>{errors.ip?.message}</p>
@@ -221,6 +226,7 @@ function Impressoras() {
                                         id="porta"
                                         name="porta"
                                         className="form-control input-porta" 
+                                        defaultValue={(location.state === null ? "" : location.state.porta)}
                                         {...register("porta")} 
                                     />
                                     <p className='impressoras-error-message'>{errors.porta?.message}</p>

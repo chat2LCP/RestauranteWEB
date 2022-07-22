@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup';
@@ -82,6 +82,8 @@ function Produtos() {
             setListaProdutos(res.data.data)
         })    
     }
+
+    const location = useLocation()
 
     useEffect(() => {
         atualizaListaDeCategorias()
@@ -226,6 +228,7 @@ function Produtos() {
                                     id="descricao"
                                     name="descricao"
                                     className="form-control input-produto" 
+                                    defaultValue={(location.state === null ? "" : location.state.nome)}
                                     {...register("descricao")} 
                                 />
                                 <p className='produto-error-message'>{errors.descricao?.message}</p>
@@ -237,6 +240,7 @@ function Produtos() {
                                     id="preco"
                                     name="preco"
                                     className="form-control input-produto" 
+                                    defaultValue={(location.state === null ? "" : location.state.preco)}
                                     {...register("preco")} 
                                 />
                                 <p className='produto-error-message'>{errors.preco?.message}</p>
@@ -249,6 +253,7 @@ function Produtos() {
                                     id="tempopreparo"
                                     name="tempopreparo"
                                     className="form-control input-produto" 
+                                    defaultValue={(location.state === null ? "" : location.state.tempo)}
                                     {...register("tempopreparo")} 
                                 />
                                 <p className='produto-error-message'>{errors.tempopreparo?.message}</p>
@@ -330,7 +335,7 @@ function Produtos() {
                         </div>
 
                         <div className='label-input-direita'>
-                        <div className='resumo-produto-container'>
+                            <div className='resumo-produto-container'>
                                 <div className='resumo-produto-scrollarea'>
                                     <h2 className='resumo-titulo'>Produtos Cadastrados</h2>
                                     {
