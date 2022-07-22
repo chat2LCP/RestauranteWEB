@@ -42,6 +42,13 @@
     text-align: center;
 }
 
+.icone-voz{
+    position: absolute;
+    top: 15px;
+    right: 65px;
+    cursor: pointer;
+}
+
 .home-body{
     display: grid;
     grid-template-rows: 70% 30%;

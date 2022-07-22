@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { BoxArrowLeft } from 'react-bootstrap-icons';
+import { BoxArrowLeft, Mic } from 'react-bootstrap-icons';
 import { Apple } from 'react-bootstrap-icons'
 import { useNavigate } from 'react-router-dom'
 
@@ -30,6 +30,9 @@ function Home() {
                     </Button>
                     <Apple size={92} color='#fefefe'></Apple>
                     <h1 className='home-titulo'>DRestaurante</h1>
+                    <Button component={Link} to='/assistente-voz' buttonSize='btn--invisible' buttonStyle='btn--transparent' className='icone-voz'>
+                        <Mic size={50} color='#e5e4e2' />
+                    </Button>
                 </div>
             </section>
 
@@ -64,7 +67,7 @@ function Home() {
                             <Button component={Link} to='/fechar-pedido' buttonSize='btn--medium' buttonStyle='btn--red'>FINALIZAR PEDIDO</Button>
                         </div>
                     </div>        
-                </div>       
+                </div>
             </section>
         </div>
     )
