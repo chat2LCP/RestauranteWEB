@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import SpeechRecognition, {useSpeechRecognition} from 'react-speech-recognition';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { format } from 'react-string-format'
 
 import './AssistenteVoz.scss'
 
@@ -8,6 +9,66 @@ import Button from '../../components/Button/Button'
 
 const AssistenteVoz = () => {
     const [path, setPath] = useState('')
+    const [prev, setPrev] = useState('')
+
+    const [id, setID] = useState('')
+    const [ip, setIP] = useState('')
+    const [login, setLogin] = useState('')
+    const [nome, setNome] = useState('')
+    const [porta, setPorta] = useState('')
+    const [preco, setPreco] = useState('')
+    const [senha, setSenha] = useState('')
+    const [tempo, setTempo] = useState('')
+
+    //const [categoria, setCat] = useState('')
+    //const [setor, setSetor] = useState('')
+    //const [cargo, setCargo] = useState('')
+
+    const [acao, setAcao] = useState('')
+    const [display, setDisplay] = useState('')
+
+    const update = () => {
+        if (prev != path){
+            setID('')
+            setIP('')
+            setLogin('')
+            setNome('')
+            setPorta('')
+            setPreco('')
+            setSenha('')
+            setTempo('')
+        }
+        setPrev(path)
+        switch(path){
+            case '/cadastrar-cargo':
+                setAcao('CADASTRAR CARGO')
+                setDisplay(format('NOME: {0}', nome))
+                break
+            case '/cadastrar-setor':
+                setAcao('CADASTRAR SETOR')
+                setDisplay(format('NOME: {0}', nome))
+                break
+            case '/cadastrar-categoria':
+                setAcao('CADASTRAR CATEGORIA')
+                setDisplay(format('NOME: {0}', nome))
+                break
+            case '/cadastrar-produto':
+                setAcao('CADASTRAR PRODUTO')
+                setDisplay(format('NOME: {0}\nPRECO: {1}\nTEMPO: {2}', nome, preco, tempo))
+                break
+            case '/cadastrar-funcionario':
+                setAcao('CADASTRAR FUNCIONARIO')
+                setDisplay(format('NOME: {0}\nLOGIN: {1}\nSENHA: {2}', nome, login, senha))
+                break
+            case '/cadastrar-impressora':
+                setAcao('CADASTRAR IMPRESSORA')
+                setDisplay(format('ID: {0}\nNOME: {1}\nIP: {2}\nPORTA: {3}', id, nome, ip, porta))
+                break
+            default:
+                setAcao('OUVINDO...')
+                setDisplay('')
+        }
+    }
     const navigate = useNavigate()
     const commands = [
         {
@@ -35,25 +96,49 @@ const AssistenteVoz = () => {
             callback: () => {setPath('/cadastrar-categoria')}
         },
         {
-            command: 'relatórios',
-            callback: () => {setPath('/relatorios')}
+            command: '(cadastrar) impressora',
+            callback: () => {setPath('/cadastrar-impressora')}
         },
         {
-            command: '(realizar) pedido',
-            callback: () => {setPath('/realizar-pedido')}
-        },
-        {
-            command: '(adicionar) item',
-            callback: () => {setPath('/incluir-item')}
-        },
-        {
-            command: ['prossegir', 'finalizar', 'fim'],
-            callback: () => {navigate(path)}
+            command: ['seguir', 'finalizar'],
+            callback: () => {navigate(path, {state:{id:id, ip:ip, login:login, nome:nome, porta:porta, preco:preco, senha:senha, tempo:tempo}})}
         },
         {
             command: 'limpar',
-            callback: ({resetTranscript}) => resetTranscript(),
-        }
+            callback: ({resetTranscript}) => {resetTranscript()}
+        },
+        {
+            command: 'id (impressora) *',
+            callback: (ret) => {setID(ret)}
+        },
+        {
+            command: 'ip (impressora) *',
+            callback: (ret) => {setIP(ret)}
+        },
+        {
+            command: 'login *',
+            callback: (ret) => {setLogin(ret)}
+        },
+        {
+            command: 'nome *',
+            callback: (ret) => {setNome(ret)}
+        },
+        {
+            command: 'porta *',
+            callback: (ret) => {setPorta(ret)}
+        },
+        {
+            command: ['preço *', 'valor *'],
+            callback: (ret) => {setPreco(ret)}
+        },
+        {
+            command: 'senha *',
+            callback: (ret) => {setSenha(ret)}
+        },
+        {
+            command: 'tempo *',
+            callback: (ret) => {setTempo(ret)}
+        },
     ]
 
     const {
@@ -78,6 +163,8 @@ const AssistenteVoz = () => {
         startListening()
     },[])
 
+    useEffect(() =>{update()},[path, id, ip, login, nome, porta, preco, senha, tempo])
+
     if (!browserSupportsSpeechRecognition) {
         return <span>NAVEGADOR NAO POSSUI SUPORTE PARA ESTA FUNCAO</span>;
     }
@@ -85,6 +172,7 @@ const AssistenteVoz = () => {
     if (!isMicrophoneAvailable) {
         return <span>MICROFONE INDISPONÍVEL</span>;
     }
+
 
     return (
         <div className='home-container'>
@@ -104,8 +192,10 @@ const AssistenteVoz = () => {
                         buttonStyle={listening ? 'btn--red' : 'btn--blue'}
                         onMouseDown={listening ? stopListening : startListening}
                     >{listening ? 'PAUSAR' : 'RETOMAR'}</Button>
-                    <h3>Path atual: {path}</h3>
-                    <h3>Transcricao: {transcript}</h3>
+                    <Button component={Link} to='/home' buttonSize='btn--large' buttonStyle='btn--white'>VOLTAR</Button>
+                    <label className='label-acao'>{acao}</label>
+                    <pre>{display}</pre>
+                    <h3>{transcript}</h3>
                 </div>
             </section>
         </div>
