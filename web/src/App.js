@@ -16,6 +16,7 @@ import Setores from './pages/Setores/Setores';
 import RelatorioIndex from './pages/Relatorios/RelatorioIndex';
 import Vendas from './pages/Venda/Vendas';
 import Impressoras from './pages/Impressoras/Impressoras';
+import AssistenteVoz from './pages/AssistenteVoz/AssistenteVoz';
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
           <Route path='/fechar-pedido' element={<Vendas />} />  
           <Route path='/incluir-item' element={<Itens />} />       
           <Route path='/relatorios' element={<RelatorioIndex />} />  
+          <Route path='/assistente-voz' element={<AssistenteVoz/>} />
           <Route path='*' element={<NotFound />} />
         </Routes>
       </BrowserRouter>
