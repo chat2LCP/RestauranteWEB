@@ -1,3 +1,18 @@
 @import 'src/styles/reset';
 @import 'src/styles/variables';
 @import 'src/styles/mixins';
+
+.botoes-interacao{
+    display: flex;
+    flex-direction: row;
+    padding-top: 10px;
+    justify-content: space-evenly;
+}
+
+.display-info{
+    height: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
+    font-size: 30px;
+    text-align: center;
+}

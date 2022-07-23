@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import SpeechRecognition, {useSpeechRecognition} from 'react-speech-recognition';
 import { Link, useNavigate } from 'react-router-dom';
-import { format } from 'react-string-format'
+import { format } from 'react-string-format';
+import { Apple } from 'react-bootstrap-icons';
 
 import './AssistenteVoz.scss'
 
@@ -65,7 +66,7 @@ const AssistenteVoz = () => {
                 setDisplay(format('ID: {0}\nNOME: {1}\nIP: {2}\nPORTA: {3}', id, nome, ip, porta))
                 break
             default:
-                setAcao('OUVINDO...')
+                setAcao('IDLE...')
                 setDisplay('')
         }
     }
@@ -181,11 +182,12 @@ const AssistenteVoz = () => {
                     <div className='logo-restaurante'>
                         <i class="fab fa-pagelines"></i>
                     </div>
+                    <Apple size={92} color='#fefefe'></Apple>
                     <h1 className='home-titulo'>DRestaurante</h1>
                 </div>
             </section>
             <section>
-                <div>
+                <div className='botoes-interacao'>
                     <Button
                         component={Button}
                         buttonSize='btn--large'
@@ -193,9 +195,10 @@ const AssistenteVoz = () => {
                         onMouseDown={listening ? stopListening : startListening}
                     >{listening ? 'PAUSAR' : 'RETOMAR'}</Button>
                     <Button component={Link} to='/home' buttonSize='btn--large' buttonStyle='btn--white'>VOLTAR</Button>
-                    <label className='label-acao'>{acao}</label>
+                </div>
+                <div className='display-info'>
+                    <label>{acao}</label>
                     <pre>{display}</pre>
-                    <h3>{transcript}</h3>
                 </div>
             </section>
         </div>
